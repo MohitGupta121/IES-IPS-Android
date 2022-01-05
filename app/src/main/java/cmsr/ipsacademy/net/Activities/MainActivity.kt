@@ -1,16 +1,15 @@
-package cmsr.ipsacademy.net
+package cmsr.ipsacademy.net.Activities
 
-import android.content.SharedPreferences
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.Util.SharedPreference
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -101,12 +100,14 @@ class MainActivity : AppCompatActivity() {
                                     .show()
                             }
                             Log.e("login", "Login Error", task.exception)
-                        } else {
-                            Toast.makeText(this, "Login Sucessfull", Toast.LENGTH_SHORT).show()
+                        } else{
+                            startActivity(Intent(this@MainActivity,UserActivity::class.java))
+                            finish()
                         }
                     })
 
             })
+
 
     }
 }
