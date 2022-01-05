@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">IES IPS Academy</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Fullname</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="minimum_password">Password is too short</string>
+    <string name="auth_failed">Login Failed !</string>
+
+    <string-array name="UsersId">
+        <item>Principle</item>
+        <item>HOD</item>
+        <item>Teacher</item>
+    </string-array>
+
+</resources>
