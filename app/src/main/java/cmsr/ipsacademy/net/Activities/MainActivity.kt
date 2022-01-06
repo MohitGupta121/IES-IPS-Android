@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.hide()
+
         val sharedPreference:SharedPreference = SharedPreference(this)
 
         val userIdList = resources.getStringArray(R.array.UsersId)
@@ -107,7 +109,6 @@ class MainActivity : AppCompatActivity() {
                     })
 
             })
-
 
     }
 }
