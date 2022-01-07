@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="cmsr.ipsacademy.net">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="com.google.android.c2dm.premission.Reciever" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -15,31 +16,31 @@
         <activity
             android:name=".Activities.UserActivity"
             android:exported="true">
+        </activity>
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.MainActivity"
-            android:exported="true">
-
-        </activity>
-
-        <service
-            android:name=".messaging.FirebaseServices"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.premission.Send">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                <action android:name="com.google.android.c2dm.intent.Recieve" />
-            </intent-filter>
-        </service>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service
+            android:name=".messaging.FirebaseMessagingService"
+            android:permission="TODO"
+            tools:ignore="ExportedService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
