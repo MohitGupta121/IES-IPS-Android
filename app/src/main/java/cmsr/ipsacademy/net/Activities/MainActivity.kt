@@ -28,6 +28,14 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreference:SharedPreference = SharedPreference(this)
 
+//        var token: String? = sharedPreference.getValueString("token")
+//
+//        if (token != null) {
+//            Log.e("tt", token)
+//            Toast.makeText(this, "token :" + token, Toast.LENGTH_SHORT).show()
+//        }
+
+
         val userIdList = resources.getStringArray(R.array.UsersId)
 
         userIdSpinner = findViewById(R.id.choose_user)

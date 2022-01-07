@@ -16,6 +16,7 @@
         <activity
             android:name=".Activities.UserActivity"
             android:exported="true">
+
         </activity>
         <activity
             android:name=".Activities.MainActivity"

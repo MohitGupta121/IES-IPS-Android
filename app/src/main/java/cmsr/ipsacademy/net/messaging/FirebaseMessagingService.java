@@ -19,21 +19,11 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.RemoteMessage;
 
 import cmsr.ipsacademy.net.Activities.UserActivity;
+import cmsr.ipsacademy.net.Util.SharedPreference;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
      NotificationManager mNotificationManager;
-
-     // For a Particular Device
-
-
-    @Override
-    public void onNewToken(@NonNull String s) {
-        super.onNewToken(s);
-
-        Log.d("device token", "onNewToken" +s);
-
-    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
