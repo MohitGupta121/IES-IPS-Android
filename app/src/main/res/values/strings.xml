@@ -9,7 +9,7 @@
     <string name="auth_failed">Login Failed !</string>
 
     <string-array name="UsersId">
-        <item>Principle</item>
+        <item>Principal</item>
         <item>HOD</item>
         <item>Teacher</item>
     </string-array>

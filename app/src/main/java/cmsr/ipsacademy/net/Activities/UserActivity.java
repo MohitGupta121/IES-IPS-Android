@@ -16,11 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceIdReceiver;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import cmsr.ipsacademy.net.R;
 import cmsr.ipsacademy.net.Util.SharedPreference;
 import cmsr.ipsacademy.net.messaging.FcmNotificationsSender;
-import cmsr.ipsacademy.net.messaging.FirebaseMessagingService;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -43,7 +43,7 @@ public class UserActivity extends AppCompatActivity {
         if (sharedPreference.getValueString("role").equals("Teacher")) {
             FirebaseMessaging.getInstance().subscribeToTopic("all");
         }
-        if (sharedPreference.getValueString("role").equals("Principle")) {
+        if (sharedPreference.getValueString("role").equals("Principal")) {
             FirebaseMessaging.getInstance().subscribeToTopic("all");
         }
 
@@ -54,17 +54,20 @@ public class UserActivity extends AppCompatActivity {
         notificationSendButton.setOnClickListener(view -> {
             if (!notificationTitle.getText().toString().isEmpty() && !notificationMessage.getText().toString().isEmpty()){
 
-                if (sharedPreference.getValueString("role").equals("Principle")) {
+                if (sharedPreference.getValueString("role").equals("Principal")) {
                     FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/all", notificationTitle.getText().toString(), notificationMessage.getText().toString(), getApplicationContext(), UserActivity.this);
                     notificationsSender.SendNotifications();
+                    notificationTitle.setText("");
+                    notificationMessage.setText("");
                 }
                 if (sharedPreference.getValueString("role").equals("HOD")) {
                     FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/all", notificationTitle.getText().toString(), notificationMessage.getText().toString(), getApplicationContext(), UserActivity.this);
                     notificationsSender.SendNotifications();
+                    notificationTitle.setText("");
+                    notificationMessage.setText("");
                 }
-
             }else{
-                Toast.makeText(this, "The noti details is Empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "The notification details is Empty", Toast.LENGTH_SHORT).show();
             }
         });
 
