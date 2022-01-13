@@ -14,4 +14,7 @@
         <item>Teacher</item>
     </string-array>
 
+    <string name="computer_code">Computer Code</string>
+    <string name="password">Password</string>
+
 </resources>
