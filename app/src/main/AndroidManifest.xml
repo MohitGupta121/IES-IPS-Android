@@ -12,25 +12,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.IESIPSAcademy">
+        android:theme="@style/Theme.IESIPSAcademy"
+        android:usesCleartextTraffic="true">
+
         <activity
             android:name=".Activities.LoginActivity"
-            android:exported="true">
-
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
         <activity
             android:name=".Activities.UserActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".Activities.MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"

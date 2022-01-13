@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     )
                         .show()
+                    sharedPreference.getValueString("role")?.let { Log.i("SharedTag", it) }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {

@@ -44,6 +44,17 @@ public class LoginActivity extends AppCompatActivity
 
         loginButton.setOnClickListener(view -> processlogin());
 
+        try {
+            if (sharedPreference.getValueString("computer_code").equals("2083")){
+                sharedPreference.save("role", "HOD");
+            }
+            Log.e("ROLESAvED", sharedPreference.getValueString("computer_code"));
+            Log.e("ROLESAvED", sharedPreference.getValueString("role"));
+        }catch (Exception e){
+            Log.i("ex", e.toString());
+        }
+
+
     }
 
     void processlogin()
@@ -83,10 +94,11 @@ public class LoginActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Login Sucessfull", Toast.LENGTH_SHORT).show();
                     try {
                         sharedPreference.save("computer_code", editTextComputerCode.getText().toString().trim());
+                        sharedPreference.save("role", "Teacher");
                     }catch (Exception e){
                         Log.e("e", e.toString());
                     }
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(),UserActivity.class));
                     finish();
                 }
             }

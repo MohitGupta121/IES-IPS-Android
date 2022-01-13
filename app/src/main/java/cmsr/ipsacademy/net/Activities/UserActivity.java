@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.security.cert.Extension;
+
 import cmsr.ipsacademy.net.R;
 import cmsr.ipsacademy.net.Util.SharedPreference;
 import cmsr.ipsacademy.net.messaging.FcmNotificationsSender;
@@ -44,11 +46,6 @@ public class UserActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.e("e", e.toString());
         }
-
-
-
-//        Log.e("ROLE", sharedPreference.getValueString("role"));
-
 
         notificationSendButton.setOnClickListener(view -> {
             if (!notificationTitle.getText().toString().isEmpty() && !notificationMessage.getText().toString().isEmpty()){
