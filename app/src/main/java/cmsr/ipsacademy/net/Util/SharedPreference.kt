@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 class SharedPreference(val context: Context) {
     private val PREFS_NAME = "kotlincodes"
-    val sharedPref: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val sharedPref: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     fun save(KEY_NAME: String, text: String) {
 
@@ -13,7 +13,7 @@ class SharedPreference(val context: Context) {
 
         editor.putString(KEY_NAME, text)
 
-        editor!!.commit()
+        editor!!.apply()
     }
 
     fun save(KEY_NAME: String, value: Int) {
@@ -21,7 +21,7 @@ class SharedPreference(val context: Context) {
 
         editor.putInt(KEY_NAME, value)
 
-        editor.commit()
+        editor.apply()
     }
 
     fun save(KEY_NAME: String, status: Boolean) {
@@ -30,14 +30,12 @@ class SharedPreference(val context: Context) {
 
         editor.putBoolean(KEY_NAME, status!!)
 
-        editor.commit()
+        editor.apply()
     }
 
     fun getValueString(KEY_NAME: String): String? {
 
         return sharedPref.getString(KEY_NAME, null)
-
-
     }
 
     fun getValueInt(KEY_NAME: String): Int {
@@ -58,7 +56,7 @@ class SharedPreference(val context: Context) {
         //sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
         editor.clear()
-        editor.commit()
+        editor.apply()
     }
 
     fun removeValue(KEY_NAME: String) {
@@ -66,7 +64,7 @@ class SharedPreference(val context: Context) {
         val editor: SharedPreferences.Editor = sharedPref.edit()
 
         editor.remove(KEY_NAME)
-        editor.commit()
+        editor.apply()
     }
 }
 
