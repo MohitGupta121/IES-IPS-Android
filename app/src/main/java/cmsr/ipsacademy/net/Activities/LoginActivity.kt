@@ -1,6 +1,5 @@
 package cmsr.ipsacademy.net.Activities
 
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,7 +17,6 @@ import cmsr.ipsacademy.net.api.responsemodel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class LoginActivity : AppCompatActivity() {
 
@@ -40,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         checkUserExistence()
 
         if (sharedPreference?.getValueString("computer_code").equals("2083")){
-            sharedPreference?.save("role", "HOD")
+            sharedPreference?.save("role", "Principal")
 
             sharedPreference?.getValueString("computer_code")?.let { Log.e("ROLESAvED", it) };
             sharedPreference?.getValueString("role")?.let { Log.e("ROLESAvED", it) };
