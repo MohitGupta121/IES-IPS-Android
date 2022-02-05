@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+
+    <item
+        android:id="@+id/Dashboard"
+        android:title="Dashboard"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+    <item
+        android:id="@+id/ExamForm"
+        android:title="Exam Form"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        />
+    <item
+        android:id="@+id/ViewReport"
+        android:title="View Report"
+        android:icon="@drawable/ic_baseline_leaderboard_24"
+        />
+    <item
+        android:id="@+id/Attendance"
+        android:title="Attendance"
+        android:icon="@drawable/ic_baseline_calendar_today_24"/>
+
+    <item
+        android:id="@+id/MST"
+        android:title="MST"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+    <item
+        android:id="@+id/Assignment"
+        android:title="Assignment"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        />
+    <item
+        android:id="@+id/feedback"
+        android:title="Feedback"
+        android:icon="@drawable/ic_baseline_feedback_24"
+        />
+    <item
+        android:id="@+id/onlineexam"
+        android:title="Online Exam"
+        android:icon="@drawable/ic_baseline_insert_drive_file_24"
+        />
+    <item
+        android:id="@+id/applyonline"
+        android:title="Apply Online"
+        android:icon="@drawable/ic_round_local_hospital_24"
+        />
+
+    <item
+        android:id="@+id/nav_settings"
+        android:title="Settings"
+        android:icon="@drawable/ic_baseline_settings_24"/>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:title="Logout"
+        android:icon="@drawable/ic_baseline_arrow_back_ios_new_24"/>
+
+</menu>
