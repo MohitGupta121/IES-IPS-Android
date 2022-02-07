@@ -33,10 +33,12 @@ public class UserActivity extends AppCompatActivity {
         notificationMessage = findViewById(R.id.noti_message);
         notificationSendButton = findViewById(R.id.noti_send);
 
+
         SharedPreference sharedPreference = new SharedPreference(this);
 
 
         try {
+            Log.i("role",sharedPreference.getValueString("role"));
             if (sharedPreference.getValueString("role").equals("Teacher")) {
                 FirebaseMessaging.getInstance().subscribeToTopic("all");
             }

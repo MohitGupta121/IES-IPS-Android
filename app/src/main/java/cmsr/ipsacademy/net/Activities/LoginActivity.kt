@@ -37,13 +37,6 @@ class LoginActivity : AppCompatActivity() {
 
         checkUserExistence()
 
-        if (sharedPreference?.getValueString("computer_code").equals("2083")){
-            sharedPreference?.save("role", "Principal")
-
-            sharedPreference?.getValueString("computer_code")?.let { Log.e("ROLESAvED", it) };
-            sharedPreference?.getValueString("role")?.let { Log.e("ROLESAvED", it) };
-        }
-
         loginButton!!.setOnClickListener(View.OnClickListener {
             processLogin()
         })
@@ -80,8 +73,27 @@ class LoginActivity : AppCompatActivity() {
                     if (response.body()?.message.equals("exist")  && response.body()?.is_student.equals("no")) {
                         Toast.makeText(applicationContext, "Login Sucessfull", Toast.LENGTH_SHORT)
                             .show()
+
                         sharedPreference?.save("computer_code", computer_code)
-                        sharedPreference?.save("role", "Teacher")
+
+                        if (sharedPreference?.getValueString("computer_code").equals("2083")){
+                            sharedPreference?.save("role", "HOD")
+
+                            sharedPreference?.getValueString("computer_code")?.let { Log.e("ROLESAvED", it) }
+                            sharedPreference?.getValueString("role")?.let { Log.e("role", it) }
+                        }
+                        else if (sharedPreference?.getValueString("computer_code").equals("1") || sharedPreference?.getValueString("computer_code").equals("2") || sharedPreference?.getValueString("computer_code").equals("3")){
+                            sharedPreference?.save("role", "Principal")
+
+                            sharedPreference?.getValueString("computer_code")?.let { Log.e("ROLESAvED", it) }
+                            sharedPreference?.getValueString("role")?.let { Log.e("role", it) }
+                        }
+                        else{
+                            sharedPreference?.save("role", "Teacher")
+                            sharedPreference?.getValueString("role")?.let { Log.i("role", it) }
+
+                        }
+
                         startActivity(Intent(applicationContext, UserActivity::class.java))
                     }
 
