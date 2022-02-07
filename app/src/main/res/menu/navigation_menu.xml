@@ -47,7 +47,7 @@
     <item
         android:id="@+id/applyonline"
         android:title="Apply Online"
-        android:icon="@drawable/ic_round_local_hospital_24" />
+        android:icon="@drawable/ic_round_local_hospital_24"/>
 
     <item
         android:id="@+id/nav_settings"

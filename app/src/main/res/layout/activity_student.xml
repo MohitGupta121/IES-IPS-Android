@@ -5,16 +5,15 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".Activities.Student"
-    tools:openDrawer="start"
-    android:background="#FFFFFF">
+    tools:openDrawer="start">
 
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"/>
-
+        android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,23 +24,23 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/calogo"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:background="@drawable/calogo"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_menu"
-        android:layout_marginTop="60dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/navigation_menu"
+        android:layout_marginTop="60dp"
         android:background="#22367F"
-        app:itemTextColor="#FFFFFF"
         app:itemIconTint="@color/white"
-        />
+        app:itemTextColor="#FFFFFF"
+        app:menu="@menu/navigation_menu" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
