@@ -25,6 +25,9 @@
 
         </activity>
         <activity
+            android:name=".Activities.Student"
+            android:exported="false" />
+        <activity
             android:name=".Activities.UserActivity"
             android:exported="true" />
         <activity

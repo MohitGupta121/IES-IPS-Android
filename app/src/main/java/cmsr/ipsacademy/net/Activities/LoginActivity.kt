@@ -68,7 +68,8 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Login Sucessfull", Toast.LENGTH_SHORT)
                             .show()
                         sharedPreference?.save("computer_code", computer_code)
-                        startActivity(Intent(applicationContext, UserActivity::class.java))
+                        sharedPreference?.save("role", "student")
+                        startActivity(Intent(applicationContext, Student::class.java))
                     }
                     if (response.body()?.message.equals("exist")  && response.body()?.is_student.equals("no")) {
                         Toast.makeText(applicationContext, "Login Sucessfull", Toast.LENGTH_SHORT)
@@ -108,7 +109,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkUserExistence(){
         if (sharedPreference?.getValueString("computer_code")!=null){
-            startActivity(Intent(applicationContext, UserActivity::class.java))
+            if (sharedPreference?.getValueString("role").equals("student")) {
+                startActivity(Intent(applicationContext, Student::class.java))
+            }else if(sharedPreference?.getValueString("role").equals("HOD")){
+                startActivity(Intent(applicationContext, UserActivity::class.java))
+            }else if(sharedPreference?.getValueString("role").equals("Teacher")){
+                startActivity(Intent(applicationContext, UserActivity::class.java))
+            }else if(sharedPreference?.getValueString("role").equals("Principal")){
+                startActivity(Intent(applicationContext, UserActivity::class.java))
+            }
+
         }else{
             Toast.makeText(applicationContext, "Please Login", Toast.LENGTH_SHORT).show()
         }
