@@ -14,15 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IESIPSAcademy"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".Activities.Student"
+            android:exported="false" />
         <activity
             android:name=".Activities.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".Activities.Student"
