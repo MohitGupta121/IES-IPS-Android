@@ -24,7 +24,7 @@
 
         git commit -m "tag: commit message"
         
-* **Note Befor Push please Note that you Update your Local Branch with Upstream Branch**  
+* **Note Before Push please Note that you Update your Local Branch with Upstream Branch**  
 * Update your GitHub Repo using Fetch and Merge button on your repo with Development Branch.
 
         git pull
