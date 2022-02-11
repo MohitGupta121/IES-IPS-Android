@@ -1,4 +1,4 @@
-package cmsr.ipsacademy.net.Activities.Teacher;
+package cmsr.ipsacademy.net.activities.Teacher;
 
 import androidx.appcompat.app.AppCompatActivity;
 

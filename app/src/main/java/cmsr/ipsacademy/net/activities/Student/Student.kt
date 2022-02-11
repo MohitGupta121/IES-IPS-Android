@@ -1,7 +1,6 @@
-package cmsr.ipsacademy.net.Activities
+package cmsr.ipsacademy.net.activities
 
 import android.os.Bundle
-import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity

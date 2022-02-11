@@ -15,31 +15,33 @@
         android:theme="@style/Theme.IESIPSAcademy"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activities.Teacher.TeacherActivity"
+            android:name=".activities.Teacher.TeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Principal.PrincipalActivity"
+            android:name=".activities.Principal.PrincipalActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.HOD.HodActivity"
+            android:name=".activities.HOD.HodActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
-            android:name=".Activities.Student"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.UserActivity"
+            android:name=".activities.Student"
             android:exported="true" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".activities.UserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.MainActivity"
             android:exported="true" />
 
         <meta-data

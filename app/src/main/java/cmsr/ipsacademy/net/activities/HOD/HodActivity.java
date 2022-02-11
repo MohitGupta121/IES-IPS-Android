@@ -1,4 +1,4 @@
-package cmsr.ipsacademy.net.Activities.HOD;
+package cmsr.ipsacademy.net.activities.HOD;
 
 import androidx.appcompat.app.AppCompatActivity;
 
