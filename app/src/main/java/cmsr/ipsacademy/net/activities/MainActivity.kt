@@ -1,4 +1,4 @@
-package cmsr.ipsacademy.net.Activities
+package cmsr.ipsacademy.net.activities
 
 import android.content.Intent
 import android.os.Bundle

@@ -6,25 +6,21 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Vibrator;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
 
-import cmsr.ipsacademy.net.Activities.UserActivity;
-import cmsr.ipsacademy.net.Util.SharedPreference;
+import cmsr.ipsacademy.net.activities.UserActivity;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
-     NotificationManager mNotificationManager;
+    NotificationManager mNotificationManager;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -46,7 +42,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
         int resourceImage = getResources().getIdentifier(remoteMessage.getNotification().getIcon(), "drawable", getPackageName());
-
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "CHANNEL_ID");
@@ -74,10 +69,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
 
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channelId = "Your_channel_id";
             NotificationChannel channel = new NotificationChannel(
                     channelId,
@@ -86,7 +78,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             mNotificationManager.createNotificationChannel(channel);
             builder.setChannelId(channelId);
         }
-
 
 
 // notificationId is a unique int for each notification that you must define

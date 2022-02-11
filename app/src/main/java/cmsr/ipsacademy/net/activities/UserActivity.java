@@ -1,4 +1,4 @@
-package cmsr.ipsacademy.net.Activities;
+package cmsr.ipsacademy.net.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 
 import com.google.firebase.messaging.FirebaseMessaging;
-
-import java.security.cert.Extension;
 
 import cmsr.ipsacademy.net.R;
 import cmsr.ipsacademy.net.Util.SharedPreference;
