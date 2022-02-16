@@ -13,6 +13,7 @@ import cmsr.ipsacademy.net.Util.SharedPreference
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import cmsr.ipsacademy.net.activities.models.LoginModel
 import cmsr.ipsacademy.net.api.responsemodel
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,12 +51,10 @@ class LoginActivity : AppCompatActivity() {
         val userApi = controller.getInstance().create(apiset::class.java)
 
         userApi.verifyuser(computer_code, password)
-            .enqueue(object : Callback<responsemodel> {
-                override fun onResponse(
-                    call: Call<responsemodel>,
-                    response: Response<responsemodel>
-                ) {
-                    if (response.body()?.message.equals("failed")) {
+            .enqueue(object : Callback<LoginModel> {
+                override fun onResponse(call: Call<LoginModel>, response: Response<LoginModel>) {
+
+                    if (response.body() == null) {
                         editTextComputerCode!!.setText("")
                         editTextPassword!!.setText("")
                         Toast.makeText(
@@ -64,20 +63,15 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    if (response.body()?.message.equals("exist") && response.body()?.is_student.equals(
-                            "yes"
-                        )
-                    ) {
+                    if (response.body() != null && response.body()!!.student_info[0].is_student == "1") {
                         Toast.makeText(applicationContext, "Login Sucessfull", Toast.LENGTH_SHORT)
                             .show()
                         sharedPreference?.save("computer_code", computer_code)
                         sharedPreference?.save("role", "student")
                         startActivity(Intent(applicationContext, Student::class.java))
                     }
-                    if (response.body()?.message.equals("exist") && response.body()?.is_student.equals(
-                            "no"
-                        )
-                    ) {
+                    if (response.body() != null && response.body()!!.student_info[0].is_student == "0") {
+
                         Toast.makeText(applicationContext, "Login Sucessfull", Toast.LENGTH_SHORT)
                             .show()
 
@@ -106,15 +100,16 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         startActivity(Intent(applicationContext, UserActivity::class.java))
+
                     }
 
                 }
 
-                override fun onFailure(call: Call<responsemodel>, t: Throwable) {
-                    Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
+                override fun onFailure(call: Call<LoginModel>, t: Throwable) {
+                    Log.d("error", t.toString())
                 }
-
             })
+
     }
 
     private fun checkUserExistence() {
