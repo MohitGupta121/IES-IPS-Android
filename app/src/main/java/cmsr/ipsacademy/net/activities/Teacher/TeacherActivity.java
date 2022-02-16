@@ -1,7 +1,7 @@
 package cmsr.ipsacademy.net.activities.Teacher;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+  
 import android.os.Bundle;
 
 import cmsr.ipsacademy.net.R;
