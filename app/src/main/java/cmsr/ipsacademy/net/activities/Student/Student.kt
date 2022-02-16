@@ -35,7 +35,6 @@ class Student : AppCompatActivity() {
         navigationView.setItemIconTintList(null)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
 
-
         val actionBarDrawerToggle =
             ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)

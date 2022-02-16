@@ -1,5 +1,6 @@
 package cmsr.ipsacademy.net.api
 
+import cmsr.ipsacademy.net.activities.models.LoginModel
 import cmsr.ipsacademy.net.activities.models.StudentInfo
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -13,7 +14,7 @@ interface apiset {
     fun verifyuser(
         @Field("computer_code") computer_code: String,
         @Field("password") password: String
-    ): Call<responsemodel>
+    ): Call<LoginModel>
 
     @FormUrlEncoded
     @POST("student_college_info.php")
