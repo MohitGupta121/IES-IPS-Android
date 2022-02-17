@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.api.apiset
@@ -37,6 +38,14 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.login_button_image_submit)
 
         checkUserExistence()
+
+        editTextPassword?.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                processLogin()
+                return@OnKeyListener true
+            }
+            false
+        })
 
         loginButton!!.setOnClickListener(View.OnClickListener {
             processLogin()
@@ -106,7 +115,6 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<LoginModel>, t: Throwable) {
-                    Log.d("error", t.toString())
                 }
             })
 
