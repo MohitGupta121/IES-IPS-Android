@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/ClassCoordinator"
+        android:title= "class coordinator"
+
+        />
+
+    <item
+        android:id="@+id/MyStudent"
+        android:title="MyStudent"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+
+
+    <item
+        android:id="@+id/Attendance"
+        android:title="attendance"
+        android:icon="@drawable/ic_baseline_calendar_today_24"/>
+
+    <item
+        android:id="@+id/SubjectCoordinator"
+        android:title="subject coordinator"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        />
+    <item
+        android:id="@+id/Events"
+        android:title="events"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        />
+    <item
+        android:id="@+id/Feedbacks"
+        android:title="feedbacks"
+        />
+    <item
+        android:id="@+id/NBA"
+        android:title="nba"
+        android:icon="@drawable/ic_round_local_hospital_24"/>
+
+    <item
+        android:id="@+id/UpdateStudentDetail"
+        android:title="update student detail"
+        android:icon="@drawable/ic_baseline_leaderboard_24"/>
+    <item
+        android:id="@+id/Onlineexam"
+        android:title="online exam"
+        android:icon="@drawable/ic_baseline_insert_drive_file_24"/>
+
+    <item
+        android:id="@+id/subjectCoordinator"
+        android:title="subject coordinator"/>
+
+    <item
+        android:id="@+id/myStudent"
+        android:title="my student"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+
+
+    <item
+        android:id="@+id/attendance"
+        android:title="attendance"
+        android:icon="@drawable/ic_baseline_calendar_today_24"/>
+
+    <item
+        android:id="@+id/events"
+        android:title="events"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        />
+
+
+</menu>
