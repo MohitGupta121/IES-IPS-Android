@@ -5,7 +5,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/white"
     tools:context=".Activities.Student"
     tools:openDrawer="start">
 
@@ -24,23 +24,28 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/calogo"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:background="@drawable/ies_toolbar_image"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:navigationIcon="@color/cms_blue" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="75dp" >
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
-
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_menu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginTop="60dp"
-        android:background="#22367F"
+        android:layout_marginTop="55dp"
+        android:background="@color/cms_blue"
         app:itemIconTint="@color/white"
-        app:itemTextColor="#FFFFFF"
+        app:itemTextColor="@color/white"
         app:menu="@menu/student_menu" />
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

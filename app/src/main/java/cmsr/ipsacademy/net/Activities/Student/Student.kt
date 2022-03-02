@@ -16,17 +16,13 @@ class Student : AppCompatActivity() {
         setContentView(R.layout.activity_student)
         val toolbar = findViewById<Toolbar>(R.id.toolBar)
         setSupportActionBar(toolbar)
-
         val navigationView = findViewById<NavigationView>(R.id.navigation_menu)
         navigationView.setItemIconTintList(null)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
-
-
         val actionBarDrawerToggle =
             ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-
         navigationView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_settings -> Toast.makeText(
