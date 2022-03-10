@@ -6,55 +6,62 @@
     <item
         android:id="@+id/online_exam_result"
         android:title="Online Exam Results"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_home_icon"
         />
     <item
         android:id="@+id/railway_concession"
         android:title="Railway Concession"
-        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_plus_sign"
         />
     <item
         android:id="@+id/lms"
         android:title="LMS"
-        android:icon="@drawable/ic_baseline_leaderboard_24"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_launch"
         />
     <item
         android:id="@+id/Attendance"
         android:title="Attendance"
-        android:icon="@drawable/ic_baseline_calendar_today_24"/>
+        android:icon="@drawable/ic_person"/>
 
     <item
         android:id="@+id/my_students"
         android:title="My Students"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_person"
         />
     <item
         android:id="@+id/fapi"
         android:title="FAPI"
-        android:icon="@drawable/ic_baseline_menu_book_24"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_plus_sign"
         />
     <item
         android:id="@+id/bog"
         android:title="Bog"
-        android:icon="@drawable/ic_baseline_feedback_24"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_plus_sign"
         />
     <item
         android:id="@+id/digital_signature"
         android:title="Digital Signature"
-        android:icon="@drawable/ic_baseline_insert_drive_file_24"
+        app:itemTextColor="#E39804"
+        android:icon="@drawable/ic_plus_sign"
         />
     <item
         android:id="@+id/faculty_details"
         android:title="Faculty Details"
-        android:icon="@drawable/ic_round_local_hospital_24"/>
+        android:icon="@drawable/ic_plus_sign"/>
 
     <item
         android:id="@+id/feedback"
+        app:itemIconTint="#E39804"
         android:title="Feedback"
-        android:icon="@drawable/ic_baseline_settings_24"/>
+        android:icon="@drawable/ic_plus_sign"/>
     <item
         android:id="@+id/navigation_drawer_item3"
-        android:icon="@drawable/ic_baseline_home_repair_service_24"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_bag"
         app:actionLayout="@layout/spinner"
         tools:ignore="MenuTitle" />
 

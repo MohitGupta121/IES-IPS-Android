@@ -20,8 +20,6 @@
         <activity
             android:name=".activities.Principal.PrincipalActivity"
             android:exported="false">
-
-
         </activity>
         <activity
             android:name=".activities.HOD.HodActivity"
@@ -34,8 +32,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
         <activity
             android:name=".activities.Student"
