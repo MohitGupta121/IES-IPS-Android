@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+
+    <item
+        android:id="@+id/Add_Category"
+        android:title="Add Category"
+        android:icon="@drawable/ic_round_local_hospital_24"
+        />
+    <item
+        android:id="@+id/Add_Elective_Code"
+        android:title="Add Elective Code"
+        android:icon="@drawable/ic_baseline_bookmark_24"
+        />
+    <item
+        android:id="@+id/Add_Semester_Credit"
+        android:title="Add Semester Credit"
+        android:icon="@drawable/ic_baseline_check_24"
+        />
+    <item
+        android:id="@+id/Add_Subject_Code"
+        android:title="Add Subject Code"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        />
+
+    <item
+        android:id="@+id/Add_Subjects"
+        android:title="Add Subjects"
+        android:icon="@drawable/ic_add_subjects"
+        />
+    <item
+        android:id="@+id/Add_Subject_Credits"
+        android:title="Add Subject Credits"
+        android:icon="@drawable/ic_add_subject_credit"
+        />
+    <item
+        android:id="@+id/Create_Batch"
+        android:title="Create Batch"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+    <item
+        android:id="@+id/Assign_Semester"
+        android:title="Assign Semester"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        />
+    <item
+        android:id="@+id/Choice_Filling_Details"
+        android:title="Choice Filling Details"
+        android:icon="@drawable/ic_choice_filling_details"
+        />
+
+    <item
+        android:id="@+id/Assign_Students"
+        android:title="Assign Students"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+
+    <item
+        android:id="@+id/Master_Student_Login"
+        android:title="Master Student Login"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+    <item
+        android:id="@+id/CO_PO_Attainment"
+        android:title="CO-PO Attainment"
+        android:icon="@drawable/ic_co_po"
+        />
+    <item
+        android:title="Subject Coordinator"
+        />
+    <item
+        android:id="@+id/Attendance"
+        android:title="Attendance"
+        android:icon="@drawable/ic_attendance"
+        />
+    <item
+        android:id="@+id/News_CO"
+        android:title="News CO"
+        android:icon="@drawable/ic_add_subject_credit"
+        />
+    <item
+        android:id="@+id/New_Events"
+        android:title="New Events"
+        android:icon="@drawable/ic_events"
+        />
+    <item
+        android:id="@+id/Events"
+        android:title="Events"
+        android:icon="@drawable/ic_events"
+        />
+    <item
+        android:id="@+id/NBA"
+        android:title="NBA"
+        android:icon="@drawable/ic_nba"
+        />
+    <item
+        android:id="@+id/Fill_NBA"
+        android:title="Fill NBA"
+        android:icon="@drawable/ic_add_subject_credit"
+        />
+    <item
+        android:id="@+id/New_Assignment"
+        android:title="New Assignment"
+        android:icon="@drawable/ic_nba"
+        />
+    <item
+        android:id="@+id/Assignment"
+        android:title="Assignment"
+        android:icon="@drawable/ic_nba"
+        />
+    <item
+        android:title="Subject Coordinator"
+        />
+    <item
+        android:id="@+id/Counselling"
+        android:title="Counselling"
+        android:icon="@drawable/ic_counselling"
+        />
+    <item
+        android:id="@+id/Add_Students"
+        android:title="Add Students"
+        />
+    <item
+        android:id="@+id/View_My_Entries"
+        android:title="View My Entries"
+        />
+    <item
+        android:id="@+id/Upload_Students_PDF"
+        android:title="Upload Student's PDF"
+        />
+    <item
+        android:id="@+id/Check_PDF"
+        android:title="Check PDF"
+        />
+    <item
+        android:id="@+id/Your_Students"
+        android:title="Your Students"
+        />
+
+
+
+
+
+
+</menu>
