@@ -40,7 +40,7 @@
         android:background="#22367F"
         app:itemIconTint="@color/white"
         app:itemTextColor="#FFFFFF"
-        app:menu="@menu/navigation_menu" />
+        app:menu="@menu/student_menu" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
