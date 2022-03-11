@@ -18,9 +18,8 @@
             android:name=".activities.Teacher.TeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.Principal.PrincipalActivity"
-            android:exported="false">
-        </activity>
+            android:name=".activities.Principal.Principal"
+            android:exported="false"/>
         <activity
             android:name=".activities.HOD.HodActivity"
             android:exported="false" />
