@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="HardcodedText">
+    <item
+        android:id="@+id/online_exam_result"
+        android:title="Online Exam Results"
+        android:icon="@drawable/ic_home_icon"
+        />
+    <item
+        android:id="@+id/railway_concession"
+        android:title="Railway Concession"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_plus_sign"
+        />
+    <item
+        android:id="@+id/lms"
+        android:title="LMS"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_launch"
+        />
+    <item
+        android:id="@+id/Attendance"
+        android:title="Attendance"
+        android:icon="@drawable/ic_person"/>
+
+    <item
+        android:id="@+id/my_students"
+        android:title="My Students"
+        android:icon="@drawable/ic_person"
+        />
+    <item
+        android:id="@+id/fapi"
+        android:title="FAPI"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_plus_sign"
+        />
+    <item
+        android:id="@+id/bog"
+        android:title="Bog"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_plus_sign"
+        />
+    <item
+        android:id="@+id/digital_signature"
+        android:title="Digital Signature"
+        app:itemTextColor="#E39804"
+        android:icon="@drawable/ic_plus_sign"
+        />
+    <item
+        android:id="@+id/faculty_details"
+        android:title="Faculty Details"
+        android:icon="@drawable/ic_plus_sign"/>
+
+    <item
+        android:id="@+id/feedback"
+        app:itemIconTint="#E39804"
+        android:title="Feedback"
+        android:icon="@drawable/ic_plus_sign"/>
+    <item
+        android:id="@+id/navigation_drawer_item3"
+        app:itemIconTint="#E39804"
+        android:icon="@drawable/ic_bag"
+        app:actionLayout="@layout/spinner"
+        tools:ignore="MenuTitle" />
+
+
+
+
+</menu>
