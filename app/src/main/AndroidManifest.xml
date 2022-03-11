@@ -18,19 +18,21 @@
             android:name=".activities.Teacher.TeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.Principal.Principal"
-            android:exported="false"/>
+            android:name=".activities.Principal.PrincipalActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.HOD.HodActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".activities.Student"
