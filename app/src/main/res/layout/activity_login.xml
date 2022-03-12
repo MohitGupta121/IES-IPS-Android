@@ -77,7 +77,7 @@
         app:layout_constraintStart_toStartOf="@+id/roundwhite"
         app:layout_constraintTop_toTopOf="@+id/roundwhite"
         app:layout_constraintVertical_bias="0.522"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+        app:srcCompat="@drawable/ic_forward_arrow" />
 
     <EditText
         android:id="@+id/edit_text_computer_code_login"
@@ -85,7 +85,7 @@
         android:layout_height="51dp"
         android:background="@drawable/input"
         android:drawablePadding="5dp"
-        android:drawableStart="@drawable/ic_baseline_computer_24"
+        android:drawableStart="@drawable/ic_computer"
         android:ems="10"
         android:fontFamily="@font/varela_round"
         android:hint="@string/computer_code"
@@ -104,7 +104,7 @@
         android:layout_width="268dp"
         android:layout_height="51dp"
         android:background="@drawable/input"
-        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:drawableStart="@drawable/ic_lock"
         android:ems="10"
         android:fontFamily="@font/varela_round"
         android:hint="@string/password"

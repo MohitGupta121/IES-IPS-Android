@@ -20,5 +20,17 @@
     <string name="close">close</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="class_coordinator">class coordinator</string>
+    <string name="mystudent">MyStudent</string>
+    <string name="attendance">attendance</string>
+    <string name="subject_coordinator">subject coordinator</string>
+    <string name="events">events</string>
+    <string name="feedbacks">feedbacks</string>
+    <string name="nba">nba</string>
+    <string name="update_student_detail">update student detail</string>
+    <string name="online_exam">online exam</string>
+    <string name="Subject_coordinator">subject coordinator</string>
+    <string name="my_student">my student</string>
+    <string name="Attendance">Attendence</string>
 
 </resources>
