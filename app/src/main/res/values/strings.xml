@@ -32,5 +32,6 @@
     <string name="Subject_coordinator">subject coordinator</string>
     <string name="my_student">my student</string>
     <string name="Attendance">Attendence</string>
+    <string name="NBA">NBA</string>
 
 </resources>

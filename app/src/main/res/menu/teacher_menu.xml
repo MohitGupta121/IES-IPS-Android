@@ -24,12 +24,14 @@
     <item
         android:id="@+id/SubjectCoordinator"
         android:title="@string/subject_coordinator"
-        android:icon="@drawable/ic_menu_book"
+        android:icon="@drawable/ic_event"
+
         />
     <item
         android:id="@+id/Events"
         android:title="@string/events"
-        android:icon="@drawable/ic_menu_book"
+        android:icon="@drawable/ic_event"
+
         />
     <item
         android:id="@+id/Feedbacks"
@@ -38,8 +40,10 @@
         />
     <item
         android:id="@+id/NBA"
-        android:title="@string/nba"
-        android:icon="@drawable/ic_open"/>
+        android:title="@string/NBA"
+        android:icon="@drawable/ic_NBA"
+        />
+
     <item
         android:id="@+id/Onlineexam"
         android:title="@string/online_exam"
@@ -48,7 +52,8 @@
     <item
         android:id="@+id/UpdateStudentDetail"
         android:title="@string/update_student_detail"
-        android:icon="@drawable/ic_leaderboard"/>
+        android:icon="@drawable/ic_open"/>
+
 
 
     <item
@@ -70,7 +75,7 @@
     <item
         android:id="@+id/events"
         android:title="@string/events"
-        android:icon="@drawable/ic_menu_book"
+        android:icon="@drawable/ic_event"
         />
 
 
