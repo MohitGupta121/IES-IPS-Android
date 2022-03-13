@@ -34,20 +34,22 @@
     <item
         android:id="@+id/Feedbacks"
         android:title="@string/feedbacks"
+        android:icon="@drawable/ic_nba"
         />
     <item
         android:id="@+id/NBA"
         android:title="@string/nba"
-        android:icon="@drawable/ic_nba"/>
+        android:icon="@drawable/ic_open"/>
+    <item
+        android:id="@+id/Onlineexam"
+        android:title="@string/online_exam"
+        android:icon="@drawable/ic_insert_drive"/>
 
     <item
         android:id="@+id/UpdateStudentDetail"
         android:title="@string/update_student_detail"
         android:icon="@drawable/ic_leaderboard"/>
-    <item
-        android:id="@+id/Onlineexam"
-        android:title="@string/online_exam"
-        android:icon="@drawable/ic_insert_drive"/>
+
 
     <item
         android:id="@+id/subjectCoordinator"
