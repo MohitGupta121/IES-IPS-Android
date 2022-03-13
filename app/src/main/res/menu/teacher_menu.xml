@@ -5,20 +5,14 @@
 
     <item
         android:id="@+id/ClassCoordinator"
-        android:title= "@string/class_coordinator"
-
-        />
-
+        android:title= "@string/class_coordinator" />
     <item
         android:id="@+id/MyStudent"
         android:title="@string/mystudent"
-        android:icon="@drawable/ic_person"
-        />
-
-
+        android:icon="@drawable/ic_person" />
     <item
         android:id="@+id/Attendance"
-        android:title="@string/attendance"
+        android:title="@string/Attendance"
         android:icon="@drawable/ic_attendance"/>
 
     <item
@@ -29,7 +23,7 @@
         />
     <item
         android:id="@+id/Events"
-        android:title="@string/events"
+        android:title="@string/Events"
         android:icon="@drawable/ic_event" />
     <item
         android:id="@+id/Feedbacks"
@@ -66,7 +60,7 @@
 
     <item
         android:id="@+id/events"
-        android:title="@string/events"
+        android:title="@string/Events"
         android:icon="@drawable/ic_event"
         />
 
