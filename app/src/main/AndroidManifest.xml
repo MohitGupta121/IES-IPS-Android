@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".activities.TeacherActivity"
+            android:name=".activities.TeacherActivity."
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

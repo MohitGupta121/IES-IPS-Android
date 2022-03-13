@@ -19,7 +19,7 @@
     <item
         android:id="@+id/Attendance"
         android:title="@string/attendance"
-        android:icon="@drawable/ic_calendar"/>
+        android:icon="@drawable/ic_attendance"/>
 
     <item
         android:id="@+id/SubjectCoordinator"
