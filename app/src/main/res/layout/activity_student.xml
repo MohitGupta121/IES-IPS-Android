@@ -31,6 +31,21 @@
 
     </LinearLayout>
 
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/studnet_frame_layout"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:navGraph="@navigation/nav_graph" />
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/studnet_frame_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="60dp"/>-->
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_menu"
         android:layout_width="wrap_content"

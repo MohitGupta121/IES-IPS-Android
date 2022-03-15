@@ -52,13 +52,13 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
-    <Spinner
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/choose_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_password"
         android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_login"

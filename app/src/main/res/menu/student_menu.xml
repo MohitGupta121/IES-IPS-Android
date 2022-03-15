@@ -5,12 +5,12 @@
 
 
     <item
-        android:id="@+id/Dashboard"
+        android:id="@+id/firstFragment"
         android:title="Dashboard"
         android:icon="@drawable/ic_baseline_person_24"
         />
     <item
-        android:id="@+id/ExamForm"
+        android:id="@+id/secondFragment"
         android:title="Exam Form"
         android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         />
