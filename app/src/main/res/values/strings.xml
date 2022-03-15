@@ -13,9 +13,15 @@
         <item>HOD</item>
         <item>Teacher</item>
     </string-array>
+    <string-array name="students">
+        <item>change password</item>
+        <item>profile</item>
+        <item>logout</item>
+    </string-array>
 
     <string name="computer_code">Computer Code</string>
     <string name="password">Password</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="name">NAME</string>
 </resources>
