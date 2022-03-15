@@ -7,7 +7,7 @@
     <item
         android:id="@+id/Add_Category"
         android:title="Add Category"
-        android:icon="@drawable/ic_round_local_hospital_24"
+        android:icon="@drawable/ic_hospital"
         />
     <item
         android:id="@+id/Add_Elective_Code"
@@ -22,7 +22,7 @@
     <item
         android:id="@+id/Add_Subject_Code"
         android:title="Add Subject Code"
-        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        android:icon="@drawable/ic_list_bulleted"
         />
 
     <item
@@ -38,12 +38,12 @@
     <item
         android:id="@+id/Create_Batch"
         android:title="Create Batch"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_person"
         />
     <item
         android:id="@+id/Assign_Semester"
         android:title="Assign Semester"
-        android:icon="@drawable/ic_baseline_calendar_today_24"
+        android:icon="@drawable/ic_calendar"
         />
     <item
         android:id="@+id/Choice_Filling_Details"
@@ -54,13 +54,13 @@
     <item
         android:id="@+id/Assign_Students"
         android:title="Assign Students"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_person"
         />
 
     <item
         android:id="@+id/Master_Student_Login"
         android:title="Master Student Login"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_person"
         />
     <item
         android:id="@+id/CO_PO_Attainment"
