@@ -12,7 +12,7 @@
         android:id="@+id/railway_concession"
         android:title="Railway Concession"
         app:itemIconTint="#E39804"
-        android:icon="@drawable/ic_plus_sign"
+        android:icon="@drawable/ic_hospital"
         />
     <item
         android:id="@+id/lms"
@@ -34,30 +34,30 @@
         android:id="@+id/fapi"
         android:title="FAPI"
         app:itemIconTint="#E39804"
-        android:icon="@drawable/ic_plus_sign"
+        android:icon="@drawable/ic_hospital"
         />
     <item
         android:id="@+id/bog"
         android:title="Bog"
         app:itemIconTint="#E39804"
-        android:icon="@drawable/ic_plus_sign"
+        android:icon="@drawable/ic_hospital"
         />
     <item
         android:id="@+id/digital_signature"
         android:title="Digital Signature"
         app:itemTextColor="#E39804"
-        android:icon="@drawable/ic_plus_sign"
+        android:icon="@drawable/ic_hospital"
         />
     <item
         android:id="@+id/faculty_details"
         android:title="Faculty Details"
-        android:icon="@drawable/ic_plus_sign"/>
+        android:icon="@drawable/ic_hospital"/>
 
     <item
         android:id="@+id/feedback"
         app:itemIconTint="#E39804"
         android:title="Feedback"
-        android:icon="@drawable/ic_plus_sign"/>
+        android:icon="@drawable/ic_hospital"/>
     <item
         android:id="@+id/navigation_drawer_item3"
         app:itemIconTint="#E39804"
