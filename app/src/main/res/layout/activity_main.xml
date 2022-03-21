@@ -9,13 +9,7 @@
     tools:context=".activities.MainActivity"
     tools:openDrawer="start">
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible" />
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -26,61 +20,82 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/ies_toolbar_image"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:navigationIcon="@color/bg_color"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@color/bg_color" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/header"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
-            android:layout_height="75dp">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/toolBar">
 
-            <ImageView
-                android:id="@+id/calender"
-                android:layout_width="60dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/ic_baseline_calendar_month_24"
-                />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/dropdown"
-                android:layout_width="60dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="right"
-                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                />
+                <ImageView
+                    android:id="@+id/calender"
+                    android:layout_width="60dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_baseline_calendar_month_24" />
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/name"
-                android:fontFamily="@font/varela_round"
-                android:textColor="#FF0000"
-                android:textSize="20dp"
+                <ImageView
+                    android:id="@+id/dropdown"
+                    android:layout_width="60dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
-                />
-            <TextView
-                android:id="@+id/designation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/varela_round"
-                android:text="Student"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="60dp"
-                android:textSize="10dp"/>
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="60dp"
+                    android:fontFamily="@font/varela_round"
+                    android:text="@string/name"
+                    android:textColor="#FF0000"
+                    android:textSize="20dp" />
 
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/designation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="60dp"
+                    android:fontFamily="@font/varela_round"
+                    android:text="Student"
+                    android:textSize="10dp" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/footer"
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:src="@drawable/password_rectangle"
-            />
-    </LinearLayout>
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/footer"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:src="@drawable/password_rectangle" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -28,6 +28,7 @@
             android:layout_marginRight="60dp"
             android:background="@drawable/calogo"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/header"
             android:layout_width="match_parent"
