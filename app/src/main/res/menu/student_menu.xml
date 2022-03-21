@@ -22,7 +22,7 @@
     <item
         android:id="@+id/Attendance"
         android:title="Attendance"
-        android:icon="@drawable/ic_baseline_calendar_today_24"/>
+        android:icon="@drawable/ic_baseline_calendar_month_24"/>
 
     <item
         android:id="@+id/MST"
