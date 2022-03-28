@@ -6,10 +6,14 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.Util.SharedPreference
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +28,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportActionBar?.hide()
+        val toolbar = findViewById<Toolbar>(R.id.toolBar)
+
+        val navigationView = findViewById<NavigationView>(R.id.navigation_menu)
+        navigationView.setItemIconTintList(null)
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
+
+        val actionBarDrawerToggle =
+            ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+
 
         val sharedPreference:SharedPreference = SharedPreference(this)
 

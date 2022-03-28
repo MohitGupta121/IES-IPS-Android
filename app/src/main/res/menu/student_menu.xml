@@ -3,61 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="HardcodedText">
 
-
     <item
         android:id="@+id/Dashboard"
-        android:title="Dashboard"
-        android:icon="@drawable/ic_baseline_person_24"
-
-        />
+        android:icon="@drawable/ic_person"
+        android:title="Dashboard" />
     <item
         android:id="@+id/ExamForm"
-        android:title="Exam Form"
-        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-        />
+        android:icon="@drawable/ic_list_bulleted"
+        android:title="Exam Form" />
     <item
         android:id="@+id/ViewReport"
-        android:title="View Report"
-        android:icon="@drawable/ic_baseline_leaderboard_24"
-        />
+        android:icon="@drawable/ic_leaderboard"
+        android:title="View Report" />
     <item
         android:id="@+id/Attendance"
-        android:title="Attendance"
-        android:icon="@drawable/ic_baseline_calendar_month_24"/>
+        android:icon="@drawable/ic_baseline_calendar_month_24"
+        android:title="Attendance" />
 
     <item
         android:id="@+id/MST"
-        android:title="MST"
-        android:icon="@drawable/ic_baseline_person_24"
-        />
+        android:icon="@drawable/ic_person"
+        android:title="MST" />
     <item
         android:id="@+id/Assignment"
-        android:title="Assignment"
-        android:icon="@drawable/ic_baseline_menu_book_24"
-        />
+        android:icon="@drawable/ic_menu_book"
+        android:title="Assignment" />
     <item
         android:id="@+id/feedback"
-        android:title="Feedback"
-        android:icon="@drawable/ic_baseline_feedback_24"
-        />
+        android:icon="@drawable/ic_feedback"
+        android:title="Feedback" />
     <item
         android:id="@+id/onlineexam"
-        android:title="Online Exam"
-        android:icon="@drawable/ic_baseline_insert_drive_file_24"
-        />
+        android:icon="@drawable/ic_insert_drive_file"
+        android:title="Online Exam" />
     <item
         android:id="@+id/applyonline"
-        android:title="Apply Online"
-        android:icon="@drawable/ic_round_local_hospital_24"/>
+        android:icon="@drawable/ic_hospital"
+        android:title="Apply Online" />
 
     <item
         android:id="@+id/nav_settings"
-        android:title="Settings"
-        android:icon="@drawable/ic_baseline_settings_24"/>
+        android:icon="@drawable/ic_settings"
+        android:title="Settings" />
 
     <item
         android:id="@+id/nav_logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_baseline_arrow_back_ios_new_24"/>
+        android:icon="@drawable/ic_arrow_back"
+        android:title="Logout" />
 
 </menu>
