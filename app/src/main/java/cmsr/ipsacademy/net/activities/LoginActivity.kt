@@ -123,7 +123,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkUserExistence() {
         if (sharedPreference?.getValueString("computer_code") != null) {
             if (sharedPreference?.getValueString("role").equals("student")) {
-                startActivity(Intent(applicationContext, Student::class.java))
+                startActivity(Intent(applicationContext, MainActivity::class.java))
             } else if (sharedPreference?.getValueString("role").equals("HOD")) {
                 startActivity(Intent(applicationContext, UserActivity::class.java))
             } else if (sharedPreference?.getValueString("role").equals("Teacher")) {
