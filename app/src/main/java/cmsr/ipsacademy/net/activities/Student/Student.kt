@@ -2,14 +2,10 @@ package cmsr.ipsacademy.net.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -41,7 +37,7 @@ class Student : AppCompatActivity() {
         getStudentDetails()
 
         val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.studnet_frame_layout) as NavHostFragment
+            .findFragmentById(R.id.frame_layout_container) as NavHostFragment
         navController = navHostFragment.navController
 
 

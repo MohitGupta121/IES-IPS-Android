@@ -78,7 +78,18 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/frame_layout_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
+            app:layout_constraintTop_toBottomOf="@+id/headerLayout"
+            app:navGraph="@navigation/nav_graph" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             app:layout_constraintBottom_toBottomOf="parent">

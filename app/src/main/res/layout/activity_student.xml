@@ -75,33 +75,26 @@
         </androidx.cardview.widget.CardView>
 
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/frame_layout_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:navGraph="@navigation/nav_graph" />
+
     </LinearLayout>
 
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/studnet_frame_layout"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        app:navGraph="@navigation/nav_graph" />
-
-<!--    <FrameLayout-->
-<!--        android:id="@+id/studnet_frame_layout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="60dp"/>-->
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:layout_marginTop="60dp"
-        android:background="#22367F"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="#FFFFFF"
-        app:menu="@menu/student_menu" />
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/navigation_menu"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:background="#22367F"-->
+<!--        app:itemIconTint="@color/white"-->
+<!--        app:itemTextColor="#FFFFFF"-->
+<!--        app:menu="@menu/student_menu" />-->
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
