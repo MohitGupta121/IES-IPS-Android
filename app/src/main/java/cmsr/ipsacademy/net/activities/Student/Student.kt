@@ -42,7 +42,6 @@ class Student : AppCompatActivity() {
 
 
         val navigationView = findViewById<NavigationView>(R.id.navigation_menu)
-        navigationView.setItemIconTintList(null)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
 
         val actionBarDrawerToggle =
