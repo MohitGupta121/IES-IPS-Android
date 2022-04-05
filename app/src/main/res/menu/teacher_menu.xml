@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ClassCoordinator"
+        android:title="@string/class_coordinator" />
+    <item
+        android:id="@+id/MyStudent"
+        android:icon="@drawable/ic_person"
+        android:title="@string/mystudent" />
+    <item
+        android:id="@+id/Attendance"
+        android:icon="@drawable/ic_attendance"
+        android:title="@string/Attendance" />
+
+    <item
+        android:id="@+id/SubjectCoordinator"
+        android:icon="@drawable/ic_event"
+        android:title="@string/subject_coordinator" />
+    <item
+        android:id="@+id/Events"
+        android:icon="@drawable/ic_event"
+        android:title="@string/Events" />
+    <item
+        android:id="@+id/Feedbacks"
+        android:icon="@drawable/ic_nba"
+        android:title="@string/feedbacks" />
+    <item
+        android:id="@+id/NBA"
+        android:icon="@drawable/ic_storage"
+        android:title="@string/NBA" />
+
+    <item
+        android:id="@+id/Onlineexam"
+        android:icon="@drawable/ic_insert_drive"
+        android:title="@string/online_exam" />
+
+    <item
+        android:id="@+id/UpdateStudentDetail"
+        android:icon="@drawable/ic_open"
+        android:title="@string/update_student_detail" />
+
+    <item
+        android:id="@+id/subjectCoordinator"
+        android:title="@string/Subject_coordinator" />
+
+    <item
+        android:id="@+id/myStudent"
+        android:icon="@drawable/ic_person"
+        android:title="@string/my_student" />
+
+    <item
+        android:id="@+id/attendance"
+        android:icon="@drawable/ic_attendance"
+        android:title="@string/Attendance" />
+
+    <item
+        android:id="@+id/events"
+        android:icon="@drawable/ic_event"
+        android:title="@string/Events" />
+
+
+</menu>

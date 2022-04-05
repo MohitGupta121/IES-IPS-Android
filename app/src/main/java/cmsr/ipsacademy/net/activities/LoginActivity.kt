@@ -63,7 +63,9 @@ class LoginActivity : AppCompatActivity() {
             .enqueue(object : Callback<LoginModel> {
                 override fun onResponse(call: Call<LoginModel>, response: Response<LoginModel>) {
 
-                    if (response.body() == null) {
+                    Log.e("Response", response.body().toString())
+
+                    if (response.body()?.student_info?.isEmpty() == true) {
                         editTextComputerCode!!.setText("")
                         editTextPassword!!.setText("")
                         Toast.makeText(
@@ -72,14 +74,14 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    if (response.body() != null && response.body()!!.student_info[0].is_student == "1") {
+                    if (response.body()?.student_info?.isEmpty() == false && response.body()!!.student_info[0].is_student == "1") {
                         Toast.makeText(applicationContext, "Login Sucessfull", Toast.LENGTH_SHORT)
                             .show()
                         sharedPreference?.save("computer_code", computer_code)
                         sharedPreference?.save("role", "student")
                         startActivity(Intent(applicationContext, Student::class.java))
                     }
-                    if (response.body() != null && response.body()!!.student_info[0].is_student == "0") {
+                    if (response.body()?.student_info?.isEmpty() == false && response.body()!!.student_info[0].is_student == "0") {
 
                         Toast.makeText(applicationContext, "Login Sucessfull", Toast.LENGTH_SHORT)
                             .show()
@@ -115,6 +117,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<LoginModel>, t: Throwable) {
+                    Log.e("Response", t.message.toString())
                 }
             })
 
@@ -123,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkUserExistence() {
         if (sharedPreference?.getValueString("computer_code") != null) {
             if (sharedPreference?.getValueString("role").equals("student")) {
-                startActivity(Intent(applicationContext, Student::class.java))
+                startActivity(Intent(applicationContext, MainActivity::class.java))
             } else if (sharedPreference?.getValueString("role").equals("HOD")) {
                 startActivity(Intent(applicationContext, UserActivity::class.java))
             } else if (sharedPreference?.getValueString("role").equals("Teacher")) {

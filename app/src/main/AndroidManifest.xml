@@ -13,13 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IESIPSAcademy"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
         <activity
-            android:name=".activities.Teacher.TeacherActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.Principal.PrincipalActivity"
-            android:exported="false" />
+            android:name=".activities.Teacher.TeacherFragment"
+            android:exported="true"/>
         <activity
             android:name=".activities.HOD.HodActivity"
             android:exported="false" />
