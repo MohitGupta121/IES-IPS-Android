@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import cmsr.ipsacademy.net.R
 
-class TeacherActivity : AppCompatActivity() {
+class TeacherFragment : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_teacher)
+        setContentView(R.layout.fragment_teacher)
     }
 }

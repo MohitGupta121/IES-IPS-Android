@@ -16,10 +16,8 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".activities.Teacher.TeacherActivity"
-            android:exported="true">
-
-        </activity>
+            android:name=".activities.Teacher.TeacherFragment"
+            android:exported="true"/>
         <activity
             android:name=".activities.Principal.PrincipalActivity"
             android:exported="false" />
