@@ -18,6 +18,20 @@
     <string name="password">Password</string>
     <string name="open">open</string>
     <string name="close">close</string>
+
+    <string name="class_coordinator">class coordinator</string>
+    <string name="mystudent">MyStudent</string>
+    <string name="Attendance">attendance</string>
+    <string name="subject_coordinator">subject coordinator</string>
+    <string name="Events">events</string>
+    <string name="feedbacks">feedbacks</string>
+
+    <string name="update_student_detail">update student detail</string>
+    <string name="online_exam">online exam</string>
+    <string name="Subject_coordinator">subject coordinator</string>
+    <string name="my_student">my student</string>
+
+    <string name="NBA">NBA</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">NAME</string>
