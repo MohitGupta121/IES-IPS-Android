@@ -19,9 +19,6 @@
             android:name=".activities.Teacher.TeacherFragment"
             android:exported="true"/>
         <activity
-            android:name=".activities.Principal.PrincipalActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.HOD.HodActivity"
             android:exported="false" />
         <activity

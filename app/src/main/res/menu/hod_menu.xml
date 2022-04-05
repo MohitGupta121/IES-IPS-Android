@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+    <item
+        android:id="@+id/Add_Category"
+        android:icon="@drawable/ic_hospital"
+        android:title="Add Category" />
+    <item
+        android:id="@+id/Add_Elective_Code"
+        android:icon="@drawable/ic_baseline_bookmark_24"
+        android:title="Add Elective Code" />
+    <item
+        android:id="@+id/Add_Semester_Credit"
+        android:icon="@drawable/ic_baseline_check_24"
+        android:title="Add Semester Credit" />
+    <item
+        android:id="@+id/Add_Subject_Code"
+        android:icon="@drawable/ic_list_bulleted"
+        android:title="Add Subject Code" />
+
+    <item
+        android:id="@+id/Add_Subjects"
+        android:icon="@drawable/ic_add_subjects"
+        android:title="Add Subjects" />
+    <item
+        android:id="@+id/Add_Subject_Credits"
+        android:icon="@drawable/ic_add_subject_credit"
+        android:title="Add Subject Credits" />
+    <item
+        android:id="@+id/Create_Batch"
+        android:icon="@drawable/ic_person"
+        android:title="Create Batch" />
+    <item
+        android:id="@+id/Assign_Semester"
+        android:icon="@drawable/ic_calendar"
+        android:title="Assign Semester" />
+    <item
+        android:id="@+id/Choice_Filling_Details"
+        android:icon="@drawable/ic_choice_filling_details"
+        android:title="Choice Filling Details" />
+
+    <item
+        android:id="@+id/Assign_Students"
+        android:icon="@drawable/ic_person"
+        android:title="Assign Students" />
+
+    <item
+        android:id="@+id/Master_Student_Login"
+        android:icon="@drawable/ic_person"
+        android:title="Master Student Login" />
+    <item
+        android:id="@+id/CO_PO_Attainment"
+        android:icon="@drawable/ic_co_po"
+        android:title="CO-PO Attainment" />
+    <item android:title="Subject Coordinator" />
+    <item
+        android:id="@+id/Attendance"
+        android:icon="@drawable/ic_attendance"
+        android:title="Attendance" />
+    <item
+        android:id="@+id/News_CO"
+        android:icon="@drawable/ic_add_subject_credit"
+        android:title="News CO" />
+    <item
+        android:id="@+id/New_Events"
+        android:icon="@drawable/ic_events"
+        android:title="New Events" />
+    <item
+        android:id="@+id/Events"
+        android:icon="@drawable/ic_events"
+        android:title="Events" />
+    <item
+        android:id="@+id/NBA"
+        android:icon="@drawable/ic_nba"
+        android:title="NBA" />
+    <item
+        android:id="@+id/Fill_NBA"
+        android:icon="@drawable/ic_add_subject_credit"
+        android:title="Fill NBA" />
+    <item
+        android:id="@+id/New_Assignment"
+        android:icon="@drawable/ic_nba"
+        android:title="New Assignment" />
+    <item
+        android:id="@+id/Assignment"
+        android:icon="@drawable/ic_nba"
+        android:title="Assignment" />
+    <item android:title="Subject Coordinator" />
+    <item
+        android:id="@+id/Counselling"
+        android:icon="@drawable/ic_counselling"
+        android:title="Counselling" />
+    <item
+        android:id="@+id/Add_Students"
+        android:title="Add Students" />
+    <item
+        android:id="@+id/View_My_Entries"
+        android:title="View My Entries" />
+    <item
+        android:id="@+id/Upload_Students_PDF"
+        android:title="Upload Student's PDF" />
+    <item
+        android:id="@+id/Check_PDF"
+        android:title="Check PDF" />
+    <item
+        android:id="@+id/Your_Students"
+        android:title="Your Students" />
+
+
+</menu>

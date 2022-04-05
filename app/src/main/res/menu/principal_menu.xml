@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+    <item
+        android:id="@+id/online_exam_result"
+        android:icon="@drawable/ic_home_icon"
+        android:title="Online Exam Results" />
+    <item
+        android:id="@+id/railway_concession"
+        android:icon="@drawable/ic_hospital"
+        android:title="Railway Concession"
+        app:itemIconTint="#E39804" />
+    <item
+        android:id="@+id/lms"
+        android:icon="@drawable/ic_launch"
+        android:title="LMS"
+        app:itemIconTint="#E39804" />
+    <item
+        android:id="@+id/Attendance"
+        android:icon="@drawable/ic_person"
+        android:title="Attendance" />
+
+    <item
+        android:id="@+id/my_students"
+        android:icon="@drawable/ic_person"
+        android:title="My Students" />
+    <item
+        android:id="@+id/fapi"
+        android:icon="@drawable/ic_hospital"
+        android:title="FAPI"
+        app:itemIconTint="#E39804" />
+    <item
+        android:id="@+id/bog"
+        android:icon="@drawable/ic_hospital"
+        android:title="Bog"
+        app:itemIconTint="#E39804" />
+    <item
+        android:id="@+id/digital_signature"
+        android:icon="@drawable/ic_hospital"
+        android:title="Digital Signature"
+        app:itemTextColor="#E39804" />
+    <item
+        android:id="@+id/faculty_details"
+        android:icon="@drawable/ic_hospital"
+        android:title="Faculty Details" />
+
+    <item
+        android:id="@+id/feedback"
+        android:icon="@drawable/ic_hospital"
+        android:title="Feedback"
+        app:itemIconTint="#E39804" />
+    <item
+        android:id="@+id/navigation_drawer_item3"
+        android:icon="@drawable/ic_bag"
+        app:actionLayout="@layout/spinner"
+        app:itemIconTint="#E39804"
+        tools:ignore="MenuTitle" />
+
+
+</menu>

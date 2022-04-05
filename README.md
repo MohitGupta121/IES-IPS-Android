@@ -1,6 +1,6 @@
 # IES-IPS-Andoid
 
-## To Contribute to this project follow the below steps:
+## To Contribute to this project follow the below steps: 
 
 * ***Fork this Project.***
 * **Clone this Project in your local:-** 
@@ -24,7 +24,7 @@
 
         git commit -m "tag: commit message"
         
-* **Note Befor Push please Note that you Update your Local Branch with Upstream Branch**  
+* **Note Before Push, Please Note that you Update your Local Branch with Upstream Branch**  
 * Update your GitHub Repo using Fetch and Merge button on your repo with Development Branch.
 
         git pull
@@ -35,4 +35,17 @@
         
         
         
+<h2>Contributors:</h2>
+
+## Thanks to all the contributors ❤️
+
+<table>
+   <tr>
+      <td>
+         <a href = "https://github.com/MohitGupta121/IES-IPS-Andoid/graphs/contributors">
+         <img src = "https://contrib.rocks/image?repo=MohitGupta121/IES-IPS-Andoid"/>
+         </a>
+      </td>
+   </tr>
+</table>
         
