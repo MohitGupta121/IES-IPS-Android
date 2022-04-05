@@ -13,7 +13,9 @@
         <item>HOD</item>
         <item>Teacher</item>
     </string-array>
-
+    <string-array name="actionofspinner">
+        <item>Attendance Print</item>
+    </string-array>
     <string name="computer_code">Computer Code</string>
     <string name="password">Password</string>
     <string name="open">open</string>
