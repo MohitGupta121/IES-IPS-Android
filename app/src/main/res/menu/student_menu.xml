@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="HardcodedText">
 
+
     <item
         android:id="@+id/firstFragment"
         android:title="Dashboard"
