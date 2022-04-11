@@ -31,7 +31,7 @@
 
 * To PUSH your Changes:-
 
-        git push 
+        git push  
         
         
         
