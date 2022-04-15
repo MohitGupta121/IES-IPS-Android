@@ -1,6 +1,6 @@
-# IES-IPS-Andoid
+# IES-IPS-Andoid 
 
-## To Contribute to this project follow the below steps:
+## To Contribute to this project follow the below steps: 
 
 * ***Fork this Project.***
 * **Clone this Project in your local:-** 
@@ -31,10 +31,10 @@
 
 * To PUSH your Changes:-
 
-        git push 
+        git push  
         
         
-        
+         
 <h2>Contributors:</h2>
 
 ## Thanks to all the contributors ❤️
