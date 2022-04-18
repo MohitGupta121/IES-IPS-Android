@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Login Sucessfull", Toast.LENGTH_SHORT)
                             .show()
                         sharedPreference?.save("computer_code", computer_code)
-                        sharedPreference?.save("role", "student")
+                        sharedPreference?.save("role", "Student")
                         startActivity(Intent(applicationContext, MainActivity::class.java))
                     }
                     if (response.body()?.student_info?.isEmpty() == false && response.body()!!.student_info[0].is_student == "0") {
@@ -110,7 +110,7 @@ class LoginActivity : AppCompatActivity() {
 
                         }
 
-                        startActivity(Intent(applicationContext, UserActivity::class.java))
+                        startActivity(Intent(applicationContext, MainActivity::class.java))
 
                     }
 
@@ -130,7 +130,7 @@ class LoginActivity : AppCompatActivity() {
             } else if (sharedPreference?.getValueString("role").equals("HOD")) {
                 startActivity(Intent(applicationContext, UserActivity::class.java))
             } else if (sharedPreference?.getValueString("role").equals("Teacher")) {
-                startActivity(Intent(applicationContext, UserActivity::class.java))
+                startActivity(Intent(applicationContext, MainActivity::class.java))
             } else if (sharedPreference?.getValueString("role").equals("Principal")) {
                 startActivity(Intent(applicationContext, UserActivity::class.java))
             }

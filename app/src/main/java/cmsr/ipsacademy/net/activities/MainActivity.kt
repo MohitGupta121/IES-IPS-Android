@@ -2,6 +2,7 @@ package cmsr.ipsacademy.net.activities
 
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,16 +13,28 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.Util.SharedPreference
+import cmsr.ipsacademy.net.activities.models.StudentInfo
+import cmsr.ipsacademy.net.api.apiset
+import cmsr.ipsacademy.net.api.controller
+import cmsr.ipsacademy.net.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import retrofit2.Call
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
+    private lateinit var binding: ActivityMainBinding
+    private var sharedPreference: SharedPreference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        sharedPreference = SharedPreference(this)
 
         val toolbar = findViewById<Toolbar>(R.id.toolBar)
 
@@ -29,23 +42,47 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.frame_layout_container) as NavHostFragment
         navController = navHostFragment.navController
 
-
-        val navigationView = findViewById<NavigationView>(R.id.navigation_menu)
-        navigationView.setItemIconTintList(null)
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
+        binding.navigationMenu.setItemIconTintList(null)
 
         val actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+            ActionBarDrawerToggle(this, binding.drawer, toolbar, R.string.open, R.string.close)
+        binding.drawer.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
-        navigationView.setupWithNavController(navController)
+        binding.navigationMenu.setupWithNavController(navController)
 
-        val sharedPreference:SharedPreference = SharedPreference(this)
+        sharedPreference?.getValueString("computer_code")?.let { getUserDetails(it) }
+        binding.role.setText(sharedPreference?.getValueString("role"))
 
     }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    private fun getUserDetails(computer_code: String) {
+
+        val userApi = controller.getInstance().create(apiset::class.java)
+        userApi.getStudentDetails(computer_code)
+            .enqueue(object : retrofit2.Callback<StudentInfo> {
+                override fun onResponse(
+                    call: Call<StudentInfo>,
+                    response: Response<StudentInfo>
+                ) {
+                    if (response.body() != null) {
+                        binding.name.setText(response.body()!!.student_info[0].student_name)
+                        Log.d(
+                            "name",
+                            "Student name:-" + response.body()!!.student_info[0].student_name
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<StudentInfo>, t: Throwable) {
+                    Log.d("error", t.toString())
+                }
+            })
+
     }
 
 }
