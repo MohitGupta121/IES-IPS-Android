@@ -13,6 +13,11 @@
         <item>HOD</item>
         <item>Teacher</item>
     </string-array>
+    <string-array name="selectSection">
+        <item>Section 1</item>
+        <item>Section 2</item>
+        <item>Section 3</item>
+    </string-array>
     <string-array name="actionofspinner">
         <item>Attendance Print</item>
     </string-array>
