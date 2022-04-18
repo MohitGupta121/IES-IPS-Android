@@ -49,11 +49,7 @@ class Student : AppCompatActivity() {
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
-//        appBarConfiguration = AppBarConfiguration(navController,)
-
         navigationView.setupWithNavController(navController)
-
-
 
     }
 
@@ -74,8 +70,11 @@ class Student : AppCompatActivity() {
                     response: Response<StudentInfo>
                 ) {
 
-                    if (response.body() != null){
-                        Log.d("name", "Student name:-" + response.body()!!.student_info[0].student_name)
+                    if (response.body() != null) {
+                        Log.d(
+                            "name",
+                            "Student name:-" + response.body()!!.student_info[0].student_name
+                        )
                     }
 
                 }
