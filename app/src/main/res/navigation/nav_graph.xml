@@ -11,8 +11,8 @@
         android:label="fragment_first2"
         tools:layout="@layout/fragment_first" />
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="cmsr.ipsacademy.net.SecondFragment"
-        android:label="fragment_second"
-        tools:layout="@layout/fragment_second" />
+        android:id="@+id/ViewReport"
+        android:name="cmsr.ipsacademy.net.activities.StudentResultFragment.StudentResultFragment"
+        android:label="ViewReport"
+        tools:layout="@layout/fragment_student_result" />
 </navigation>
