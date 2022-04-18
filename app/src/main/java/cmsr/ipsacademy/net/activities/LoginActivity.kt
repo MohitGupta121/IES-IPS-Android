@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
                             .show()
                         sharedPreference?.save("computer_code", computer_code)
                         sharedPreference?.save("role", "student")
-                        startActivity(Intent(applicationContext, Student::class.java))
+                        startActivity(Intent(applicationContext, MainActivity::class.java))
                     }
                     if (response.body()?.student_info?.isEmpty() == false && response.body()!!.student_info[0].is_student == "0") {
 
