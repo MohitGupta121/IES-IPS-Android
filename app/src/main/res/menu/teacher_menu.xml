@@ -7,7 +7,7 @@
     <item
         android:id="@+id/MyStudent"
         android:icon="@drawable/ic_person"
-        android:title="@string/mystudent" />
+        android:title="@string/my_student" />
     <item
         android:id="@+id/Attendance"
         android:icon="@drawable/ic_attendance"
@@ -20,7 +20,7 @@
     <item
         android:id="@+id/Events"
         android:icon="@drawable/ic_event"
-        android:title="@string/Events" />
+        android:title="@string/events" />
     <item
         android:id="@+id/Feedbacks"
         android:icon="@drawable/ic_nba"
@@ -42,7 +42,7 @@
 
     <item
         android:id="@+id/subjectCoordinator"
-        android:title="@string/Subject_coordinator" />
+        android:title="@string/subject_coordinator" />
 
     <item
         android:id="@+id/myStudent"
@@ -57,7 +57,7 @@
     <item
         android:id="@+id/events"
         android:icon="@drawable/ic_event"
-        android:title="@string/Events" />
+        android:title="@string/events" />
 
 
 </menu>

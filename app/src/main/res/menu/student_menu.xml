@@ -1,57 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="HardcodedText">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/firstFragment"
-        android:title="Dashboard"
         android:icon="@drawable/ic_person"
-        />
+        android:title="@string/dashboard" />
     <item
         android:id="@+id/secondFragment"
-        android:title="Exam Form"
         android:icon="@drawable/ic_list_bulleted"
-        />
+        android:title="@string/exam_form" />
     <item
         android:id="@+id/ViewReport"
         android:icon="@drawable/ic_leaderboard"
-        android:title="View Report" />
+        android:title="@string/view_report" />
     <item
         android:id="@+id/Attendance"
         android:icon="@drawable/ic_baseline_calendar_month_24"
-        android:title="Attendance" />
+        android:title="@string/attendance" />
 
     <item
         android:id="@+id/MST"
         android:icon="@drawable/ic_person"
-        android:title="MST" />
+        android:title="@string/mst" />
     <item
         android:id="@+id/Assignment"
         android:icon="@drawable/ic_menu_book"
-        android:title="Assignment" />
+        android:title="@string/assignment" />
     <item
         android:id="@+id/feedback"
         android:icon="@drawable/ic_feedback"
-        android:title="Feedback" />
+        android:title="@string/feedback" />
     <item
         android:id="@+id/onlineexam"
         android:icon="@drawable/ic_insert_drive_file"
-        android:title="Online Exam" />
+        android:title="@string/online_exam" />
     <item
         android:id="@+id/applyonline"
         android:icon="@drawable/ic_hospital"
-        android:title="Apply Online" />
+        android:title="@string/apply_online" />
 
     <item
         android:id="@+id/nav_settings"
         android:icon="@drawable/ic_settings"
-        android:title="Settings" />
+        android:title="@string/settings" />
 
     <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/ic_arrow_back"
-        android:title="Logout" />
+        android:title="@string/logout" />
 
 </menu>

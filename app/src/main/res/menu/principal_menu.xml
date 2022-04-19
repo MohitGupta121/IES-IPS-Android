@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="HardcodedText">
+    xmlns:tools="http://schemas.android.com/tools">
+
     <item
         android:id="@+id/online_exam_result"
         android:icon="@drawable/ic_home_icon"
-        android:title="Online Exam Results" />
+        android:title="@string/online_exam_results" />
     <item
         android:id="@+id/railway_concession"
         android:icon="@drawable/ic_hospital"
-        android:title="Railway Concession"
+        android:title="@string/railway_concession"
         app:itemIconTint="#E39804" />
     <item
         android:id="@+id/lms"
         android:icon="@drawable/ic_launch"
-        android:title="LMS"
+        android:title="@string/lms"
         app:itemIconTint="#E39804" />
     <item
         android:id="@+id/Attendance"
         android:icon="@drawable/ic_person"
-        android:title="Attendance" />
+        android:title="@string/attendance" />
 
     <item
         android:id="@+id/my_students"
         android:icon="@drawable/ic_person"
-        android:title="My Students" />
+        android:title="@string/my_students" />
     <item
         android:id="@+id/fapi"
         android:icon="@drawable/ic_hospital"
-        android:title="FAPI"
+        android:title="@string/fapi"
         app:itemIconTint="#E39804" />
     <item
         android:id="@+id/bog"
         android:icon="@drawable/ic_hospital"
-        android:title="Bog"
+        android:title="@string/bog"
         app:itemIconTint="#E39804" />
     <item
         android:id="@+id/digital_signature"
         android:icon="@drawable/ic_hospital"
-        android:title="Digital Signature"
+        android:title="@string/digital_signature"
         app:itemTextColor="#E39804" />
     <item
         android:id="@+id/faculty_details"
         android:icon="@drawable/ic_hospital"
-        android:title="Faculty Details" />
+        android:title="@string/faculty_details" />
 
     <item
         android:id="@+id/feedback"
         android:icon="@drawable/ic_hospital"
-        android:title="Feedback"
+        android:title="@string/feedback"
         app:itemIconTint="#E39804" />
     <item
         android:id="@+id/navigation_drawer_item3"

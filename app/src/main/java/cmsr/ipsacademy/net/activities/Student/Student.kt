@@ -11,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.Util.SharedPreference
+import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 import cmsr.ipsacademy.net.activities.models.StudentInfo
 import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
@@ -22,7 +22,7 @@ import retrofit2.Response
 
 class Student : AppCompatActivity() {
 
-    private var sharedPreference: SharedPreference? = null
+    private var sharedPreferencesHelper: SharedPreferencesHelper? = null
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -32,7 +32,7 @@ class Student : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolBar)
         setSupportActionBar(toolbar)
 
-        sharedPreference = SharedPreference(this)
+        sharedPreferencesHelper = SharedPreferencesHelper(this)
 
         getStudentDetails()
 

@@ -3,22 +3,19 @@ package cmsr.ipsacademy.net.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.Util.SharedPreference
+import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 import cmsr.ipsacademy.net.activities.models.StudentInfo
 import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
+import cmsr.ipsacademy.net.helpers.AppConstants
 import retrofit2.Call
 import retrofit2.Response
 
@@ -26,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
-    private var sharedPreference: SharedPreference? = null
+    private var sharedPreferencesHelper: SharedPreferencesHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreference = SharedPreference(this)
+        sharedPreferencesHelper = SharedPreferencesHelper(this)
 
         val toolbar = findViewById<Toolbar>(R.id.toolBar)
 
@@ -51,8 +48,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.navigationMenu.setupWithNavController(navController)
 
-        sharedPreference?.getValueString("computer_code")?.let { getUserDetails(it) }
-        binding.role.setText(sharedPreference?.getValueString("role"))
+        sharedPreferencesHelper?.getValueString(AppConstants.computer_code)
+            ?.let { getUserDetails(it) }
+        binding.role.setText(sharedPreferencesHelper?.getValueString(AppConstants.user_role))
 
     }
 

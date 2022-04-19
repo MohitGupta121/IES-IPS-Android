@@ -1,46 +1,101 @@
 <resources>
     <string name="app_name">IES IPS Academy</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
-    <string name="hint_name">Fullname</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
-    <string name="minimum_password">Password is too short</string>
-    <string name="auth_failed">Login Failed !</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="name">NAME</string>
+
 
     <string-array name="UsersId">
         <item>Principal</item>
         <item>HOD</item>
         <item>Teacher</item>
     </string-array>
+
     <string-array name="selectSection">
         <item>Section 1</item>
         <item>Section 2</item>
         <item>Section 3</item>
     </string-array>
+
     <string-array name="actionofspinner">
         <item>Attendance Print</item>
     </string-array>
+
+
+    <!-- TODO: Login Strings -->
     <string name="computer_code">Computer Code</string>
     <string name="password">Password</string>
-    <string name="open">open</string>
-    <string name="close">close</string>
+    <string name="login_error_message">Invalid Computer Code or Password</string>
+    <string name="login_sucess">Login Sucessfull</string>
+    <string name="please_login">Please Login</string>
+    <string name="logout">Logout</string>
 
-    <string name="class_coordinator">class coordinator</string>
-    <string name="mystudent">MyStudent</string>
-    <string name="Attendance">attendance</string>
-    <string name="subject_coordinator">subject coordinator</string>
-    <string name="Events">events</string>
-    <string name="feedbacks">feedbacks</string>
 
-    <string name="update_student_detail">update student detail</string>
-    <string name="online_exam">online exam</string>
-    <string name="Subject_coordinator">subject coordinator</string>
-    <string name="my_student">my student</string>
+    <!-- TODO: Principal Navigation Menu Strings -->
+    <string name="online_exam_results">Online Exam Results</string>
+    <string name="railway_concession">Railway Concession</string>
+    <string name="lms">LMS</string>
+    <string name="my_students">My Students</string>
+    <string name="fapi">FAPI</string>
+    <string name="bog">Bog</string>
+    <string name="digital_signature">Digital Signature</string>
+    <string name="faculty_details">Faculty Details</string>
 
+
+    <!-- TODO: HOD Navigation Menu Strings -->
+    <string name="add_elective_code">Add Elective Code</string>
+    <string name="add_semester_credit">Add Semester Credit</string>
+    <string name="add_subject_code">Add Subject Code</string>
+    <string name="add_subjects">Add Subjects</string>
+    <string name="add_subject_credits">Add Subject Credits</string>
+    <string name="create_batch">Create Batch</string>
+    <string name="assign_semester">Assign Semester</string>
+    <string name="choice_filling_details">Choice Filling Details</string>
+    <string name="assign_students">Assign Students</string>
+    <string name="master_student_login">Master Student Login</string>
+    <string name="co_po_attainment">CO-PO Attainment</string>
+    <string name="news_co">News CO</string>
+    <string name="new_events">New Events</string>
+    <string name="fill_nba">Fill NBA</string>
+    <string name="new_assignment">New Assignment</string>
+    <string name="assignment">Assignment</string>
+    <string name="counselling">Counselling</string>
+    <string name="add_students">Add Students</string>
+    <string name="view_my_entries">View My Entries</string>
+    <string name="upload_student_s_pdf">Upload Student\'s PDF</string>
+    <string name="check_pdf">Check PDF</string>
+    <string name="your_students">Your Students</string>
+
+    <!-- TODO: Teacher Navigation Menu Strings -->
+    <string name="class_coordinator">Class coordinator</string>
+    <string name="Attendance">Attendance</string>
+    <string name="subject_coordinator">Subject coordinator</string>
+    <string name="events">Events</string>
+    <string name="feedbacks">Feedbacks</string>
+    <string name="update_student_detail">Update Student Detail</string>
+    <string name="online_exam">Online Exam</string>
+    <string name="my_student">My Student</string>
     <string name="NBA">NBA</string>
+
+    <!-- TODO: Student Navigation Menu Strings -->
+    <string name="dashboard">Dashboard</string>
+    <string name="exam_form">Exam Form</string>
+    <string name="view_report">View Report</string>
+    <string name="attendance">Attendance</string>
+    <string name="mst">MST</string>
+    <string name="feedback">Feedback</string>
+    <string name="apply_online">Apply Online</string>
+    <string name="settings">Settings</string>
+
+    <!-- TODO: SharedPreference Values -->
+    <string name="role_student">Student</string>
+    <string name="role_hod">HOD</string>
+    <string name="role_principal">Principal</string>
+    <string name="role_teacher">Teacher</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="name">NAME</string>
+    <string name="add_category">Add Category</string>
+
 
 </resources>
