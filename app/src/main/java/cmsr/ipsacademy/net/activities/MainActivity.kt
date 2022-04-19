@@ -1,8 +1,12 @@
 package cmsr.ipsacademy.net.activities
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Color.RED
+import android.graphics.Color.red
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -41,6 +45,12 @@ class MainActivity : AppCompatActivity() {
 
 
         val sharedPreference:SharedPreference = SharedPreference(this)
+        val profileDropdownArray =resources.getStringArray(R.array.profile_dropdown)
+        val spinnerProfileDropdown=findViewById<Spinner>(R.id.dropdown)
+        spinnerProfileDropdown.onItemSelectedListener
+        val hyperlink = findViewById<TextView>(R.id.hyperlink)
+        hyperlink.movementMethod = LinkMovementMethod.getInstance()
+        hyperlink.setLinkTextColor(RED)
 
 //        var token: String? = sharedPreference.getValueString("token")
 //

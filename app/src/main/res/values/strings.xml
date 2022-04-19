@@ -13,11 +13,20 @@
         <item>HOD</item>
         <item>Teacher</item>
     </string-array>
+    <string-array name="profile_dropdown">
+        <item>Change Password</item>
+        <item>Profile</item>
+        <item>Logout</item>
+    </string-array>
+
+
 
     <string name="computer_code">Computer Code</string>
     <string name="password">Password</string>
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="name">NAME</string>
+    <string name="Hyperlink">Powered by: <a href="https://ipsacademy.org/">IPS Academy,Institute of Engineering and Science Indore(M.P)</a></string>
+    <string name="mainscreentext">The link for unapplied leave will not be opened at the end of the month.</string>
 
 </resources>
