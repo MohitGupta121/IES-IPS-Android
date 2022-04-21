@@ -1,7 +1,8 @@
 package cmsr.ipsacademy.net.api
 
 import cmsr.ipsacademy.net.activities.models.LoginModel
-import cmsr.ipsacademy.net.activities.models.StudentInfo
+import cmsr.ipsacademy.net.activities.models.faculty.FacultyInfoModel
+import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 import retrofit2.Call
@@ -20,5 +21,11 @@ interface apiset {
     @POST("student_college_info.php")
     fun getStudentDetails(
         @Field("computer_code") computer_code: String
-    ): Call<StudentInfo>
+    ): Call<StudentInfoModel>
+
+    @FormUrlEncoded
+    @POST("faculty_info.php")
+    fun getFacultyDetails(
+        @Field("computer_code") computer_code: String
+    ): Call<FacultyInfoModel>
 }

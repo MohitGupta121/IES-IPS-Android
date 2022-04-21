@@ -12,7 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
-import cmsr.ipsacademy.net.activities.models.StudentInfo
+import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
 import com.google.android.material.navigation.NavigationView
@@ -64,10 +64,10 @@ class Student : AppCompatActivity() {
 
 
         userApi.getStudentDetails(computer_code)
-            .enqueue(object : retrofit2.Callback<StudentInfo> {
+            .enqueue(object : retrofit2.Callback<StudentInfoModel> {
                 override fun onResponse(
-                    call: Call<StudentInfo>,
-                    response: Response<StudentInfo>
+                    call: Call<StudentInfoModel>,
+                    response: Response<StudentInfoModel>
                 ) {
 
                     if (response.body() != null) {
@@ -79,7 +79,7 @@ class Student : AppCompatActivity() {
 
                 }
 
-                override fun onFailure(call: Call<StudentInfo>, t: Throwable) {
+                override fun onFailure(call: Call<StudentInfoModel>, t: Throwable) {
                     Log.d("error", t.toString())
                 }
             })

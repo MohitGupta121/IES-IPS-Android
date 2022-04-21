@@ -1,6 +1,7 @@
 package cmsr.ipsacademy.net.activities
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,8 +11,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import cmsr.ipsacademy.net.R
+import cmsr.ipsacademy.net.activities.models.faculty.FacultyInfoModel
 import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
-import cmsr.ipsacademy.net.activities.models.StudentInfo
+import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.ActivityMainBinding
@@ -61,26 +63,48 @@ class MainActivity : AppCompatActivity() {
     private fun getUserDetails(computer_code: String) {
 
         val userApi = controller.getInstance().create(apiset::class.java)
-        userApi.getStudentDetails(computer_code)
-            .enqueue(object : retrofit2.Callback<StudentInfo> {
-                override fun onResponse(
-                    call: Call<StudentInfo>,
-                    response: Response<StudentInfo>
-                ) {
-                    if (response.body() != null) {
-                        binding.name.setText(response.body()!!.student_info[0].student_name)
-                        Log.d(
-                            "name",
-                            "Student name:-" + response.body()!!.student_info[0].student_name
-                        )
+
+        // If role is Student then get Student Details
+        if (sharedPreferencesHelper?.getValueString(AppConstants.user_role)
+                .equals(getString(R.string.role_student))
+        ) {
+            userApi.getStudentDetails(computer_code)
+                .enqueue(object : retrofit2.Callback<StudentInfoModel> {
+                    override fun onResponse(
+                        call: Call<StudentInfoModel>,
+                        response: Response<StudentInfoModel>
+                    ) {
+                        if (response.body() != null) {
+                            binding.name.setText(response.body()!!.student_info[0].student_name)
+                            Log.d(
+                                "name",
+                                "Student name:-" + response.body()!!.student_info[0].student_name
+                            )
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<StudentInfo>, t: Throwable) {
-                    Log.d("error", t.toString())
-                }
-            })
+                    override fun onFailure(call: Call<StudentInfoModel>, t: Throwable) {
+                        Log.d("error", t.toString())
+                    }
+                })
+        } else {
+            userApi.getFacultyDetails(computer_code)
+                .enqueue(object : retrofit2.Callback<FacultyInfoModel> {
+                    @SuppressLint("SetTextI18n")
+                    override fun onResponse(
+                        call: Call<FacultyInfoModel>,
+                        response: Response<FacultyInfoModel>
+                    ) {
+                        if (response.body() != null) {
+                            binding.name.setText(response.body()!!.faculty_info[0].first_name + " " + response.body()!!.faculty_info[0].last_name)
+                        }
+                    }
 
+                    override fun onFailure(call: Call<FacultyInfoModel>, t: Throwable) {
+                        Log.d("error", t.toString())
+                    }
+                })
+        }
     }
 
 }
