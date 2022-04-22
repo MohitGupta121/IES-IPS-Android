@@ -21,6 +21,12 @@
         <item>Attendance Print</item>
     </string-array>
 
+    <string-array name="profile_dropdown">
+        <item>Change Password</item>
+        <item>Profile</item>
+        <item>Logout</item>
+    </string-array>
+
 
     <!-- TODO: Login Strings -->
     <string name="computer_code">Computer Code</string>
@@ -97,5 +103,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_category">Add Category</string>
 
+    <!-- TODO: Footer Credit -->
+    <string name="Hyperlink">Powered by: <a href="https://ipsacademy.org/">IPS Academy,Institute of Engineering and Science Indore(M.P)</a></string>
+    <string name="mainscreentext">The link for unapplied leave will not be opened at the end of the month.</string>
 
 </resources>

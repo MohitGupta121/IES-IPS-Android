@@ -2,8 +2,12 @@ package cmsr.ipsacademy.net.activities
 
 
 import android.annotation.SuppressLint
+import android.graphics.Color.RED
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.util.Log
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -34,21 +38,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPreferencesHelper = SharedPreferencesHelper(this)
-
         val toolbar = findViewById<Toolbar>(R.id.toolBar)
 
+        // navigation graph
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.frame_layout_container) as NavHostFragment
         navController = navHostFragment.navController
-
         binding.navigationMenu.setItemIconTintList(null)
-
         val actionBarDrawerToggle =
             ActionBarDrawerToggle(this, binding.drawer, toolbar, R.string.open, R.string.close)
         binding.drawer.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-
         binding.navigationMenu.setupWithNavController(navController)
+
+        // Profile menu
+//        val profileDropdownArray = resources.getStringArray(R.array.profile_dropdown)
+        binding.profileDropdown.onItemSelectedListener
+        binding.bottomCredit.movementMethod = LinkMovementMethod.getInstance()
+        binding.bottomCredit.setLinkTextColor(RED)
 
         sharedPreferencesHelper?.getValueString(AppConstants.computer_code)
             ?.let { getUserDetails(it) }

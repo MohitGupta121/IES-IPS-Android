@@ -42,20 +42,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/calender"
+                    <Spinner
+                        android:id="@+id/profile_dropdown"
                         android:layout_width="60dp"
-                        android:layout_height="42dp"
-                        android:layout_marginTop="15dp"
-                        android:src="@drawable/ic_baseline_calendar_month_24" />
-
-                    <ImageView
-                        android:id="@+id/dropdown"
-                        android:layout_width="60dp"
-                        android:layout_height="42dp"
+                        android:layout_height="48dp"
                         android:layout_gravity="right"
                         android:layout_marginTop="15dp"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
+                        android:entries="@array/profile_dropdown" />
 
                     <TextView
                         android:id="@+id/name"
@@ -80,6 +73,13 @@
                         android:text=""
                         android:textSize="10dp" />
 
+                    <Spinner
+                        android:id="@+id/spinner2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="18dp"
+                        android:background="@drawable/ic_calender_main_activity" />
+
                 </androidx.cardview.widget.CardView>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -103,8 +103,22 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/footer"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:src="@drawable/password_rectangle" />
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/bottom_credit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/varela_round"
+                        android:text="@string/Hyperlink"
+                        android:textAlignment="center"
+                        android:textColor="#707070"
+                        android:textSize="12dp" />
+
+                </androidx.cardview.widget.CardView>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
