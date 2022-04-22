@@ -14,17 +14,25 @@ import java.util.*
 class ClassAttendanceFragment : Fragment(R.layout.fragment_class_attendance) {
 
     private var actionSpinner: Spinner? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val actions = resources.getStringArray(R.array.actionofspinner)
+        return inflater.inflate(R.layout.fragment_class_attendance, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         actionSpinner = requireView().findViewById(R.id.spinner)
+        val actions = resources.getStringArray(R.array.actionofspinner)
+
         val adapter = ArrayAdapter(
             requireActivity(),
             android.R.layout.simple_spinner_item, actions
         )
-        actionSpinner!!.adapter =adapter
+        actionSpinner!!.adapter = adapter
         actionSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -36,31 +44,30 @@ class ClassAttendanceFragment : Fragment(R.layout.fragment_class_attendance) {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-        return inflater.inflate(R.layout.fragment_class_attendance, container, false)
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        val datePicker:Button = requireView().findViewById(R.id.datePickerButton)
+        val datePicker: Button = requireView().findViewById(R.id.datePickerButton)
         datePicker.setOnClickListener {
-            val dpd = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { view, year, month, day ->
-                datePicker.setText(""+day+"/"+month+"/"+year)
-                                                                                           },year,month,day
+            val dpd = DatePickerDialog(
+                requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, day ->
+                    datePicker.setText("" + day + "/" + month + "/" + year)
+                }, year, month, day
             )
             dpd.show()
         }
-        val datePicker2:Button = requireView().findViewById(R.id.datePickerButton2)
+        val datePicker2: Button = requireView().findViewById(R.id.datePickerButton2)
         datePicker2.setOnClickListener {
-            val dpd = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { view, year, month, day ->
-                datePicker.setText(""+day+"/"+month+"/"+year)
-            },year,month,day
+            val dpd = DatePickerDialog(
+                requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, day ->
+                    datePicker.setText("" + day + "/" + month + "/" + year)
+                }, year, month, day
             )
             dpd.show()
         }
+
     }
 
 }

@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_person"
         android:title="@string/my_student" />
     <item
-        android:id="@+id/Attendance"
+        android:id="@+id/Attendance3"
         android:icon="@drawable/ic_attendance"
         android:title="@string/Attendance" />
 

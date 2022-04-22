@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.Student">
+    tools:context=".activities.Student"
+    android:id="@+id/Attendance">
 
     <androidx.cardview.widget.CardView
         android:layout_margin="10dp"
@@ -103,7 +104,6 @@
                 style="?android:spinnerStyle"
                 android:layout_width="166dp"
                 android:layout_height="41dp"
-                android:onClick="openDatePicker"
                 android:background="@drawable/ismailcalendar"
                 android:text=" 01/02/2020"
                 android:textColor="@color/black"

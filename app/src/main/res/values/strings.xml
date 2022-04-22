@@ -12,9 +12,9 @@
     </string-array>
 
     <string-array name="selectSection">
-        <item>Section 1</item>
-        <item>Section 2</item>
-        <item>Section 3</item>
+        <item>Select Section</item>
+        <item>Exam Form Receipt</item>
+        <item>Regular Result</item>
     </string-array>
 
     <string-array name="actionofspinner">

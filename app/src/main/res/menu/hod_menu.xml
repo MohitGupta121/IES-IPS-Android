@@ -55,7 +55,7 @@
 
     <item android:title="@string/subject_coordinator" />
     <item
-        android:id="@+id/Attendance"
+        android:id="@+id/Attendance1"
         android:icon="@drawable/ic_attendance"
         android:title="@string/Attendance" />
     <item
