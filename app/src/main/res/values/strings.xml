@@ -73,7 +73,7 @@
     <string name="your_students">Your Students</string>
 
     <!-- TODO: Teacher Navigation Menu Strings -->
-    <string name="class_coordinator">Class coordinator</string>
+    <string name="class_coordinator">Year Coordinator</string>
     <string name="Attendance">Attendance</string>
     <string name="subject_coordinator">Subject coordinator</string>
     <string name="events">Events</string>

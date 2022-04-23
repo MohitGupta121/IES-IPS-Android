@@ -12,4 +12,7 @@
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/black</item>
     </style>
+    <style name="NavigationView">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
 </resources>

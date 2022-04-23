@@ -22,6 +22,7 @@ import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.ActivityMainBinding
 import cmsr.ipsacademy.net.helpers.AppConstants
+import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Response
 
@@ -45,6 +46,16 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.frame_layout_container) as NavHostFragment
         navController = navHostFragment.navController
         binding.navigationMenu.setItemIconTintList(null)
+
+        binding.navigationMenu.menu.clear()
+
+        when (sharedPreferencesHelper?.getValueString(AppConstants.user_role)){
+            "HOD" -> binding.navigationMenu.inflateMenu(R.menu.hod_menu)
+            "Principal" -> binding.navigationMenu.inflateMenu(R.menu.principal_menu)
+            "Teacher" -> binding.navigationMenu.inflateMenu(R.menu.teacher_menu)
+            "Student" -> binding.navigationMenu.inflateMenu(R.menu.student_menu)
+        }
+
         val actionBarDrawerToggle =
             ActionBarDrawerToggle(this, binding.drawer, toolbar, R.string.open, R.string.close)
         binding.drawer.addDrawerListener(actionBarDrawerToggle)
@@ -52,10 +63,11 @@ class MainActivity : AppCompatActivity() {
         binding.navigationMenu.setupWithNavController(navController)
 
         // Profile menu
-//        val profileDropdownArray = resources.getStringArray(R.array.profile_dropdown)
+        val profileDropdownArray = resources.getStringArray(R.array.profile_dropdown)
         binding.profileDropdown.onItemSelectedListener
         binding.bottomCredit.movementMethod = LinkMovementMethod.getInstance()
         binding.bottomCredit.setLinkTextColor(RED)
+
 
         sharedPreferencesHelper?.getValueString(AppConstants.computer_code)
             ?.let { getUserDetails(it) }
@@ -115,3 +127,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+

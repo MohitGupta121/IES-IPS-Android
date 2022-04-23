@@ -132,6 +132,7 @@
             android:layout_gravity="start"
             android:layout_marginTop="60dp"
             android:background="#22367F"
+            android:theme="@style/NavigationView"
             app:itemIconTint="@color/white"
             app:itemTextColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
