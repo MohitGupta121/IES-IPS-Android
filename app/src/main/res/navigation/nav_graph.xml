@@ -20,5 +20,10 @@
         android:name="cmsr.ipsacademy.net.activities.Class.ClassAttendanceFragment"
         android:label="Attendance"
         tools:layout="@layout/fragment_class_attendance" />
+    <fragment
+        android:id="@+id/faculty_attendance_panel"
+        android:name="cmsr.ipsacademy.net.activities.Teacher.AttendancePanelFragment"
+        android:label="Attendance Panel"
+        tools:layout="@layout/fragment_attendance_panel" />
 
 </navigation>

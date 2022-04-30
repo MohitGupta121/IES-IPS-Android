@@ -18,7 +18,7 @@
 
         <menu>
             <item
-                android:id="@+id/attendance"
+                android:id="@+id/faculty_attendance_panel"
                 android:icon="@drawable/ic_attendance"
                 android:title="@string/Attendance" />
             <item
