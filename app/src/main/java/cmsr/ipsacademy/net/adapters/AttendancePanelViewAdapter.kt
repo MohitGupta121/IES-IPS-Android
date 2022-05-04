@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectsDetailsModelSubListItem
+import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectDetailsModel
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.*
 
 class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<AttendancePanelViewAdapter.RowViewHolder>() {
 
 
-    lateinit var myList: List<List<FacultySubjectsDetailsModelSubListItem>>
+    lateinit var myList: List<List<FacultySubjectDetailsModel>>
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowViewHolder {
@@ -35,17 +35,17 @@ class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<Att
         Log.d("test", myList.size.toString())
         val modal = myList[position][position]
 
-        Log.d("test", myList[0][0].subject_name.toString())
-
-        holder.itemView.apply {
-
-            txtSNo.text = modal.ip
-            txtBatch.text = modal.batch
-            txtDepartment.text = modal.department
-            txtSubject.text = modal.subject_name
-            txtSubjectCode.text = modal.university_sub_code
-            btnAction.text = modal.academic_session_id
-        }
+//        Log.d("test", myList[0][0].subject_name.toString())
+//
+//        holder.itemView.apply {
+//
+//            txtSNo.text = modal.ip
+//            txtBatch.text = modal.batch
+//            txtDepartment.text = modal.department
+//            txtSubject.text = modal.subject_name
+//            txtSubjectCode.text = modal.university_sub_code
+//            btnAction.text = modal.academic_session_id
+//        }
 
 //        if (rowPos == 0) {
 //            // Header Cells. Main Headings appear here
@@ -85,10 +85,10 @@ class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<Att
 //        }
     }
 
-    fun setData(newList: List<List<FacultySubjectsDetailsModelSubListItem>>){
-        myList = newList
-        notifyDataSetChanged()
-    }
+//    fun setData(newList: List<List<FacultySubjectsDetailsModelSubListItem>>){
+//        myList = newList
+//        notifyDataSetChanged()
+//    }
 
     override fun getItemCount(): Int {
 

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectsDetailsModelSubListItem
+import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectDetailsModel
 import cmsr.ipsacademy.net.adapters.AttendancePanelViewAdapter
 import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
@@ -46,21 +46,21 @@ class AttendancePanelFragment : Fragment() {
 
         userApi.getFacultySubjectsDetails(computer_code)
             .enqueue(object :
-                retrofit2.Callback<List<List<FacultySubjectsDetailsModelSubListItem>>?> {
+                retrofit2.Callback<FacultySubjectDetailsModel> {
                 override fun onResponse(
-                    call: Call<List<List<FacultySubjectsDetailsModelSubListItem>>?>,
-                    response: Response<List<List<FacultySubjectsDetailsModelSubListItem>>?>
+                    call: Call<FacultySubjectDetailsModel>,
+                    response: Response<FacultySubjectDetailsModel>
                 ) {
-                    val responseBody = response.body()!!
-                    val myStringBuilder = StringBuilder()
-                    for (myData in responseBody){
-                        myStringBuilder.append(myData.listIterator())
-                        myStringBuilder.append("\n")
-                    }
-                    Log.d(
-                        "mohitgu",
-                        "Faculty Subjects-" + myStringBuilder
-                    )
+//                    val responseBody = response.body()!!
+//                    val myStringBuilder = StringBuilder()
+//                    for (myData in responseBody){
+//                        myStringBuilder.append(myData.listIterator())
+//                        myStringBuilder.append("\n")
+//                    }
+//                    Log.d(
+//                        "mohitgu",
+//                        "Faculty Subjects-" + myStringBuilder
+//                    )
                     if (response.body() != null) {
 
 //                        response.body()?.let { myAdapter.setData(it) }
@@ -68,18 +68,18 @@ class AttendancePanelFragment : Fragment() {
                         Log.d(
                             "test",
                             "Faculty Subjects-" + response.body()
-                                .toString() + response.body()!!.size.toString()
+                                .toString() + "\n"  + response.body()!!.size.toString() + "\n" + response.body()!![0].department.toString()
                         )
-                        myAdapter = AttendancePanelViewAdapter(requireContext())
-                        myAdapter.setData(response.body()!!)
-                        myAdapter.notifyDataSetChanged()
-                        binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
+//                        myAdapter = AttendancePanelViewAdapter(requireContext())
+//                        myAdapter.setData(response.body())
+//                        myAdapter.notifyDataSetChanged()
+//                        binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
 
                     }
                 }
 
                 override fun onFailure(
-                    call: Call<List<List<FacultySubjectsDetailsModelSubListItem>>?>,
+                    call: Call<FacultySubjectDetailsModel>,
                     t: Throwable
                 ) {
                     Log.d("error", t.toString())
