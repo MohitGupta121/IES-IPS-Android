@@ -3,6 +3,7 @@ package cmsr.ipsacademy.net.api
 import cmsr.ipsacademy.net.activities.models.LoginModel
 import cmsr.ipsacademy.net.activities.models.faculty.FacultyInfoModel
 import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectsDetailsModel
+import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectsDetailsModelSubListItem
 import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -34,6 +35,6 @@ interface apiset {
     @POST("faculty_info_attendance.php")
     fun getFacultySubjectsDetails(
         @Field("computer_code") computer_code: String
-    ): Call<FacultySubjectsDetailsModel>
+    ): Call<List<List<FacultySubjectsDetailsModelSubListItem>>>
 
 }
