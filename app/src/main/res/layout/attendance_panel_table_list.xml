@@ -7,16 +7,16 @@
 
     <TextView
         android:id="@+id/txtSNo"
-        android:layout_width="56dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="top"
         android:background="@drawable/table_content_cell_bg"
-        android:text="S.No"
+        android:text="S.No."
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txtBatch"
-        android:layout_width="260dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@drawable/table_content_cell_bg"
@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/txtDepartment"
-        android:layout_width="124dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="top"
         android:background="@drawable/table_content_cell_bg"
@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/txtSubject"
-        android:layout_width="156dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="top"
         android:background="@drawable/table_content_cell_bg"
@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/txtSubjectCode"
-        android:layout_width="260dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="top"
         android:background="@drawable/table_content_cell_bg"
@@ -56,7 +56,7 @@
 
     <TextView
         android:id="@+id/btnAction"
-        android:layout_width="156dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="top"
         android:background="@drawable/table_content_cell_bg"

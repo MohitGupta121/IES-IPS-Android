@@ -62,18 +62,15 @@ class AttendancePanelFragment : Fragment() {
 //                        "Faculty Subjects-" + myStringBuilder
 //                    )
                     if (response.body() != null) {
-
-//                        response.body()?.let { myAdapter.setData(it) }
-//                        binding?.subject?.setText(response.body()!!.get(0).get(0).subject_name)
                         Log.d(
                             "test",
                             "Faculty Subjects-" + response.body()
                                 .toString() + "\n"  + response.body()!!.size.toString() + "\n" + response.body()!![0].department.toString()
                         )
-//                        myAdapter = AttendancePanelViewAdapter(requireContext())
-//                        myAdapter.setData(response.body())
-//                        myAdapter.notifyDataSetChanged()
-//                        binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
+                        myAdapter = AttendancePanelViewAdapter(requireContext())
+                        myAdapter.setData(response.body()!!)
+                        myAdapter.notifyDataSetChanged()
+                        binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
 
                     }
                 }

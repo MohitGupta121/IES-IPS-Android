@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectDetailsModel
+import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectDetailsModelItem
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.*
 
 class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<AttendancePanelViewAdapter.RowViewHolder>() {
 
 
-    lateinit var myList: List<List<FacultySubjectDetailsModel>>
+    lateinit var myList: List<FacultySubjectDetailsModelItem>
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowViewHolder {
@@ -32,63 +33,29 @@ class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<Att
     override fun onBindViewHolder(holder: RowViewHolder, position: Int) {
         val rowPos = holder.adapterPosition
 
-        Log.d("test", myList.size.toString())
-        val modal = myList[position][position]
+            val modal = myList[position]
 
-//        Log.d("test", myList[0][0].subject_name.toString())
-//
-//        holder.itemView.apply {
-//
-//            txtSNo.text = modal.ip
-//            txtBatch.text = modal.batch
-//            txtDepartment.text = modal.department
-//            txtSubject.text = modal.subject_name
-//            txtSubjectCode.text = modal.university_sub_code
-//            btnAction.text = modal.academic_session_id
-//        }
+            holder.itemView.apply {
+                setContentBg(txtSNo)
+                setContentBg(txtBatch)
+                setContentBg(txtDepartment)
+                setContentBg(txtSubject)
+                setContentBg(txtSubjectCode)
+                setContentBg(btnAction)
 
-//        if (rowPos == 0) {
-//            // Header Cells. Main Headings appear here
-//            holder.itemView.apply {
-//                setHeaderBg(txtSNo)
-//                setHeaderBg(txtBatch)
-//                setHeaderBg(txtSubject)
-//                setHeaderBg(txtDepartment)
-//                setHeaderBg(txtSubjectCode)
-//                setHeaderBg(btnAction)
-//
-//                txtSNo.text = "S.No"
-//                txtBatch.text = "Batch"
-//                txtDepartment.text = "Department"
-//                txtSubject.text = "Subject"
-//                txtSubjectCode.text = "University Subject Code"
-//                btnAction.text = "Action"
-//            }
-//        } else {
-//            val modal = facultySubjectList[position-1][position-1]
-//
-//            holder.itemView.apply {
-//                setContentBg(txtSNo)
-//                setContentBg(txtBatch)
-//                setContentBg(txtDepartment)
-//                setContentBg(txtSubject)
-//                setContentBg(txtSubjectCode)
-//                setContentBg(btnAction)
-//
-//                txtSNo.text = modal.ip
-//                txtBatch.text = modal.batch
-//                txtDepartment.text = modal.department
-//                txtSubject.text = modal.subject_name
-//                txtSubjectCode.text = modal.university_sub_code
-//                btnAction.text = modal.academic_session_id
-//            }
-//        }
+                txtSNo.text = (holder.adapterPosition +1).toString()
+                txtBatch.text = modal.batch
+                txtDepartment.text = modal.department
+                txtSubject.text = modal.subject_name
+                txtSubjectCode.text = modal.university_sub_code
+                btnAction.text = modal.academic_session_id
+            }
     }
 
-//    fun setData(newList: List<List<FacultySubjectsDetailsModelSubListItem>>){
-//        myList = newList
-//        notifyDataSetChanged()
-//    }
+    fun setData(newList: List<FacultySubjectDetailsModelItem>){
+        myList = newList
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
 
