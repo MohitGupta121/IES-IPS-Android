@@ -54,15 +54,49 @@
         android:textSize="18sp"
         tools:ignore="RtlCompat" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/btnAction"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="top"
         android:background="@drawable/table_content_cell_bg"
-        android:text="Action"
         android:textAlignment="center"
-        android:textSize="18sp"
-        tools:ignore="RtlCompat" />
+        android:orientation="horizontal"
+        tools:ignore="RtlCompat">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Take Attendance "
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="#46b8da"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text=" View Attendance "
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="#3BC500"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text=" Modify "
+            android:background="#E61010"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text=" Lecture Plan "
+            android:background="#46b8da"/>
+
+    </LinearLayout>
 
 </LinearLayout>

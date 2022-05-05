@@ -36,7 +36,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="top"
-                        android:background="@drawable/table_content_cell_bg"
+                        android:background="@drawable/table_header_cell_bg"
                         android:text="S.No."
                         android:textSize="18sp" />
 
@@ -45,7 +45,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
-                        android:background="@drawable/table_content_cell_bg"
+                        android:background="@drawable/table_header_cell_bg"
                         android:text="Batch"
                         android:textSize="18sp" />
 
@@ -54,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="top"
-                        android:background="@drawable/table_content_cell_bg"
+                        android:background="@drawable/table_header_cell_bg"
                         android:text="Department"
                         android:textSize="18sp" />
 
@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="top"
-                        android:background="@drawable/table_content_cell_bg"
+                        android:background="@drawable/table_header_cell_bg"
                         android:text="Subject"
                         android:textAlignment="center"
                         android:textSize="18sp"
@@ -74,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="top"
-                        android:background="@drawable/table_content_cell_bg"
+                        android:background="@drawable/table_header_cell_bg"
                         android:text="University Subject Code"
                         android:textAlignment="center"
                         android:textSize="18sp"
@@ -85,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="top"
-                        android:background="@drawable/table_content_cell_bg"
+                        android:background="@drawable/table_header_cell_bg"
                         android:text="Action"
                         android:textAlignment="center"
                         android:textSize="18sp"

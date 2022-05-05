@@ -48,7 +48,6 @@ class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<Att
                 txtDepartment.text = modal.department
                 txtSubject.text = modal.subject_name
                 txtSubjectCode.text = modal.university_sub_code
-                btnAction.text = modal.academic_session_id
             }
     }
 
