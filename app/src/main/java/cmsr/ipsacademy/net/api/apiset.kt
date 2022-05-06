@@ -31,7 +31,7 @@ interface apiset {
     ): Call<FacultyInfoModel>
 
     @FormUrlEncoded
-    @POST("faculty_info_attendance.php")
+    @POST("faculty_class_attendance.php")
     fun getFacultySubjectsDetails(
         @Field("computer_code") computer_code: String
     ): Call<FacultySubjectDetailsModel>
