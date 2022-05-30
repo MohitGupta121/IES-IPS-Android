@@ -2,24 +2,29 @@ package cmsr.ipsacademy.net.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.Util.SharedPreference
-import cmsr.ipsacademy.net.activities.models.StudentInfo
+import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
+import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
 import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Response
 
+
 class Student : AppCompatActivity() {
 
-    private var sharedPreference: SharedPreference? = null
-
+    private var sharedPreferencesHelper: SharedPreferencesHelper? = null
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +32,16 @@ class Student : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolBar)
         setSupportActionBar(toolbar)
 
-        sharedPreference = SharedPreference(this)
+        sharedPreferencesHelper = SharedPreferencesHelper(this)
 
         getStudentDetails()
 
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.frame_layout_container) as NavHostFragment
+        navController = navHostFragment.navController
+
+
         val navigationView = findViewById<NavigationView>(R.id.navigation_menu)
-        navigationView.setItemIconTintList(null)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
 
         val actionBarDrawerToggle =
@@ -40,47 +49,12 @@ class Student : AppCompatActivity() {
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
-        navigationView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_settings -> Toast.makeText(
-                    applicationContext,
-                    "setting",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.nav_logout -> Toast.makeText(applicationContext, "logout", Toast.LENGTH_SHORT)
-                    .show()
-                R.id.Dashboard -> Toast.makeText(
-                    applicationContext,
-                    "dashboard",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.Assignment -> Toast.makeText(
-                    applicationContext,
-                    "assignment",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.Attendance -> Toast.makeText(
-                    applicationContext,
-                    "attendance",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.MST -> Toast.makeText(applicationContext, "mst", Toast.LENGTH_SHORT).show()
-                R.id.feedback -> Toast.makeText(applicationContext, "feedback", Toast.LENGTH_SHORT)
-                    .show()
-                R.id.onlineexam -> Toast.makeText(
-                    applicationContext,
-                    "online exam",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.applyonline -> Toast.makeText(
-                    applicationContext,
-                    "apply online",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            true
-        })
+        navigationView.setupWithNavController(navController)
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
 
@@ -90,22 +64,27 @@ class Student : AppCompatActivity() {
 
 
         userApi.getStudentDetails(computer_code)
-            .enqueue(object : retrofit2.Callback<StudentInfo> {
+            .enqueue(object : retrofit2.Callback<StudentInfoModel> {
                 override fun onResponse(
-                    call: Call<StudentInfo>,
-                    response: Response<StudentInfo>
+                    call: Call<StudentInfoModel>,
+                    response: Response<StudentInfoModel>
                 ) {
 
-                    if (response.body() != null){
-                        Log.d("name", "Student name:-" + response.body()!!.student_info[0].student_name)
+                    if (response.body() != null) {
+                        Log.d(
+                            "name",
+                            "Student name:-" + response.body()!!.student_info[0].student_name
+                        )
                     }
 
                 }
 
-                override fun onFailure(call: Call<StudentInfo>, t: Throwable) {
+                override fun onFailure(call: Call<StudentInfoModel>, t: Throwable) {
                     Log.d("error", t.toString())
                 }
             })
 
     }
+
+
 }

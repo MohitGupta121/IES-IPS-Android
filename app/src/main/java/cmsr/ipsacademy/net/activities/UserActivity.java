@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import cmsr.ipsacademy.net.R;
-import cmsr.ipsacademy.net.Util.SharedPreference;
+import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper;
 import cmsr.ipsacademy.net.messaging.FcmNotificationsSender;
 
 public class UserActivity extends AppCompatActivity {
@@ -32,15 +32,15 @@ public class UserActivity extends AppCompatActivity {
         notificationSendButton = findViewById(R.id.noti_send);
 
 
-        SharedPreference sharedPreference = new SharedPreference(this);
+        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(this);
 
 
         try {
-            Log.i("role",sharedPreference.getValueString("role"));
-            if (sharedPreference.getValueString("role").equals("Teacher")) {
+            Log.i("role", sharedPreferencesHelper.getValueString("role"));
+            if (sharedPreferencesHelper.getValueString("role").equals("Teacher")) {
                 FirebaseMessaging.getInstance().subscribeToTopic("all");
             }
-            if (sharedPreference.getValueString("role").equals("Principal")) {
+            if (sharedPreferencesHelper.getValueString("role").equals("Principal")) {
                 FirebaseMessaging.getInstance().subscribeToTopic("all");
             }
         }catch (Exception e){
@@ -51,13 +51,13 @@ public class UserActivity extends AppCompatActivity {
             if (!notificationTitle.getText().toString().isEmpty() && !notificationMessage.getText().toString().isEmpty()){
 
                 try {
-                    if (sharedPreference.getValueString("role").equals("Principal")) {
+                    if (sharedPreferencesHelper.getValueString("role").equals("Principal")) {
                         FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/all", notificationTitle.getText().toString(), notificationMessage.getText().toString(), getApplicationContext(), UserActivity.this);
                         notificationsSender.SendNotifications();
                         notificationTitle.setText("");
                         notificationMessage.setText("");
                     }
-                    if (sharedPreference.getValueString("role").equals("HOD")) {
+                    if (sharedPreferencesHelper.getValueString("role").equals("HOD")) {
                         FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/all", notificationTitle.getText().toString(), notificationMessage.getText().toString(), getApplicationContext(), UserActivity.this);
                         notificationsSender.SendNotifications();
                         notificationTitle.setText("");

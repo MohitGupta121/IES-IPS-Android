@@ -5,15 +5,9 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/bg_color"
     tools:context=".activities.Student"
     tools:openDrawer="start">
-
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,6 +22,60 @@
             android:layout_marginRight="60dp"
             android:background="@drawable/calogo"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="75dp">
+
+            <ImageView
+                android:id="@+id/calender"
+                android:layout_width="60dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/ic_baseline_calendar_month_24" />
+
+            <ImageView
+                android:id="@+id/dropdown"
+                android:layout_width="60dp"
+                android:layout_height="42dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="60dp"
+                android:fontFamily="@font/varela_round"
+                android:text="@string/name"
+                android:textColor="#FF0000"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/designation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="60dp"
+                android:fontFamily="@font/varela_round"
+                android:text="Student"
+                android:textSize="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/frame_layout_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:navGraph="@navigation/nav_graph" />
 
     </LinearLayout>
 

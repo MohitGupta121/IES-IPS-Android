@@ -1,123 +1,130 @@
 package cmsr.ipsacademy.net.activities
 
-import android.content.Intent
+
+import android.annotation.SuppressLint
+import android.graphics.Color.RED
 import android.os.Bundle
-import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.util.Log
-import android.view.View
-import android.widget.*
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.Util.SharedPreference
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.FirebaseAuth
+import cmsr.ipsacademy.net.activities.models.faculty.FacultyInfoModel
+import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
+import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
+import cmsr.ipsacademy.net.api.apiset
+import cmsr.ipsacademy.net.api.controller
+import cmsr.ipsacademy.net.databinding.ActivityMainBinding
+import cmsr.ipsacademy.net.helpers.AppConstants
+import com.google.android.material.navigation.NavigationView
+import retrofit2.Call
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
-    private var inputEmail: EditText? = null
-    private var inputPassword: EditText? = null
-    private var userIdSpinner: Spinner? = null
-    private var loginButton: Button? = null
-    private var auth: FirebaseAuth? = null
+    private lateinit var navController: NavController
+    private lateinit var binding: ActivityMainBinding
+    private var sharedPreferencesHelper: SharedPreferencesHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        supportActionBar?.hide()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val sharedPreference:SharedPreference = SharedPreference(this)
+        sharedPreferencesHelper = SharedPreferencesHelper(this)
+        val toolbar = findViewById<Toolbar>(R.id.toolBar)
 
-//        var token: String? = sharedPreference.getValueString("token")
-//
-//        if (token != null) {
-//            Log.e("tt", token)
-//            Toast.makeText(this, "token :" + token, Toast.LENGTH_SHORT).show()
-//        }
+        // navigation graph
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.frame_layout_container) as NavHostFragment
+        navController = navHostFragment.navController
+        binding.navigationMenu.setItemIconTintList(null)
 
+        binding.navigationMenu.menu.clear()
 
-        val userIdList = resources.getStringArray(R.array.UsersId)
-
-        userIdSpinner = findViewById(R.id.choose_user)
-        if (userIdSpinner != null) {
-            val adapter = ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item, userIdList
-            )
-            userIdSpinner!!.adapter = adapter
-
-            userIdSpinner!!.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
-                ) {
-                    sharedPreference.save("role", userIdList.get(position))
-                    Toast.makeText(
-                        applicationContext,
-                        sharedPreference.getValueString("role"),
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    sharedPreference.getValueString("role")?.let { Log.i("SharedTag", it) }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
-                }
-            }
+        when (sharedPreferencesHelper?.getValueString(AppConstants.user_role)){
+            "HOD" -> binding.navigationMenu.inflateMenu(R.menu.hod_menu)
+            "Principal" -> binding.navigationMenu.inflateMenu(R.menu.principal_menu)
+            "Teacher" -> binding.navigationMenu.inflateMenu(R.menu.teacher_menu)
+            "Student" -> binding.navigationMenu.inflateMenu(R.menu.student_menu)
         }
 
-            inputEmail = findViewById(R.id.edit_email)
-            inputPassword = findViewById(R.id.edit_password)
-            loginButton = findViewById(R.id.button_login)
+        val actionBarDrawerToggle =
+            ActionBarDrawerToggle(this, binding.drawer, toolbar, R.string.open, R.string.close)
+        binding.drawer.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+        binding.navigationMenu.setupWithNavController(navController)
 
-            auth = FirebaseAuth.getInstance()
+        // Profile menu
+        val profileDropdownArray = resources.getStringArray(R.array.profile_dropdown)
+        binding.profileDropdown.onItemSelectedListener
+        binding.bottomCredit.movementMethod = LinkMovementMethod.getInstance()
+        binding.bottomCredit.setLinkTextColor(RED)
 
-            loginButton!!.setOnClickListener(View.OnClickListener {
-                val email = inputEmail!!.text.toString().trim()
-                val password = inputPassword!!.text.toString().trim()
 
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(
-                        applicationContext,
-                        "PLease Enter your E-Mail",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    return@OnClickListener
-                }
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(
-                        applicationContext,
-                        "PLease Enter your password",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    return@OnClickListener
-                }
-
-                auth!!.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, OnCompleteListener { task ->
-                        if (!task.isSuccessful) {
-                            if (password.length < 6) {
-                                inputPassword!!.setError(getString(R.string.minimum_password))
-                            } else {
-                                Toast.makeText(
-                                    this,
-                                    getString(R.string.auth_failed),
-                                    Toast.LENGTH_LONG
-                                )
-                                    .show()
-                            }
-                            Log.e("login", "Login Error", task.exception)
-                        } else{
-                            startActivity(Intent(this@MainActivity,UserActivity::class.java))
-                            finish()
-                        }
-                    })
-
-            })
+        sharedPreferencesHelper?.getValueString(AppConstants.computer_code)
+            ?.let { getUserDetails(it) }
+        binding.role.setText(sharedPreferencesHelper?.getValueString(AppConstants.user_role))
 
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    private fun getUserDetails(computer_code: String) {
+
+        val userApi = controller.getInstance().create(apiset::class.java)
+
+        // If role is Student then get Student Details
+        if (sharedPreferencesHelper?.getValueString(AppConstants.user_role)
+                .equals(getString(R.string.role_student))
+        ) {
+            userApi.getStudentDetails(computer_code)
+                .enqueue(object : retrofit2.Callback<StudentInfoModel> {
+                    override fun onResponse(
+                        call: Call<StudentInfoModel>,
+                        response: Response<StudentInfoModel>
+                    ) {
+                        if (response.body() != null) {
+                            binding.name.setText(response.body()!!.student_info[0].student_name)
+                            Log.d(
+                                "name",
+                                "Student name:-" + response.body()!!.student_info[0].student_name
+                            )
+                        }
+                    }
+
+                    override fun onFailure(call: Call<StudentInfoModel>, t: Throwable) {
+                        Log.d("error", t.toString())
+                    }
+                })
+        } else {
+            userApi.getFacultyDetails(computer_code)
+                .enqueue(object : retrofit2.Callback<FacultyInfoModel> {
+                    @SuppressLint("SetTextI18n")
+                    override fun onResponse(
+                        call: Call<FacultyInfoModel>,
+                        response: Response<FacultyInfoModel>
+                    ) {
+                        if (response.body() != null) {
+                            binding.name.setText(response.body()!!.faculty_info[0].first_name + " " + response.body()!!.faculty_info[0].last_name)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<FacultyInfoModel>, t: Throwable) {
+                        Log.d("error", t.toString())
+                    }
+                })
+        }
+    }
+
 }
+

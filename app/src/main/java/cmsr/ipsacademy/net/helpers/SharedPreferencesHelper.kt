@@ -1,9 +1,9 @@
-package cmsr.ipsacademy.net.Util
+package cmsr.ipsacademy.net.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
 
-class SharedPreference(val context: Context) {
+class SharedPreferencesHelper(val context: Context) {
     private val PREFS_NAME = "kotlincodes"
     private val sharedPref: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/firstFragment">
+
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="cmsr.ipsacademy.net.FirstFragment"
+        android:label="fragment_first2"
+        tools:layout="@layout/fragment_first" />
+    <fragment
+        android:id="@+id/ViewReport"
+        android:name="cmsr.ipsacademy.net.activities.StudentResultFragment.StudentResultFragment"
+        android:label="ViewReport"
+        tools:layout="@layout/fragment_student_result" />
+    <fragment
+        android:id="@+id/Attendance"
+        android:name="cmsr.ipsacademy.net.activities.Class.ClassAttendanceFragment"
+        android:label="Attendance"
+        tools:layout="@layout/fragment_class_attendance" />
+    <fragment
+        android:id="@+id/faculty_attendance_panel"
+        android:name="cmsr.ipsacademy.net.activities.Teacher.AttendancePanelFragment"
+        android:label="Attendance Panel"
+        tools:layout="@layout/fragment_attendance_panel" />
+
+</navigation>

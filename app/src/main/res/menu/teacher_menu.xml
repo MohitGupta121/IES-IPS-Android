@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    <item-->
+<!--        android:id="@+id/YearCoordinator"-->
+<!--        android:title="@string/class_coordinator" />-->
+<!--    <item-->
+<!--        android:id="@+id/MyStudent"-->
+<!--        android:icon="@drawable/ic_person"-->
+<!--        android:title="@string/my_student" />-->
+<!--    <item-->
+<!--        android:id="@+id/Attendance3"-->
+<!--        android:icon="@drawable/ic_attendance"-->
+<!--        android:title="@string/Attendance" />-->
+
+    <item android:title="@string/subject_coordinator"/>
+    <item android:title="Academic">
+
+        <menu>
+            <item
+                android:id="@+id/faculty_attendance_panel"
+                android:icon="@drawable/ic_attendance"
+                android:title="@string/Attendance" />
+            <item
+                android:id="@+id/Events"
+                android:icon="@drawable/ic_event"
+                android:title="@string/events" />
+            <item
+                android:id="@+id/Assignment"
+                android:icon="@drawable/ic_event"
+                android:title="@string/assignment" />
+
+        </menu>
+
+    </item>
+
+    <item android:title="OBE">
+
+        <menu>
+
+                <item
+                    android:id="@+id/createCo"
+                    android:icon="@drawable/ic_nba"
+                    android:title="Create CO" />
+                <item
+                    android:id="@+id/NBA"
+                    android:icon="@drawable/ic_storage"
+                    android:title="@string/NBA" />
+                <item
+                    android:id="@+id/fillNBA"
+                    android:icon="@drawable/ic_insert_drive"
+                    android:title="@string/fill_nba" />
+
+        </menu>
+
+    </item>
+
+
+</menu>
