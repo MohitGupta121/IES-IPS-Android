@@ -21,11 +21,6 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AttendancePanelFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AttendancePanelFragment : Fragment() {
 
     private var binding: FragmentAttendancePanelBinding? = null
