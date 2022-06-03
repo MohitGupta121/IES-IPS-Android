@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectDetailsModel
 import cmsr.ipsacademy.net.adapters.AttendancePanelViewAdapter
@@ -15,6 +16,8 @@ import cmsr.ipsacademy.net.databinding.FragmentAttendancePanelBinding
 import cmsr.ipsacademy.net.helpers.AppConstants
 import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 import kotlinx.android.synthetic.main.fragment_attendance_panel.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 
@@ -42,47 +45,23 @@ class AttendancePanelFragment : Fragment() {
 
     private fun getSubjectsDetails(computer_code: String) {
 
-        val userApi = controller.getInstance().create(apiset::class.java)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val res = controller.getInstance().create(apiset::class.java)
+                .getFacultySubjectsDetails(computer_code).execute()
 
-        userApi.getFacultySubjectsDetails(computer_code)
-            .enqueue(object :
-                retrofit2.Callback<FacultySubjectDetailsModel> {
-                override fun onResponse(
-                    call: Call<FacultySubjectDetailsModel>,
-                    response: Response<FacultySubjectDetailsModel>
-                ) {
-//                    val responseBody = response.body()!!
-//                    val myStringBuilder = StringBuilder()
-//                    for (myData in responseBody){
-//                        myStringBuilder.append(myData.listIterator())
-//                        myStringBuilder.append("\n")
-//                    }
-//                    Log.d(
-//                        "mohitgu",
-//                        "Faculty Subjects-" + myStringBuilder
-//                    )
-                    if (response.body() != null) {
-                        Log.d(
-                            "test",
-                            "Faculty Subjects-" + response.body()
-                                .toString() + "\n"  + response.body()!!.size.toString() + "\n" + response.body()!![0].department.toString()
-                        )
-                        myAdapter = AttendancePanelViewAdapter(requireContext())
-                        myAdapter.setData(response.body()!!)
-                        myAdapter.notifyDataSetChanged()
-                        binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
+            if (res.body() != null) {
+                Log.d(
+                    "test",
+                    "Faculty Subjects-" + res.body()
+                        .toString() + "\n" + res.body()!!.size.toString() + "\n" + res.body()!![0].department.toString()
+                )
+                myAdapter = AttendancePanelViewAdapter(requireContext())
+                myAdapter.setData(res.body()!!)
+                myAdapter.notifyDataSetChanged()
+                binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
 
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<FacultySubjectDetailsModel>,
-                    t: Throwable
-                ) {
-                    Log.d("error", t.toString())
-                }
-
-            })
+            }
+        }
 
     }
 
