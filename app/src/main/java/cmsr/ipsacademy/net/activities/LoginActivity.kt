@@ -19,6 +19,7 @@ import cmsr.ipsacademy.net.activities.models.LoginModel
 import cmsr.ipsacademy.net.helpers.AppConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
 import retrofit2.Call
 import retrofit2.Callback
@@ -56,12 +57,6 @@ class LoginActivity : AppCompatActivity() {
             processLogin()
         })
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            val res = controller.getInstance().create(apiset::class.java).getStudentDetails("52684")
-
-            Log.d("MOHIT", "Name of student using :---- ${res.execute().body()?.student_info?.get(0)?.student_name}")
-        }
-
     }
 
     private fun processLogin() {
@@ -69,24 +64,20 @@ class LoginActivity : AppCompatActivity() {
         val password = editTextPassword!!.text.toString().trim()
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val res = controller.getInstance().create(apiset::class.java).verifyuser(computer_code, password).execute()
+            val res = controller.getInstance().create(apiset::class.java)
+                .verifyuser(computer_code, password).execute()
 
             if (res.body()?.student_info?.isEmpty() == true) {
                 editTextComputerCode!!.setText("")
                 editTextPassword!!.setText("")
-//                Toast.makeText(
-//                    applicationContext,
-//                    getString(R.string.login_error_message),
-//                    Toast.LENGTH_SHORT
-//                ).show()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(applicationContext, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show()
+                }
             }
             if (res.body()?.student_info?.isEmpty() == false && res.body()!!.student_info[0].is_student == "1") {
-//                Toast.makeText(
-//                    applicationContext,
-//                    getString(R.string.login_sucess),
-//                    Toast.LENGTH_SHORT
-//                )
-//                    .show()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(applicationContext, getString(R.string.login_sucess), Toast.LENGTH_SHORT).show()
+                }
                 sharedPreference?.save(AppConstants.computer_code, computer_code)
                 sharedPreference?.save(
                     AppConstants.user_role,
@@ -94,146 +85,54 @@ class LoginActivity : AppCompatActivity() {
                 )
                 startActivity(Intent(applicationContext, MainActivity::class.java))
             }
-//            if (res.body()?.student_info?.isEmpty() == false && res.body()!!.student_info[0].is_student == "0") {
-//
-//                Toast.makeText(
-//                    applicationContext,
-//                    getString(R.string.login_sucess),
-//                    Toast.LENGTH_SHORT
-//                )
-//                    .show()
-//
-//                sharedPreference?.save(AppConstants.computer_code, computer_code)
-//
-//                if (sharedPreference?.getValueString(AppConstants.computer_code)
-//                        .equals("2083")
-//                ) {
-//                    sharedPreference?.save(
-//                        AppConstants.user_role,
-//                        getString(R.string.role_hod)
-//                    )
-//
-//                    sharedPreference?.getValueString(AppConstants.computer_code)
-//                        ?.let { Log.e("ROLESAvED", it) }
-//                    sharedPreference?.getValueString(AppConstants.user_role)
-//                        ?.let { Log.e("role", it) }
-//                } else if (sharedPreference?.getValueString(AppConstants.computer_code)
-//                        .equals("1") || sharedPreference?.getValueString(AppConstants.computer_code)
-//                        .equals("2") || sharedPreference?.getValueString(AppConstants.computer_code)
-//                        .equals("3")
-//                ) {
-//                    sharedPreference?.save(
-//                        AppConstants.user_role,
-//                        getString(R.string.role_principal)
-//                    )
-//
-//                    sharedPreference?.getValueString(AppConstants.computer_code)
-//                        ?.let { Log.e("ROLESAvED", it) }
-//                    sharedPreference?.getValueString(AppConstants.user_role)
-//                        ?.let { Log.e("role", it) }
-//                } else {
-//                    sharedPreference?.save(
-//                        AppConstants.user_role,
-//                        getString(R.string.role_teacher)
-//                    )
-//                    sharedPreference?.getValueString(AppConstants.user_role)
-//                        ?.let { Log.i("role", it) }
-//
-//                }
-//
-//                startActivity(Intent(applicationContext, MainActivity::class.java))
-//
-//            }
-        }
+            if (res.body()?.student_info?.isEmpty() == false && res.body()!!.student_info[0].is_student == "0") {
 
-//        val userApi = controller.getInstance().create(apiset::class.java)
-//
-//        userApi.verifyuser(computer_code, password)
-//            .enqueue(object : Callback<LoginModel> {
-//                override fun onResponse(call: Call<LoginModel>, response: Response<LoginModel>) {
-//
-//                    Log.e("Response", response.body().toString())
-//
-//                    if (response.body()?.student_info?.isEmpty() == true) {
-//                        editTextComputerCode!!.setText("")
-//                        editTextPassword!!.setText("")
-//                        Toast.makeText(
-//                            applicationContext,
-//                            getString(R.string.login_error_message),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                    if (response.body()?.student_info?.isEmpty() == false && response.body()!!.student_info[0].is_student == "1") {
-//                        Toast.makeText(
-//                            applicationContext,
-//                            getString(R.string.login_sucess),
-//                            Toast.LENGTH_SHORT
-//                        )
-//                            .show()
-//                        sharedPreference?.save(AppConstants.computer_code, computer_code)
-//                        sharedPreference?.save(
-//                            AppConstants.user_role,
-//                            getString(R.string.role_student)
-//                        )
-//                        startActivity(Intent(applicationContext, MainActivity::class.java))
-//                    }
-//                    if (response.body()?.student_info?.isEmpty() == false && response.body()!!.student_info[0].is_student == "0") {
-//
-//                        Toast.makeText(
-//                            applicationContext,
-//                            getString(R.string.login_sucess),
-//                            Toast.LENGTH_SHORT
-//                        )
-//                            .show()
-//
-//                        sharedPreference?.save(AppConstants.computer_code, computer_code)
-//
-//                        if (sharedPreference?.getValueString(AppConstants.computer_code)
-//                                .equals("2083")
-//                        ) {
-//                            sharedPreference?.save(
-//                                AppConstants.user_role,
-//                                getString(R.string.role_hod)
-//                            )
-//
-//                            sharedPreference?.getValueString(AppConstants.computer_code)
-//                                ?.let { Log.e("ROLESAvED", it) }
-//                            sharedPreference?.getValueString(AppConstants.user_role)
-//                                ?.let { Log.e("role", it) }
-//                        } else if (sharedPreference?.getValueString(AppConstants.computer_code)
-//                                .equals("1") || sharedPreference?.getValueString(AppConstants.computer_code)
-//                                .equals("2") || sharedPreference?.getValueString(AppConstants.computer_code)
-//                                .equals("3")
-//                        ) {
-//                            sharedPreference?.save(
-//                                AppConstants.user_role,
-//                                getString(R.string.role_principal)
-//                            )
-//
-//                            sharedPreference?.getValueString(AppConstants.computer_code)
-//                                ?.let { Log.e("ROLESAvED", it) }
-//                            sharedPreference?.getValueString(AppConstants.user_role)
-//                                ?.let { Log.e("role", it) }
-//                        } else {
-//                            sharedPreference?.save(
-//                                AppConstants.user_role,
-//                                getString(R.string.role_teacher)
-//                            )
-//                            sharedPreference?.getValueString(AppConstants.user_role)
-//                                ?.let { Log.i("role", it) }
-//
-//                        }
-//
-//                        startActivity(Intent(applicationContext, MainActivity::class.java))
-//
-//                    }
-//
-//                }
-//
-//                override fun onFailure(call: Call<LoginModel>, t: Throwable) {
-//                    Log.e("Response", t.message.toString())
-//                }
-//            })
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(applicationContext, getString(R.string.login_sucess), Toast.LENGTH_SHORT).show()
+                }
+
+                sharedPreference?.save(AppConstants.computer_code, computer_code)
+
+                if (sharedPreference?.getValueString(AppConstants.computer_code)
+                        .equals("2083")
+                ) {
+                    sharedPreference?.save(
+                        AppConstants.user_role,
+                        getString(R.string.role_hod)
+                    )
+
+                    sharedPreference?.getValueString(AppConstants.computer_code)
+                        ?.let { Log.e("ROLESAvED", it) }
+                    sharedPreference?.getValueString(AppConstants.user_role)
+                        ?.let { Log.e("role", it) }
+                } else if (sharedPreference?.getValueString(AppConstants.computer_code)
+                        .equals("1") || sharedPreference?.getValueString(AppConstants.computer_code)
+                        .equals("2") || sharedPreference?.getValueString(AppConstants.computer_code)
+                        .equals("3")
+                ) {
+                    sharedPreference?.save(
+                        AppConstants.user_role,
+                        getString(R.string.role_principal)
+                    )
+
+                    sharedPreference?.getValueString(AppConstants.computer_code)
+                        ?.let { Log.e("ROLESAvED", it) }
+                    sharedPreference?.getValueString(AppConstants.user_role)
+                        ?.let { Log.e("role", it) }
+                } else {
+                    sharedPreference?.save(
+                        AppConstants.user_role,
+                        getString(R.string.role_teacher)
+                    )
+                    sharedPreference?.getValueString(AppConstants.user_role)
+                        ?.let { Log.i("role", it) }
+
+                }
+
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+
+            }
+        }
 
     }
 
