@@ -18,6 +18,7 @@ import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 import kotlinx.android.synthetic.main.fragment_attendance_panel.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 
@@ -25,7 +26,7 @@ class AttendancePanelFragment : Fragment() {
 
     private var binding: FragmentAttendancePanelBinding? = null
     private var sharedPreferencesHelper: SharedPreferencesHelper? = null
-    lateinit var myAdapter: AttendancePanelViewAdapter
+    private lateinit var myAdapter: AttendancePanelViewAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,10 +51,12 @@ class AttendancePanelFragment : Fragment() {
                     "Faculty Subjects-" + res.body()
                         .toString() + "\n" + res.body()!!.size.toString() + "\n" + res.body()!![0].department.toString()
                 )
-                myAdapter = AttendancePanelViewAdapter(requireContext())
-                myAdapter.setData(res.body()!!)
-                myAdapter.notifyDataSetChanged()
-                binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
+                withContext(Dispatchers.Main) {
+                    myAdapter = AttendancePanelViewAdapter(requireContext())
+                    myAdapter.setData(res.body()!!)
+                    myAdapter.notifyDataSetChanged()
+                    binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
+                }
 
             }
         }
