@@ -8,19 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectDetailsModel
 import cmsr.ipsacademy.net.adapters.AttendancePanelViewAdapter
 import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.FragmentAttendancePanelBinding
 import cmsr.ipsacademy.net.helpers.AppConstants
 import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
-import kotlinx.android.synthetic.main.fragment_attendance_panel.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Response
 
 class AttendancePanelFragment : Fragment() {
 
