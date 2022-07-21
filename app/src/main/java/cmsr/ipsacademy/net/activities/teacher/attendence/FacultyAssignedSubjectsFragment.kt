@@ -1,4 +1,4 @@
-package cmsr.ipsacademy.net.activities.Teacher
+package cmsr.ipsacademy.net.activities.teacher.attendence
 
 import android.os.Bundle
 import android.util.Log
@@ -11,16 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cmsr.ipsacademy.net.adapters.AttendancePanelViewAdapter
 import cmsr.ipsacademy.net.api.apiset
 import cmsr.ipsacademy.net.api.controller
-import cmsr.ipsacademy.net.databinding.FragmentAttendancePanelBinding
+import cmsr.ipsacademy.net.databinding.FragmentFacultyAssignedSubjectsBinding
 import cmsr.ipsacademy.net.helpers.AppConstants
 import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AttendancePanelFragment : Fragment() {
+class FacultyAssignedSubjectsFragment : Fragment() {
 
-    private var binding: FragmentAttendancePanelBinding? = null
+    private var binding: FragmentFacultyAssignedSubjectsBinding? = null
     private var sharedPreferencesHelper: SharedPreferencesHelper? = null
     private lateinit var myAdapter: AttendancePanelViewAdapter
 
@@ -68,7 +68,7 @@ class AttendancePanelFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val fragmentBinding = FragmentAttendancePanelBinding.inflate(inflater, container, false)
+        val fragmentBinding = FragmentFacultyAssignedSubjectsBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
     }
