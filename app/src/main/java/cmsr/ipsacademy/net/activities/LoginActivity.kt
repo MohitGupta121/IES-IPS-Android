@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.api.apiset
+import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 
@@ -15,16 +15,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import cmsr.ipsacademy.net.activities.models.LoginModel
 import cmsr.ipsacademy.net.helpers.AppConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.create
 
 class LoginActivity : AppCompatActivity() {
 
@@ -64,8 +58,8 @@ class LoginActivity : AppCompatActivity() {
         val password = editTextPassword!!.text.toString().trim()
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val res = controller.getInstance().create(apiset::class.java)
-                .verifyuser(computer_code, password).execute()
+            val res = controller.getInstance().create(ApiSet::class.java)
+                .verifyUsers(computer_code, password).execute()
 
             if (res.body()?.student_info?.isEmpty() == true) {
                 editTextComputerCode!!.setText("")

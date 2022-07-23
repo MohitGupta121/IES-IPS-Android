@@ -1,22 +1,15 @@
 package cmsr.ipsacademy.net.adapters
 
 import android.content.Context
-import android.util.Log
+import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.findFragment
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.activities.MainActivity
-import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectDetailsModel
-import cmsr.ipsacademy.net.activities.models.faculty.subjects.FacultySubjectDetailsModelItem
+import cmsr.ipsacademy.net.activities.teacher.attendence.models.subjects.FacultySubjectDetailsModelItem
 import cmsr.ipsacademy.net.activities.teacher.attendence.TakeAttendanceFragment
-import cmsr.ipsacademy.net.databinding.FragmentTakeAttendanceBinding
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.*
 
 class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<AttendancePanelViewAdapter.RowViewHolder>() {
@@ -60,12 +53,11 @@ class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<Att
                 take_attendance_particular_subject_button.setOnClickListener {
                     val fragment: TakeAttendanceFragment = TakeAttendanceFragment.newInstance()
                     val activity = it.context as AppCompatActivity
+                    val bundle = Bundle()
+                    bundle.putString("clg_sub_code", modal.clg_sub_code.toString())
+                    fragment.arguments = bundle
                     activity.supportFragmentManager.beginTransaction().replace(R.id.frame_layout_container, fragment).addToBackStack(null).commit()
-
-
                 }
-
-
 
             }
     }

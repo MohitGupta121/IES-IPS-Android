@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cmsr.ipsacademy.net.adapters.AttendancePanelViewAdapter
-import cmsr.ipsacademy.net.api.apiset
+import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.FragmentFacultyAssignedSubjectsBinding
 import cmsr.ipsacademy.net.helpers.AppConstants
@@ -20,8 +20,8 @@ import kotlinx.coroutines.withContext
 
 class FacultyAssignedSubjectsFragment : Fragment() {
 
-    private var binding: FragmentFacultyAssignedSubjectsBinding? = null
-    private var sharedPreferencesHelper: SharedPreferencesHelper? = null
+    private lateinit var binding: FragmentFacultyAssignedSubjectsBinding
+    private lateinit var sharedPreferencesHelper: SharedPreferencesHelper
     private lateinit var myAdapter: AttendancePanelViewAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,7 +29,7 @@ class FacultyAssignedSubjectsFragment : Fragment() {
 
         sharedPreferencesHelper = SharedPreferencesHelper(requireContext())
 
-        sharedPreferencesHelper?.getValueString(AppConstants.computer_code)
+        sharedPreferencesHelper.getValueString(AppConstants.computer_code)
             ?.let { getSubjectsDetails(it) }
 
         setupRecyclerview()
@@ -38,7 +38,7 @@ class FacultyAssignedSubjectsFragment : Fragment() {
     private fun getSubjectsDetails(computer_code: String) {
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val res = controller.getInstance().create(apiset::class.java)
+            val res = controller.getInstance().create(ApiSet::class.java)
                 .getFacultySubjectsDetails(computer_code).execute()
 
             if (res.body() != null) {
@@ -51,7 +51,7 @@ class FacultyAssignedSubjectsFragment : Fragment() {
                     myAdapter = AttendancePanelViewAdapter(requireContext())
                     myAdapter.setData(res.body()!!)
                     myAdapter.notifyDataSetChanged()
-                    binding?.recyclerViewAttendancePanel!!.adapter = myAdapter
+                    binding.recyclerViewAttendancePanel.adapter = myAdapter
                 }
 
             }
@@ -60,7 +60,7 @@ class FacultyAssignedSubjectsFragment : Fragment() {
     }
 
     private fun setupRecyclerview() {
-        binding?.recyclerViewAttendancePanel?.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewAttendancePanel.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onCreateView(
