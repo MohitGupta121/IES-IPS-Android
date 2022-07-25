@@ -6,6 +6,7 @@ import cmsr.ipsacademy.net.activities.teacher.attendence.models.subjects.Faculty
 import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.lecture_category.LectureCategory
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.lecture_types.LectureTypes
+import cmsr.ipsacademy.net.activities.teacher.attendence.models.students_by_batch_id.StudentByBatchId
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.time_slots.TimeSlots
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.topics.TopicsFromBatchId
 import retrofit2.http.FormUrlEncoded
@@ -60,5 +61,12 @@ interface ApiSet {
     fun getLectureCategory(
         @Field("clg_sub_code") clg_sub_code: String
     ): Call<LectureCategory>
+
+    @FormUrlEncoded
+    @POST("get_students_by_batch_id.php")
+    fun getStudentsByBatchId(
+        @Field("batch_id") batch_id: String,
+        @Field("semester") semester: String
+    ): Call<StudentByBatchId>
 
 }
