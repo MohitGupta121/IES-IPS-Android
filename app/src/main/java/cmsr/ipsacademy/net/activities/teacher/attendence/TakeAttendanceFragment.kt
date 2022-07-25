@@ -12,6 +12,9 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import cmsr.ipsacademy.net.activities.teacher.attendence.adapters.AttendancePanelViewAdapter
+import cmsr.ipsacademy.net.activities.teacher.attendence.adapters.TakeAttendanceStudentsListAdapter
 import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.FragmentTakeAttendanceBinding
@@ -28,6 +31,7 @@ class TakeAttendanceFragment : Fragment() {
     private lateinit var batch_id: String
     private lateinit var semester: String
     private lateinit var binding: FragmentTakeAttendanceBinding
+    private lateinit var myAdapter: TakeAttendanceStudentsListAdapter
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -47,6 +51,7 @@ class TakeAttendanceFragment : Fragment() {
         setStudentGroup()
         selectToadyDate()
         getAllStudents()
+        setupStudentsDetailsRecyclerView()
 
     }
 
@@ -63,10 +68,17 @@ class TakeAttendanceFragment : Fragment() {
                 )
 
                 withContext(Dispatchers.Main) {
-
+                    myAdapter = TakeAttendanceStudentsListAdapter(requireContext())
+                    myAdapter.setData(res.body()!!)
+                    myAdapter.notifyDataSetChanged()
+                    binding.takeAttendanceStudentsNameRecyclerview.adapter = myAdapter
                 }
             }
         }
+    }
+
+    private fun setupStudentsDetailsRecyclerView() {
+        binding.takeAttendanceStudentsNameRecyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

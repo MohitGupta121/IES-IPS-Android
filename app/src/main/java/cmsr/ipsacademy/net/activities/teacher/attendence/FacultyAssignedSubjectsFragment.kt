@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import cmsr.ipsacademy.net.adapters.AttendancePanelViewAdapter
+import cmsr.ipsacademy.net.activities.teacher.attendence.adapters.AttendancePanelViewAdapter
 import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.FragmentFacultyAssignedSubjectsBinding
@@ -68,7 +68,8 @@ class FacultyAssignedSubjectsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val fragmentBinding = FragmentFacultyAssignedSubjectsBinding.inflate(inflater, container, false)
+        val fragmentBinding =
+            FragmentFacultyAssignedSubjectsBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
     }
