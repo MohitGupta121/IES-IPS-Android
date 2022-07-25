@@ -194,7 +194,7 @@ class TakeAttendanceFragment : Fragment() {
             val res = controller.getInstance().create(ApiSet::class.java)
                 .getTopicFromBatchId(clg_sub_code).execute()
 
-            if (res.body() != null && res.isSuccessful) {
+            if (res.body() != null) {
                 Log.d(
                     "SelectTopics",
                     "Topics-" + res.body()
@@ -205,18 +205,15 @@ class TakeAttendanceFragment : Fragment() {
 
                     val topicsItems: ArrayList<String> = ArrayList()
                     for (i in 0 until res.body()!!.size) {
-
-                        if (res.body()!![i].topic_name == null) {
-                            topicsItems.add(res.body()!![i].topic_name)
-                            setTopicSpinner(topicsItems)
-                        } else {
-                            topicsItems.add(" ")
-                            setTopicSpinner(topicsItems)
-                        }
-
+                        topicsItems.add(res.body()!![i].topic_name)
+                        setTopicSpinner(topicsItems)
                     }
                 }
 
+            }else {
+                val topicsItems: ArrayList<String> = ArrayList()
+                topicsItems.add(" ")
+                setTopicSpinner(topicsItems)
             }
         }
 
