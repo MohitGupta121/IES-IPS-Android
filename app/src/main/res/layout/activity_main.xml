@@ -84,15 +84,22 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/frame_layout_container"
-                android:name="androidx.navigation.fragment.NavHostFragment"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
-                app:layout_constraintTop_toBottomOf="@+id/headerLayout"
-                app:navGraph="@navigation/nav_graph" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headerLayout">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/frame_layout_container"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:navGraph="@navigation/nav_graph" />
+
+            </ScrollView>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearLayoutCompat"
