@@ -55,6 +55,8 @@ class AttendancePanelViewAdapter(val context: Context): RecyclerView.Adapter<Att
                     val activity = it.context as AppCompatActivity
                     val bundle = Bundle()
                     bundle.putString("clg_sub_code", modal.clg_sub_code)
+                    bundle.putString("batch_id", modal.batch_id)
+                    bundle.putString("semester", modal.semester)
                     fragment.arguments = bundle
                     activity.supportFragmentManager.beginTransaction().replace(R.id.frame_layout_container, fragment).addToBackStack(null).commit()
                 }
