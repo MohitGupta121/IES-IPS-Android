@@ -78,7 +78,8 @@ class TakeAttendanceFragment : Fragment() {
     }
 
     private fun setupStudentsDetailsRecyclerView() {
-        binding.takeAttendanceStudentsNameRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        binding.takeAttendanceStudentsNameRecyclerview.layoutManager =
+            LinearLayoutManager(requireContext())
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -193,7 +194,7 @@ class TakeAttendanceFragment : Fragment() {
             val res = controller.getInstance().create(ApiSet::class.java)
                 .getTopicFromBatchId(clg_sub_code).execute()
 
-            if (res.body() !=null && res.isSuccessful) {
+            if (res.body() != null && res.isSuccessful) {
                 Log.d(
                     "SelectTopics",
                     "Topics-" + res.body()
@@ -205,10 +206,10 @@ class TakeAttendanceFragment : Fragment() {
                     val topicsItems: ArrayList<String> = ArrayList()
                     for (i in 0 until res.body()!!.size) {
 
-                        if (res.body()!![i].topic_name == null){
+                        if (res.body()!![i].topic_name == null) {
                             topicsItems.add(res.body()!![i].topic_name)
                             setTopicSpinner(topicsItems)
-                        }else {
+                        } else {
                             topicsItems.add(" ")
                             setTopicSpinner(topicsItems)
                         }
