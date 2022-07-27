@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="-10dp"
+        android:layout_marginTop="25dp"
         tools:context=".activities.teacher.attendence.TakeAttendanceFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -174,8 +175,23 @@
                 android:layout_marginTop="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/take_attendance_select_date_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/take_attendance_select_date_spinner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="250dp"/>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/take_attendance_submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="SUBMIT"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="#5bc0de"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/take_attendance_students_name_recyclerview"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
