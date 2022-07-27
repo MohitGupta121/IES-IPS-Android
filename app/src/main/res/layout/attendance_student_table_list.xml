@@ -22,4 +22,10 @@
         android:text="Batch"
         android:textSize="18sp" />
 
+    <CheckBox
+        android:id="@+id/student_mark_attendance_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColorHighlight="@color/cmsblue"/>
+
 </LinearLayout>

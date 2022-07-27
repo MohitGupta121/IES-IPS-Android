@@ -15,7 +15,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cmsr.ipsacademy.net.activities.teacher.attendence.adapters.TakeAttendanceStudentsListAdapter
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.Lecture_Type_Model
 import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.FragmentTakeAttendanceBinding
@@ -45,6 +44,8 @@ class TakeAttendanceFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        myAdapter = TakeAttendanceStudentsListAdapter(requireContext())
 
         sharedPreferencesHelper = SharedPreferencesHelper(requireContext())
         sharedPreferencesHelper.getValueString(AppConstants.computer_code)
@@ -117,7 +118,6 @@ class TakeAttendanceFragment : Fragment() {
                 )
 
                 withContext(Dispatchers.Main) {
-                    myAdapter = TakeAttendanceStudentsListAdapter(requireContext())
                     myAdapter.setData(res.body()!!)
                     myAdapter.notifyDataSetChanged()
                     binding.takeAttendanceStudentsNameRecyclerview.adapter = myAdapter
@@ -144,7 +144,7 @@ class TakeAttendanceFragment : Fragment() {
                 requireContext(),
                 { _, year, monthOfYear, dayOfMonth ->
                     binding.takeAttendanceSelectDateSpinner.text =
-                        ("$year-$monthOfYear-$dayOfMonth")
+                        ("$year - $monthOfYear - $dayOfMonth")
                     date = binding.takeAttendanceSelectDateSpinner.text as String
                 },
                 year,
@@ -284,28 +284,28 @@ class TakeAttendanceFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
 
-                    val topicsItems: ArrayList<Lecture_Type_Model> = ArrayList()
+                    val topicsName: ArrayList<String> = ArrayList()
+                    val topicsID: ArrayList<String> = ArrayList()
+
                     for (i in 0 until res.body()!!.size) {
-                        topicsItems.add(
-                            Lecture_Type_Model(
-                                res.body()!![i].topic_id,
-                                res.body()!![i].topic_name
-                            )
-                        )
-                        setTopicSpinner(topicsItems)
+                        topicsName.add(res.body()!![i].topic_name)
+                        topicsID.add(res.body()!![i].topic_id)
+                        setTopicSpinner(topicsName, topicsID)
                     }
                 }
 
             } else {
-//                val topicsItems: ArrayList<String> = ArrayList()
-//                topicsItems.add(" ")
-//                setTopicSpinner(topicsItems)
+                val topicsItems: ArrayList<String> = ArrayList()
+                val topicsID: ArrayList<String> = ArrayList()
+                topicsItems.add(" ")
+                topicsID.add(" ")
+                setTopicSpinner(topicsItems, topicsID)
             }
         }
 
     }
 
-    private fun setTopicSpinner(topicItem: ArrayList<Lecture_Type_Model>) {
+    private fun setTopicSpinner(topicItem: ArrayList<String>, topicsID: ArrayList<String>) {
 
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, topicItem)
@@ -317,14 +317,13 @@ class TakeAttendanceFragment : Fragment() {
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
-
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
                     id: Long
                 ) {
-                    topic_id = topicItem[position].topic_id
+                    topic_id = topicsID[position]
                 }
             }
 
