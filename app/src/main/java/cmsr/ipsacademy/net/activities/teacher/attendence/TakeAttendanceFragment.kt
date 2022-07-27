@@ -8,21 +8,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import cmsr.ipsacademy.net.activities.teacher.attendence.adapters.AttendancePanelViewAdapter
 import cmsr.ipsacademy.net.activities.teacher.attendence.adapters.TakeAttendanceStudentsListAdapter
+import cmsr.ipsacademy.net.activities.teacher.attendence.models.Lecture_Type_Model
 import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.FragmentTakeAttendanceBinding
+import cmsr.ipsacademy.net.helpers.AppConstants
+import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 import kotlin.collections.ArrayList
 
 class TakeAttendanceFragment : Fragment() {
@@ -32,11 +34,21 @@ class TakeAttendanceFragment : Fragment() {
     private lateinit var semester: String
     private lateinit var binding: FragmentTakeAttendanceBinding
     private lateinit var myAdapter: TakeAttendanceStudentsListAdapter
-
+    private lateinit var sharedPreferencesHelper: SharedPreferencesHelper
+    private lateinit var faculty_computer_code: String
+    private lateinit var date: String
+    private lateinit var lecture_type: String
+    private lateinit var time_slot_id: String
+    private lateinit var topic_id: String
+    private lateinit var lab_group: String
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedPreferencesHelper = SharedPreferencesHelper(requireContext())
+        sharedPreferencesHelper.getValueString(AppConstants.computer_code)
+            ?.let { faculty_computer_code = it }
 
         val arguments = this.arguments
         if (arguments != null) {
@@ -52,6 +64,43 @@ class TakeAttendanceFragment : Fragment() {
         selectToadyDate()
         getAllStudents()
         setupStudentsDetailsRecyclerView()
+        submitAttendance()
+
+    }
+
+    private fun submitAttendance() {
+
+        binding.takeAttendanceSubmitButton.setOnClickListener {
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                val res = controller.getInstance().create(ApiSet::class.java)
+                    .submitAttendance(
+                        batch_id,
+                        faculty_computer_code,
+                        date,
+                        lecture_type,
+                        time_slot_id,
+                        topic_id,
+                        "AB",
+                        "192.APP.IP"
+                    ).execute()
+
+                if (res.isSuccessful) {
+
+                    Log.d(
+                        "SUBMIT",
+                         res.body()
+                            .toString()
+                    )
+
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "Attendance Submit", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+
+        }
 
     }
 
@@ -95,7 +144,8 @@ class TakeAttendanceFragment : Fragment() {
                 requireContext(),
                 { _, year, monthOfYear, dayOfMonth ->
                     binding.takeAttendanceSelectDateSpinner.text =
-                        ("$dayOfMonth - $monthOfYear - $year")
+                        ("$year-$monthOfYear-$dayOfMonth")
+                    date = binding.takeAttendanceSelectDateSpinner.text as String
                 },
                 year,
                 month,
@@ -103,6 +153,7 @@ class TakeAttendanceFragment : Fragment() {
             )
             dpd.show()
         }
+
     }
 
     private fun setStudentGroup() {
@@ -151,6 +202,22 @@ class TakeAttendanceFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, timeItem)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.takeAttendanceSelectTimeSlotsSpinner.adapter = adapter
+
+        binding.takeAttendanceSelectTimeSlotsSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    time_slot_id = (position + 1).toString()
+                }
+            }
+
     }
 
     private fun getLectureType() {
@@ -169,7 +236,6 @@ class TakeAttendanceFragment : Fragment() {
                 withContext(Dispatchers.Main) {
 
                     val lectureItems: ArrayList<String> = ArrayList()
-
                     for (i in 0 until res.body()!!.size) {
                         lectureItems.add(res.body()!![i].lecture_type)
                         setLectureTypeSpinner(lectureItems)
@@ -186,6 +252,21 @@ class TakeAttendanceFragment : Fragment() {
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, lectureItems)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.takeAttendanceSelectLectureTypeSpinner.adapter = adapter
+
+        binding.takeAttendanceSelectLectureTypeSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    lecture_type = (position + 1).toString()
+                }
+            }
     }
 
     private fun getSelectTopics() {
@@ -203,28 +284,49 @@ class TakeAttendanceFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
 
-                    val topicsItems: ArrayList<String> = ArrayList()
+                    val topicsItems: ArrayList<Lecture_Type_Model> = ArrayList()
                     for (i in 0 until res.body()!!.size) {
-                        topicsItems.add(res.body()!![i].topic_name)
+                        topicsItems.add(
+                            Lecture_Type_Model(
+                                res.body()!![i].topic_id,
+                                res.body()!![i].topic_name
+                            )
+                        )
                         setTopicSpinner(topicsItems)
                     }
                 }
 
-            }else {
-                val topicsItems: ArrayList<String> = ArrayList()
-                topicsItems.add(" ")
-                setTopicSpinner(topicsItems)
+            } else {
+//                val topicsItems: ArrayList<String> = ArrayList()
+//                topicsItems.add(" ")
+//                setTopicSpinner(topicsItems)
             }
         }
 
     }
 
-    private fun setTopicSpinner(topicItem: ArrayList<String>) {
+    private fun setTopicSpinner(topicItem: ArrayList<Lecture_Type_Model>) {
 
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, topicItem)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         binding.takeAttendanceSubjectTopicSpinner.adapter = adapter
+
+        binding.takeAttendanceSubjectTopicSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    topic_id = topicItem[position].topic_id
+                }
+            }
 
     }
 

@@ -7,6 +7,7 @@ import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.lecture_category.LectureCategory
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.lecture_types.LectureTypes
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.students_by_batch_id.StudentByBatchId
+import cmsr.ipsacademy.net.activities.teacher.attendence.models.submit_attendance.AttendInfoRecord
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.time_slots.TimeSlots
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.topics.TopicsFromBatchId
 import retrofit2.http.FormUrlEncoded
@@ -68,5 +69,18 @@ interface ApiSet {
         @Field("batch_id") batch_id: String,
         @Field("semester") semester: String
     ): Call<StudentByBatchId>
+
+    @FormUrlEncoded
+    @POST("submit_set_attend_info_new.php")
+    fun submitAttendance(
+        @Field("batch_id") batchId: String,
+        @Field("faculty_computer_code") facultyComputerCode: String,
+        @Field("date") date: String,
+        @Field("lecture_type") lectureType: String,
+        @Field("time_slot_id") timeSlotId: String,
+        @Field("topic") topicId: String,
+        @Field("lab_group") labGroup: String,
+        @Field("ip") ip: String
+    ): Call<AttendInfoRecord>
 
 }
