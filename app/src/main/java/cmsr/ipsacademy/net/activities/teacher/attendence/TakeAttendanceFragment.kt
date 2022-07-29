@@ -20,6 +20,7 @@ import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.FragmentTakeAttendanceBinding
 import cmsr.ipsacademy.net.helpers.AppConstants
 import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -40,6 +41,9 @@ class TakeAttendanceFragment : Fragment() {
     private lateinit var time_slot_id: String
     private lateinit var topic_id: String
     private lateinit var lab_group: String
+    private val studentList: ArrayList<String> = ArrayList()
+    private val presentStudentList: ArrayList<String> = ArrayList()
+    private val absentStudentList: ArrayList<String> = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,18 +71,28 @@ class TakeAttendanceFragment : Fragment() {
         setupStudentsDetailsRecyclerView()
         submitAttendance()
 
+
     }
 
     private fun submitAttendance() {
 
+        var latest_record_id: String = "7854"
+
         binding.takeAttendanceSubmitButton.setOnClickListener {
+
+//            Log.e("present", presentStudentList.size.toString())
+//
+//            println(studentList.minus(presentStudentList.toSet()))
+//
+            absentStudentList.addAll(studentList.minus(presentStudentList.toSet()))
+//            println("Absent:   " + absentStudentList.toSet())
 
             lifecycleScope.launch(Dispatchers.IO) {
                 val res = controller.getInstance().create(ApiSet::class.java)
                     .submitAttendance(
                         batch_id,
                         faculty_computer_code,
-                        date,
+                        "2022-07-29",
                         lecture_type,
                         time_slot_id,
                         topic_id,
@@ -90,18 +104,39 @@ class TakeAttendanceFragment : Fragment() {
 
                     Log.d(
                         "SUBMIT",
-                         res.body()
+                        res.body()
                             .toString()
                     )
 
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Attendance Submit", Toast.LENGTH_SHORT)
+                        latest_record_id = res.body()!!.latest_id
+                        Toast.makeText(
+                            requireContext(),
+                            "Attendance Submit + ${latest_record_id}",
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 }
+
+                for (i in 0 until presentStudentList.size) {
+                    val comp = presentStudentList[i]
+                    Log.e("present", comp + latest_record_id)
+                    controller.getInstance().create(ApiSet::class.java)
+                        .presentStudent(comp, latest_record_id, "1").execute()
+                }
+
+                for (i in 0 until absentStudentList.size) {
+                    val comp = absentStudentList[i]
+                    Log.e("absent", comp + latest_record_id)
+                    controller.getInstance().create(ApiSet::class.java)
+                        .presentStudent(comp, latest_record_id, "0").execute()
+                }
+
             }
 
         }
+
 
     }
 
@@ -121,6 +156,10 @@ class TakeAttendanceFragment : Fragment() {
                     myAdapter.setData(res.body()!!)
                     myAdapter.notifyDataSetChanged()
                     binding.takeAttendanceStudentsNameRecyclerview.adapter = myAdapter
+
+                    for (i in 0 until res.body()!!.size) {
+                        studentList.add(res.body()!![i].computer_code)
+                    }
                 }
             }
         }
@@ -129,6 +168,13 @@ class TakeAttendanceFragment : Fragment() {
     private fun setupStudentsDetailsRecyclerView() {
         binding.takeAttendanceStudentsNameRecyclerview.layoutManager =
             LinearLayoutManager(requireContext())
+        myAdapter.setOnClickListener(object :
+            TakeAttendanceStudentsListAdapter.onItemClickListener {
+            override fun onItemClick(position: Int) {
+                presentStudentList.add(studentList[position])
+            }
+
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -199,7 +245,8 @@ class TakeAttendanceFragment : Fragment() {
     }
 
     private fun setTimeSlotSpinner(timeItem: java.util.ArrayList<String>) {
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, timeItem)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, timeItem)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.takeAttendanceSelectTimeSlotsSpinner.adapter = adapter
 
@@ -317,6 +364,7 @@ class TakeAttendanceFragment : Fragment() {
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
+
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,

@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -13,19 +12,18 @@
         android:text="S.No."
         android:textSize="18sp" />
 
-    <TextView
+    <CheckBox
         android:id="@+id/txtBatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@drawable/table_content_cell_bg"
         android:text="Batch"
-        android:textSize="18sp" />
+        android:textSize="18sp"/>
 
-    <CheckBox
-        android:id="@+id/student_mark_attendance_check_box"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColorHighlight="@color/cmsblue"/>
-
+        android:visibility="invisible"
+        android:id="@+id/compCode"/>
 </LinearLayout>
