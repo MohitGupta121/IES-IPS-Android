@@ -119,6 +119,8 @@ class TakeAttendanceFragment : Fragment() {
                     }
                 }
 
+                Log.e("students", "present:" + presentStudentList.size + "absent: " + absentStudentList.size)
+
                 for (i in 0 until presentStudentList.size) {
                     val comp = presentStudentList[i]
                     Log.e("present", comp + latest_record_id)
