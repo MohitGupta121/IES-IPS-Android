@@ -1,23 +1,14 @@
 package cmsr.ipsacademy.net.activities.teacher.attendence.adapters
 
 import android.content.Context
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.CompoundButton
-import android.widget.RadioGroup
 import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.students_by_batch_id.StudentByBatchIdItem
-import kotlinx.android.synthetic.main.attendance_panel_table_list.view.*
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.txtBatch
-import kotlinx.android.synthetic.main.attendance_panel_table_list.view.txtSNo
 import kotlinx.android.synthetic.main.attendance_student_table_list.view.*
-import javax.xml.transform.ErrorListener
 
 class TakeAttendanceStudentsListAdapter(val context: Context) :
     RecyclerView.Adapter<TakeAttendanceStudentsListAdapter.RowViewHolder>() {

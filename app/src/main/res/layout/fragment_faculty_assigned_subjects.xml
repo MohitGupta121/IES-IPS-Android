@@ -13,98 +13,23 @@
         android:layout_height="match_parent"
         tools:context=".activities.teacher.attendence.FacultyAssignedSubjectsFragment">
 
-        <!-- Table View-->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/headerTable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/txtSNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:background="@drawable/table_header_cell_bg"
-                        android:text="S.No."
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/txtBatch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:background="@drawable/table_header_cell_bg"
-                        android:text="Batch"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/txtDepartment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:background="@drawable/table_header_cell_bg"
-                        android:text="Department"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/txtSubject"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:background="@drawable/table_header_cell_bg"
-                        android:text="Subject"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        tools:ignore="RtlCompat" />
-
-                    <TextView
-                        android:id="@+id/txtSubjectCode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:background="@drawable/table_header_cell_bg"
-                        android:text="University Subject Code"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        tools:ignore="RtlCompat" />
-
-                    <TextView
-                        android:id="@+id/btnAction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:background="@drawable/table_header_cell_bg"
-                        android:text="Action"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        tools:ignore="RtlCompat" />
-
-                </LinearLayout>
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewAttendancePanel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/headerTable"
-                    tools:listitem="@layout/attendance_panel_table_list"
-                    android:nestedScrollingEnabled="false" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/attendance_panel_table_list" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </HorizontalScrollView>
 
     </FrameLayout>
 

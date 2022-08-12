@@ -25,13 +25,13 @@ class AttendancePanelViewAdapter(val context: Context) :
         return RowViewHolder(itemView)
     }
 
-    private fun setHeaderBg(view: View) {
-        view.setBackgroundResource(R.drawable.table_header_cell_bg)
-    }
-
-    private fun setContentBg(view: View) {
-        view.setBackgroundResource(R.drawable.table_content_cell_bg)
-    }
+//    private fun setHeaderBg(view: View) {
+//        view.setBackgroundResource(R.drawable.table_header_cell_bg)
+//    }
+//
+//    private fun setContentBg(view: View) {
+//        view.setBackgroundResource(R.drawable.table_content_cell_bg)
+//    }
 
     override fun onBindViewHolder(holder: RowViewHolder, position: Int) {
         val rowPos = holder.adapterPosition
@@ -39,14 +39,14 @@ class AttendancePanelViewAdapter(val context: Context) :
         val modal = myList[position]
 
         holder.itemView.apply {
-            setContentBg(txtSNo)
-            setContentBg(txtBatch)
-            setContentBg(txtDepartment)
-            setContentBg(txtSubject)
-            setContentBg(txtSubjectCode)
-            setContentBg(btnAction)
+//            setContentBg(txtSNo)
+//            setContentBg(txtBatch)
+//            setContentBg(txtDepartment)
+//            setContentBg(txtSubject)
+//            setContentBg(txtSubjectCode)
+//            setContentBg(btnAction)
 
-            txtSNo.text = (holder.adapterPosition + 1).toString()
+//            txtSNo.text = (holder.adapterPosition + 1).toString()
             txtBatch.text = modal.batch
             txtDepartment.text = modal.department
             txtSubject.text = modal.subject_name
