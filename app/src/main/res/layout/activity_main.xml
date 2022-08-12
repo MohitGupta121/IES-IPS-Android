@@ -86,16 +86,17 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/frame_layout_container"
-                    android:name="androidx.navigation.fragment.NavHostFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/headerLayout"
-                    app:navGraph="@navigation/nav_graph" />
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/frame_layout_container"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/headerLayout"
+                app:navGraph="@navigation/nav_graph" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearLayoutCompat"
@@ -137,7 +138,7 @@
             android:background="#22367F"
             android:theme="@style/NavigationView"
             app:itemIconTint="@color/white"
-            app:itemTextColor="#FFFFFF"
+            app:itemTextColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/student_menu" />
 
