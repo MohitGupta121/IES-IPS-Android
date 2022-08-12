@@ -59,7 +59,6 @@
                         android:layout_marginTop="12dp"
                         android:text="Select Topic *"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/take_attendance_subject_name_heading" />
 
@@ -84,7 +83,6 @@
                         android:layout_marginTop="12dp"
                         android:text="Enter Topic Manually *"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/take_attendance_subject_topic_spinner" />
 
@@ -96,6 +94,7 @@
                         android:layout_marginTop="4dp"
                         android:elevation="10dp"
                         android:layout_marginEnd="8dp"
+                        android:backgroundTint="#FDF9F9"
                         android:background="@drawable/spinner_background"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +108,6 @@
                         android:layout_marginTop="12dp"
                         android:text="Lecture Type *"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/take_attendance_subject_topic_manual_edit_text" />
 
@@ -134,7 +132,6 @@
                         android:layout_marginTop="12dp"
                         android:text="Select Time Slots *"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/take_attendance_select_lecture_type_spinner" />
 
@@ -160,7 +157,6 @@
                         android:layout_marginTop="12dp"
                         android:text="Group *"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/take_attendance_select_time_slots_spinner" />
 
@@ -185,21 +181,21 @@
                         android:layout_marginTop="12dp"
                         android:text="Date *"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/take_attendance_select_group_spinner" />
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <TextView
                         android:id="@+id/take_attendance_select_date_spinner"
-                        style="@style/Widget.AppCompat.Spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
-                        android:textAlignment="center"
-                        android:elevation="10dp"
-                        android:layout_marginEnd="8dp"
                         android:background="@drawable/spinner_background"
+                        android:elevation="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text6" />
 
