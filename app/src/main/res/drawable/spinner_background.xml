@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item><layer-list>
-        <item>
-            <shape>
-                <solid
-                    android:color="@color/white">
-                </solid>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape>
 
-                <corners android:radius="3dp" />
+            <solid android:color="#FDF9F9" />
 
-                <padding
-                    android:bottom="10dp"
-                    android:left="10dp"
-                    android:right="10dp"
-                    android:top="10dp" />
-                <stroke
-                    android:width="2dp"
-                    android:color="#6C000000"/>
-            </shape>
-        </item>
-        <!--        <item >-->
-        <!--            <bitmap android:gravity="bottom|right"-->
-        <!--                android:src="@drawable/ic_arrow_drop_down_black_24dp" />-->
-        <!--        </item>-->
-    </layer-list></item>
-</selector>
+            <size
+                android:width="150dp"
+                android:height="30dp" />
+            <corners
+                android:bottomLeftRadius="15dp"
+                android:bottomRightRadius="15dp"
+                android:topLeftRadius="15dp"
+                android:topRightRadius="15dp" />
+        </shape>
+    </item>
+
+    <item
+        android:end="18dp"
+        android:drawable="@drawable/ic_drop_down"
+        android:gravity="right"/>
+
+</layer-list>

@@ -65,10 +65,13 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/take_attendance_subject_topic_spinner"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
+                        android:elevation="10dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/spinner_background"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text1" />
@@ -87,10 +90,13 @@
 
                     <EditText
                         android:id="@+id/take_attendance_subject_topic_manual_edit_text"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
+                        android:elevation="10dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/spinner_background"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text2" />
@@ -109,10 +115,13 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/take_attendance_select_lecture_type_spinner"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
+                        android:elevation="10dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/spinner_background"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text3" />
@@ -131,10 +140,13 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/take_attendance_select_time_slots_spinner"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
+                        android:elevation="10dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/spinner_background"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text4" />
@@ -154,10 +166,13 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/take_attendance_select_group_spinner"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
+                        android:elevation="10dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/spinner_background"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text5" />
@@ -177,11 +192,14 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/take_attendance_select_date_spinner"
                         style="@style/Widget.AppCompat.Spinner"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
                         android:textAlignment="center"
+                        android:elevation="10dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/spinner_background"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text6" />
 
