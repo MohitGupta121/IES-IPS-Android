@@ -6,6 +6,7 @@ import cmsr.ipsacademy.net.activities.teacher.attendence.models.subjects.Faculty
 import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.lecture_category.LectureCategory
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.lecture_types.LectureTypes
+import cmsr.ipsacademy.net.activities.teacher.attendence.models.modify_attendance.ModifyAttendance
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.students_by_batch_id.StudentByBatchId
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.submit_attendance.AttendInfoRecord
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.submit_attendance.AttendInfoSubmit
@@ -91,5 +92,11 @@ interface ApiSet {
         @Field("attend_info_id") attend_info_id: String,
         @Field("is_attended") is_attended: String,
     ): Call<AttendInfoRecord>
+
+    @FormUrlEncoded
+    @POST("modify_attendance.php")
+    fun modifyAttendance(
+        @Field("batch_id") batch_id: String
+    ): Call<ModifyAttendance>
 
 }

@@ -88,6 +88,11 @@ class TakeAttendanceFragment : Fragment() {
 //            println("Absent:   " + absentStudentList.toSet())
 
             lifecycleScope.launch(Dispatchers.IO) {
+
+                var submitAction1 = false
+                var submitAction2 = false
+                var submitAction3 = false
+
                 val res = controller.getInstance().create(ApiSet::class.java)
                     .submitAttendance(
                         batch_id,
@@ -108,15 +113,17 @@ class TakeAttendanceFragment : Fragment() {
                             .toString()
                     )
 
-                    withContext(Dispatchers.Main) {
-                        latest_record_id = res.body()!!.latest_id
-                        Toast.makeText(
-                            requireContext(),
-                            "Attendance Submit + ${latest_record_id}",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
+                    submitAction1 = true
+
+//                    withContext(Dispatchers.Main) {
+//                        latest_record_id = res.body()!!.latest_id
+//                        Toast.makeText(
+//                            requireContext(),
+//                            "Attendance Submit + ${latest_record_id}",
+//                            Toast.LENGTH_SHORT
+//                        )
+//                            .show()
+//                    }
                 }
 
                 Log.e("students", "present:" + presentStudentList.size + "absent: " + absentStudentList.size)
@@ -124,15 +131,42 @@ class TakeAttendanceFragment : Fragment() {
                 for (i in 0 until presentStudentList.size) {
                     val comp = presentStudentList[i]
                     Log.e("present", comp + latest_record_id)
-                    controller.getInstance().create(ApiSet::class.java)
+                    val res2 = controller.getInstance().create(ApiSet::class.java)
                         .presentStudent(comp, latest_record_id, "1").execute()
+                    if (res2.isSuccessful)
+                        submitAction2 = true
                 }
 
                 for (i in 0 until absentStudentList.size) {
                     val comp = absentStudentList[i]
                     Log.e("absent", comp + latest_record_id)
-                    controller.getInstance().create(ApiSet::class.java)
+                    val res3 = controller.getInstance().create(ApiSet::class.java)
                         .presentStudent(comp, latest_record_id, "0").execute()
+                    if (res3.isSuccessful)
+                        submitAction3 = true
+                }
+
+                Log.e("action", submitAction1.toString() + submitAction2.toString() + submitAction3.toString())
+
+                if (submitAction1 && submitAction2 && submitAction3){
+
+                    val res3 = controller.getInstance().create(ApiSet::class.java)
+                        .modifyAttendance(batch_id).execute()
+                    if (res3.isSuccessful){
+                        Log.d(
+                            "MODIFY",
+                            res3.body()
+                                .toString()
+                        )
+                    }
+
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(
+                            requireContext(),
+                            "Modify Attendance + ${batch_id}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
             }
