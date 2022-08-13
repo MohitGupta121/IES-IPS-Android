@@ -130,7 +130,10 @@ class TakeAttendanceFragment : Fragment() {
 //                    }
                 }
 
-                Log.e("students", "present:" + presentStudentList.size + "absent: " + absentStudentList.size)
+                Log.e(
+                    "students",
+                    "present:" + presentStudentList.size + "absent: " + absentStudentList.size
+                )
 
                 for (i in 0 until presentStudentList.size) {
                     val comp = presentStudentList[i]
@@ -150,13 +153,16 @@ class TakeAttendanceFragment : Fragment() {
                         submitAction3 = true
                 }
 
-                Log.e("action", submitAction1.toString() + submitAction2.toString() + submitAction3.toString())
+                Log.e(
+                    "action",
+                    submitAction1.toString() + submitAction2.toString() + submitAction3.toString()
+                )
 
-                if (submitAction1 && submitAction2 && submitAction3){
+                if (submitAction1 && submitAction2 && submitAction3) {
 
                     val res3 = controller.getInstance().create(ApiSet::class.java)
                         .modifyAttendance(batch_id).execute()
-                    if (res3.isSuccessful){
+                    if (res3.isSuccessful) {
                         Log.d(
                             "MODIFY",
                             res3.body()
@@ -164,7 +170,7 @@ class TakeAttendanceFragment : Fragment() {
                         )
                     }
 
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
 
                         binding.progressSubmitAttendance.visibility = GONE
 

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
     android:layout_margin="8dp"
+    app:cardCornerRadius="10dp"
     app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,8 +23,8 @@
             android:id="@+id/student_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mohit Gupta"
             android:layout_marginStart="12dp"
+            android:text="Mohit Gupta"
             app:layout_constraintBottom_toBottomOf="@+id/check_box"
             app:layout_constraintStart_toEndOf="@+id/check_box"
             app:layout_constraintTop_toTopOf="@+id/check_box" />
