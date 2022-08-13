@@ -233,11 +233,11 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
                     <com.github.ybq.android.spinkit.SpinKitView
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:id="@+id/progress_submit_attendance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/SpinKitView.Large.Circle"
+                        style="@style/SpinKitView.Large.FadingCircle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:SpinKit_Color="#FF0000"
