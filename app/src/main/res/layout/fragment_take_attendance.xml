@@ -239,6 +239,7 @@
                     android:text="SUBMIT"
                     android:textColor="@color/white"
                     android:textStyle="bold"
+                    android:elevation="8dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
