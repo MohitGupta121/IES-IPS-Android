@@ -32,7 +32,7 @@ class AttendancePanelViewAdapter(val context: Context) :
 
         holder.itemView.apply {
 
-            txtBatch.text = modal.batch
+            student_name.text = modal.batch
             txtDepartment.text = modal.name
             txtSubject.text = modal.subject_name
             txtSubjectCode.text = modal.university_sub_code

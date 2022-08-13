@@ -17,5 +17,6 @@ data class StudentByBatchIdItem(
     val student_name: String,
     val student_session: String,
     val time_stamp: String,
-    val user_stamp: String
+    val user_stamp: String,
+    var isSelected: Boolean
 )

@@ -5,12 +5,14 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import cmsr.ipsacademy.net.R
+import cmsr.ipsacademy.net.activities.teacher.attendence.TakeAttendanceFragment
 import cmsr.ipsacademy.net.activities.teacher.attendence.models.students_by_batch_id.StudentByBatchIdItem
-import kotlinx.android.synthetic.main.attendance_panel_table_list.view.txtBatch
+import kotlinx.android.synthetic.main.attendance_panel_table_list.view.student_name
 import kotlinx.android.synthetic.main.attendance_student_table_list.view.*
 
-class TakeAttendanceStudentsListAdapter(val context: Context) :
+class TakeAttendanceStudentsListAdapter(val context: Context, val takeAttendanceFragment: TakeAttendanceFragment) :
     RecyclerView.Adapter<TakeAttendanceStudentsListAdapter.RowViewHolder>() {
 
     private lateinit var myList: List<StudentByBatchIdItem>
@@ -20,7 +22,7 @@ class TakeAttendanceStudentsListAdapter(val context: Context) :
         fun onItemClick(position: Int)
     }
 
-    fun setOnClickListener(listener: onItemClickListener){
+    fun setOnClickListener(listener: onItemClickListener) {
         mlistener = listener
     }
 
@@ -36,12 +38,26 @@ class TakeAttendanceStudentsListAdapter(val context: Context) :
         val modal = myList[position]
 
         holder.itemView.apply {
-            txtSNo.text = (holder.adapterPosition + 1).toString()
-            txtBatch.text = modal.student_name
+//            student_name.text = (holder.adapterPosition + 1).toString()
+            student_name.text = modal.student_name
         }
 
-        holder.itemView.txtBatch.setOnClickListener {
-               mlistener.onItemClick(holder.adapterPosition)
+        holder.itemView.check_box.isChecked = modal.isSelected
+
+        holder.itemView.check_box.setOnClickListener {
+
+            val attendCheckBox = it as CheckBox
+            val attendStudent = myList[holder.adapterPosition].computer_code
+
+            if (attendCheckBox.isChecked){
+                modal.isSelected = true
+                takeAttendanceFragment.presentStudentList.add(attendStudent)
+            }else if (!attendCheckBox.isChecked){
+                modal.isSelected = false
+                takeAttendanceFragment.presentStudentList.remove(attendStudent)
+            }
+
+//            mlistener.onItemClick(holder.adapterPosition)
         }
 
     }

@@ -42,14 +42,14 @@ class TakeAttendanceFragment : Fragment() {
     private lateinit var topic_id: String
     private lateinit var lab_group: String
     private val studentList: ArrayList<String> = ArrayList()
-    private val presentStudentList: ArrayList<String> = ArrayList()
+    val presentStudentList: ArrayList<String> = ArrayList()
     private val absentStudentList: ArrayList<String> = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        myAdapter = TakeAttendanceStudentsListAdapter(requireContext())
+        myAdapter = TakeAttendanceStudentsListAdapter(requireContext(), this)
 
         sharedPreferencesHelper = SharedPreferencesHelper(requireContext())
         sharedPreferencesHelper.getValueString(AppConstants.computer_code)
@@ -170,13 +170,13 @@ class TakeAttendanceFragment : Fragment() {
     private fun setupStudentsDetailsRecyclerView() {
         binding.takeAttendanceStudentsNameRecyclerview.layoutManager =
             LinearLayoutManager(requireContext())
-        myAdapter.setOnClickListener(object :
-            TakeAttendanceStudentsListAdapter.onItemClickListener {
-            override fun onItemClick(position: Int) {
-                presentStudentList.add(studentList[position])
-            }
-
-        })
+//        myAdapter.setOnClickListener(object :
+//            TakeAttendanceStudentsListAdapter.onItemClickListener {
+//            override fun onItemClick(position: Int) {
+//                presentStudentList.add(studentList[position])
+//            }
+//
+//        })
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
