@@ -119,15 +119,15 @@ class TakeAttendanceFragment : Fragment() {
 
                     submitAction1 = true
 
-//                    withContext(Dispatchers.Main) {
-//                        latest_record_id = res.body()!!.latest_id
+                    withContext(Dispatchers.Main) {
+                        latest_record_id = res.body()!!.latest_id
 //                        Toast.makeText(
 //                            requireContext(),
 //                            "Attendance Submit + ${latest_record_id}",
 //                            Toast.LENGTH_SHORT
 //                        )
 //                            .show()
-//                    }
+                    }
                 }
 
                 Log.e(

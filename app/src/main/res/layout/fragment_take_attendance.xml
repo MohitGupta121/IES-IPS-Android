@@ -237,7 +237,7 @@
                         style="@style/SpinKitView.Large.FadingCircle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:SpinKit_Color="#FF0000"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
