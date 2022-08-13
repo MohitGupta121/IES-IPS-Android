@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -87,6 +89,8 @@ class TakeAttendanceFragment : Fragment() {
             absentStudentList.addAll(studentList.minus(presentStudentList.toSet()))
 //            println("Absent:   " + absentStudentList.toSet())
 
+            binding.progressSubmitAttendance.visibility = VISIBLE
+
             lifecycleScope.launch(Dispatchers.IO) {
 
                 var submitAction1 = false
@@ -161,6 +165,9 @@ class TakeAttendanceFragment : Fragment() {
                     }
 
                     withContext(Dispatchers.Main){
+
+                        binding.progressSubmitAttendance.visibility = GONE
+
                         Toast.makeText(
                             requireContext(),
                             "Modify Attendance + ${batch_id}",
