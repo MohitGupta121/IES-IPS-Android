@@ -57,7 +57,7 @@ class TakeAttendanceStudentsListAdapter(val context: Context, val takeAttendance
                 takeAttendanceFragment.presentStudentList.remove(attendStudent)
             }
 
-//            mlistener.onItemClick(holder.adapterPosition)
+//           mlistener.onItemClick(holder.adapterPosition)
         }
 
     }
