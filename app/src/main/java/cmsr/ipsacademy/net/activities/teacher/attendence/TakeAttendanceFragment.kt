@@ -24,6 +24,7 @@ import cmsr.ipsacademy.net.helpers.AppConstants
 import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -65,14 +66,15 @@ class TakeAttendanceFragment : Fragment() {
         }
 
         getSelectTopics()
-        getLectureType()
+        getLectureCategory()
+//        getLectureType()
+//        setLectureTypeSpinner()
         getTimeSlots()
         setStudentGroup()
         selectToadyDate()
         getAllStudents()
         setupStudentsDetailsRecyclerView()
         submitAttendance()
-
 
     }
 
@@ -121,12 +123,6 @@ class TakeAttendanceFragment : Fragment() {
 
                     withContext(Dispatchers.Main) {
                         latest_record_id = res.body()!!.latest_id
-//                        Toast.makeText(
-//                            requireContext(),
-//                            "Attendance Submit + ${latest_record_id}",
-//                            Toast.LENGTH_SHORT
-//                        )
-//                            .show()
                     }
                 }
 
@@ -239,7 +235,7 @@ class TakeAttendanceFragment : Fragment() {
                 requireContext(),
                 { _, year, monthOfYear, dayOfMonth ->
                     binding.takeAttendanceSelectDateSpinner.text =
-                        ("$year - $monthOfYear - $dayOfMonth")
+                        ("$year - ${monthOfYear.plus(1)} - $dayOfMonth")
                     date = binding.takeAttendanceSelectDateSpinner.text as String
                 },
                 year,
@@ -316,34 +312,76 @@ class TakeAttendanceFragment : Fragment() {
 
     }
 
-    private fun getLectureType() {
+//    private fun getLectureType() {
+//
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            val res = controller.getInstance().create(ApiSet::class.java)
+//                .getLectureTypes().execute()
+//
+//            if (res.body() != null) {
+//                Log.d(
+//                    "SelectTopics",
+//                    "Topics-" + res.body()
+//                        .toString() + "\n" + res.body()!![0].lecture_type
+//                )
+//
+//                withContext(Dispatchers.Main) {
+//
+//                    val lectureItems: ArrayList<String> = ArrayList()
+//                    for (i in 0 until res.body()!!.size) {
+//                        lectureItems.add(res.body()!![i].lecture_type)
+//                        setLectureTypeSpinner(lectureItems)
+//                    }
+//
+//                }
+//            }
+//        }
+//
+//    }
+
+    private fun getLectureCategory() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             val res = controller.getInstance().create(ApiSet::class.java)
-                .getLectureTypes().execute()
+                .getLectureCategory(clg_sub_code).execute()
 
             if (res.body() != null) {
                 Log.d(
-                    "SelectTopics",
+                    "TTTTTTT",
                     "Topics-" + res.body()
-                        .toString() + "\n" + res.body()!![0].lecture_type
+                        .toString() + "\n" + res.body()!![0].type
                 )
 
+
                 withContext(Dispatchers.Main) {
-
-                    val lectureItems: ArrayList<String> = ArrayList()
-                    for (i in 0 until res.body()!!.size) {
-                        lectureItems.add(res.body()!![i].lecture_type)
-                        setLectureTypeSpinner(lectureItems)
-                    }
-
+                    setLectureTypeSpinner(res.body()!![0].type)
                 }
+
+
             }
         }
 
     }
 
-    private fun setLectureTypeSpinner(lectureItems: ArrayList<String>) {
+    private fun setLectureTypeSpinner(lect_cat: String) {
+
+        val lectureItems: ArrayList<String> = ArrayList()
+
+        if (lect_cat == "B") {
+            lectureItems.add("Theory")
+            lectureItems.add("Tutorial")
+            lectureItems.add("CBS")
+            lectureItems.add("MST")
+            lectureItems.add("Practical")
+        } else if (lect_cat == "T") {
+            lectureItems.add("Theory")
+            lectureItems.add("Tutorial")
+            lectureItems.add("CBS")
+            lectureItems.add("MST")
+        } else {
+            lectureItems.add("Practical")
+        }
+
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, lectureItems)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
