@@ -70,7 +70,7 @@ class TakeAttendanceFragment : Fragment() {
 //        getLectureType()
 //        setLectureTypeSpinner()
         getTimeSlots()
-        setStudentGroup()
+//        setStudentGroup(0)
         selectToadyDate()
         getAllStudents()
         setupStudentsDetailsRecyclerView()
@@ -247,12 +247,16 @@ class TakeAttendanceFragment : Fragment() {
 
     }
 
-    private fun setStudentGroup() {
+    private fun setStudentGroup(pos: Int) {
 
         val groupItems: ArrayList<String> = ArrayList()
-        groupItems.add("Both A & B")
-        groupItems.add("A")
-        groupItems.add("B")
+
+        if (pos==1){
+            groupItems.add("A")
+            groupItems.add("B")
+        }else{
+            groupItems.add("Both A & B")
+        }
 
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, groupItems)
@@ -398,6 +402,12 @@ class TakeAttendanceFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
+                    if (lectureItems[position].contentEquals("Practical")) {
+                        setStudentGroup(1)
+                    }else{
+                        setStudentGroup(0)
+                    }
+
                     lecture_type = (position + 1).toString()
                 }
             }
