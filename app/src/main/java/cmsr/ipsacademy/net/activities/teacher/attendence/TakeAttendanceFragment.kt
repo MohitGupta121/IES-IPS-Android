@@ -67,10 +67,6 @@ class TakeAttendanceFragment : Fragment() {
 
         getSelectTopics()
         getLectureCategory()
-//        getLectureType()
-//        setLectureTypeSpinner()
-        getTimeSlots()
-//        setStudentGroup(0)
         selectToadyDate()
         getAllStudents()
         setupStudentsDetailsRecyclerView()
@@ -94,8 +90,6 @@ class TakeAttendanceFragment : Fragment() {
             binding.progressSubmitAttendance.visibility = VISIBLE
 
             lifecycleScope.launch(Dispatchers.IO) {
-
-                Log.d("datelll", "date:- " + date)
 
                 var submitAction1 = false
                 var submitAction2 = false
@@ -184,7 +178,6 @@ class TakeAttendanceFragment : Fragment() {
 
         }
 
-
     }
 
     private fun getAllStudents() {
@@ -253,10 +246,10 @@ class TakeAttendanceFragment : Fragment() {
 
         val groupItems: ArrayList<String> = ArrayList()
 
-        if (pos==1){
+        if (pos == 1) {
             groupItems.add("A")
             groupItems.add("B")
-        }else{
+        } else {
             groupItems.add("Both A & B")
         }
 
@@ -267,35 +260,62 @@ class TakeAttendanceFragment : Fragment() {
 
     }
 
+    /**
+     * Get TimeSlot from API
+     *
     private fun getTimeSlots() {
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            val res = controller.getInstance().create(ApiSet::class.java)
-                .getTimeSlots().execute()
+    lifecycleScope.launch(Dispatchers.IO) {
+    val res = controller.getInstance().create(ApiSet::class.java)
+    .getTimeSlots().execute()
 
-            if (res.body() != null) {
-                Log.d(
-                    "SelectTopics",
-                    "Topics-" + res.body()
-                        .toString() + "\n"
-                )
+    if (res.body() != null) {
+    Log.d(
+    "SelectTopics",
+    "Topics-" + res.body()
+    .toString() + "\n"
+    )
 
-                withContext(Dispatchers.Main) {
+    withContext(Dispatchers.Main) {
 
-                    val lectureItems: ArrayList<String> = ArrayList()
+    val lectureItems: ArrayList<String> = ArrayList()
 
-                    for (i in 0 until res.body()!!.size) {
-                        lectureItems.add(res.body()!![i].start_time + " - " + res.body()!![i].end_time)
-                        setTimeSlotSpinner(lectureItems)
-                    }
-
-                }
-            }
-        }
-
+    for (i in 0 until res.body()!!.size) {
+    lectureItems.add(res.body()!![i].start_time + " - " + res.body()!![i].end_time)
+    setTimeSlotSpinner(lectureItems)
     }
 
-    private fun setTimeSlotSpinner(timeItem: java.util.ArrayList<String>) {
+    }
+    }
+    }
+    }
+
+     **/
+
+    private fun setTimeSlotSpinner(lect_type: Int) {
+
+        val timeItem: ArrayList<String> = ArrayList()
+
+//        if (lect_type==1){
+//            timeItem.add("09:45 AM - 10:35 AM")
+//            timeItem.add("10:35 AM - 11:25 AM")
+//            timeItem.add("11:25 AM - 12:20 PM")
+//            timeItem.add("12:20 PM - 01:10 PM")
+//            timeItem.add("01:40 PM - 02:30 PM")
+//            timeItem.add("02:30 PM - 03:20 PM")
+//            timeItem.add("03:20 PM - 04:05 PM")
+//            timeItem.add("04:05 PM - 04:50 PM")
+//        } else if (lect_type==2){
+//            timeItem.add("09:45 AM - 11:25 AM")
+//            timeItem.add("10:35 AM - 12:20 PM")
+//            timeItem.add("12:20 PM - 02:30 PM")
+//            timeItem.add("02:30 PM - 04:05 PM")
+//            timeItem.add("03:20 PM - 04:50 PM")
+//        } else if (lect_type==4){
+//            timeItem.add("09:45 AM - 01:10 AM")
+//            timeItem.add("10:35 PM - 04:50 PM")
+//        }
+
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, timeItem)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -318,32 +338,39 @@ class TakeAttendanceFragment : Fragment() {
 
     }
 
-//    private fun getLectureType() {
-//
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            val res = controller.getInstance().create(ApiSet::class.java)
-//                .getLectureTypes().execute()
-//
-//            if (res.body() != null) {
-//                Log.d(
-//                    "SelectTopics",
-//                    "Topics-" + res.body()
-//                        .toString() + "\n" + res.body()!![0].lecture_type
-//                )
-//
-//                withContext(Dispatchers.Main) {
-//
-//                    val lectureItems: ArrayList<String> = ArrayList()
-//                    for (i in 0 until res.body()!!.size) {
-//                        lectureItems.add(res.body()!![i].lecture_type)
-//                        setLectureTypeSpinner(lectureItems)
-//                    }
-//
-//                }
-//            }
-//        }
-//
-//    }
+    /**
+     * Lecture Type from API
+     *
+
+    private fun getLectureType() {
+
+    lifecycleScope.launch(Dispatchers.IO) {
+    val res = controller.getInstance().create(ApiSet::class.java)
+    .getLectureTypes().execute()
+
+    if (res.body() != null) {
+    Log.d(
+    "SelectTopics",
+    "Topics-" + res.body()
+    .toString() + "\n" + res.body()!![0].lecture_type
+    )
+
+    withContext(Dispatchers.Main) {
+
+    val lectureItems: ArrayList<String> = ArrayList()
+    for (i in 0 until res.body()!!.size) {
+    lectureItems.add(res.body()!![i].lecture_type)
+    setLectureTypeSpinner(lectureItems)
+    }
+
+    }
+    }
+    }
+
+    }
+
+     */
+
 
     private fun getLectureCategory() {
 
@@ -406,8 +433,22 @@ class TakeAttendanceFragment : Fragment() {
                 ) {
                     if (lectureItems[position].contentEquals("Practical")) {
                         setStudentGroup(1)
-                    }else{
+                    } else {
                         setStudentGroup(0)
+                    }
+
+                    if (lectureItems[position].contentEquals("Theory") || lectureItems[position].contentEquals(
+                            "CBS"
+                        )
+                    ) {
+                        setTimeSlotSpinner(1)
+                    } else if (lectureItems[position].contentEquals("Tutorial") || lectureItems[position].contentEquals(
+                            "Practical"
+                        )
+                    ) {
+                        setTimeSlotSpinner(2)
+                    } else {
+                        setTimeSlotSpinner(4)
                     }
 
                     lecture_type = (position + 1).toString()
