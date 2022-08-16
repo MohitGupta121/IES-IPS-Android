@@ -43,6 +43,8 @@ class TakeAttendanceStudentsListAdapter(
         holder.itemView.apply {
 //            student_name.text = (holder.adapterPosition + 1).toString()
             student_name.text = modal.student_name
+            student_enroll_number.text = modal.enrollment_no
+            student_lab_group.text = modal.lab_group_name
         }
 
         holder.itemView.check_box.isChecked = modal.isSelected

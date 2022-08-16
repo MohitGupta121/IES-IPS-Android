@@ -95,6 +95,8 @@ class TakeAttendanceFragment : Fragment() {
 
             lifecycleScope.launch(Dispatchers.IO) {
 
+                Log.d("datelll", "date:- " + date)
+
                 var submitAction1 = false
                 var submitAction2 = false
                 var submitAction3 = false
@@ -103,7 +105,7 @@ class TakeAttendanceFragment : Fragment() {
                     .submitAttendance(
                         batch_id,
                         faculty_computer_code,
-                        "2022-07-29",
+                        date,
                         lecture_type,
                         time_slot_id,
                         topic_id,
@@ -235,7 +237,7 @@ class TakeAttendanceFragment : Fragment() {
                 requireContext(),
                 { _, year, monthOfYear, dayOfMonth ->
                     binding.takeAttendanceSelectDateSpinner.text =
-                        ("$year - ${monthOfYear.plus(1)} - $dayOfMonth")
+                        ("$year-${monthOfYear.plus(1)}-$dayOfMonth")
                     date = binding.takeAttendanceSelectDateSpinner.text as String
                 },
                 year,
