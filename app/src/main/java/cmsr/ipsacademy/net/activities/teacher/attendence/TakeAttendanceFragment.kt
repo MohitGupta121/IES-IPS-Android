@@ -126,22 +126,30 @@ class TakeAttendanceFragment : Fragment() {
                     "present:" + presentStudentList.size + "absent: " + absentStudentList.size
                 )
 
-                for (i in 0 until presentStudentList.size) {
-                    val comp = presentStudentList[i]
-                    Log.e("present", comp + latest_record_id)
-                    val res2 = controller.getInstance().create(ApiSet::class.java)
-                        .presentStudent(comp, latest_record_id, "1").execute()
-                    if (res2.isSuccessful)
-                        submitAction2 = true
+                if (presentStudentList.isNotEmpty()){
+                    for (i in 0 until presentStudentList.size) {
+                        val comp = presentStudentList[i]
+                        Log.e("present", comp + latest_record_id)
+                        val res2 = controller.getInstance().create(ApiSet::class.java)
+                            .presentStudent(comp, latest_record_id, "1").execute()
+                        if (res2.isSuccessful)
+                            submitAction2 = true
+                    }
+                } else{
+                    submitAction2 = true
                 }
 
-                for (i in 0 until absentStudentList.size) {
-                    val comp = absentStudentList[i]
-                    Log.e("absent", comp + latest_record_id)
-                    val res3 = controller.getInstance().create(ApiSet::class.java)
-                        .presentStudent(comp, latest_record_id, "0").execute()
-                    if (res3.isSuccessful)
-                        submitAction3 = true
+                if (absentStudentList.isNotEmpty()){
+                    for (i in 0 until absentStudentList.size) {
+                        val comp = absentStudentList[i]
+                        Log.e("absent", comp + latest_record_id)
+                        val res3 = controller.getInstance().create(ApiSet::class.java)
+                            .presentStudent(comp, latest_record_id, "0").execute()
+                        if (res3.isSuccessful)
+                            submitAction3 = true
+                    }
+                } else {
+                    submitAction3 = true
                 }
 
                 Log.e(
