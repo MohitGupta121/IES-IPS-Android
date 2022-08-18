@@ -73,4 +73,5 @@ class FacultyAssignedSubjectsFragment : Fragment() {
         binding = fragmentBinding
         return fragmentBinding.root
     }
+
 }
