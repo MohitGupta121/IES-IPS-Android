@@ -103,7 +103,7 @@ class TakeAttendanceFragment : Fragment() {
                         lecture_type,
                         time_slot_id,
                         topic_id,
-                        lab_group,
+                        "AB",
                         "192.APP.IP"
                     ).execute()
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cmsr.ipsacademy.net.activities.teacher.attendance.adapters.AttendancePanelViewAdapter
+import cmsr.ipsacademy.net.activities.teacher.attendance.adapters.ModifyAttendanceAdapter
 import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.FragmentModifyAttendanceBinding
@@ -26,7 +27,7 @@ class ModifyAttendanceFragment : Fragment() {
 
         val arguments = this.arguments
         if (arguments != null) {
-            batch_id = arguments.getString("batch_id").toString()
+            val batch_id = arguments.getString("batch_id").toString()
             modifyAttendance(batch_id)
         }
 
@@ -47,10 +48,10 @@ class ModifyAttendanceFragment : Fragment() {
                         .toString()
                 )
                 withContext(Dispatchers.Main) {
-                    myAdapter = AttendancePanelViewAdapter(requireContext())
+                    myAdapter = ModifyAttendanceAdapter(requireContext())
                     myAdapter.setData(res.body()!!)
                     myAdapter.notifyDataSetChanged()
-                    binding.recyclerViewAttendancePanel.adapter = myAdapter
+                    binding.recyclerViewModifyAttendance.adapter = myAdapter
                 }
 
             }
