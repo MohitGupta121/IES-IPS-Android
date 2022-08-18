@@ -12,6 +12,8 @@ import cmsr.ipsacademy.net.activities.teacher.attendance.TakeAttendanceFragment
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.modify_attendance.ModifyAttendanceItem
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.subjects.FacultySubjectDetailsModelItem
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.*
+import kotlinx.android.synthetic.main.attendance_panel_table_list.view.txtSubject
+import kotlinx.android.synthetic.main.modify_attendance_rv_item.view.*
 
 class ModifyAttendanceAdapter(val context: Context) :
     RecyclerView.Adapter<ModifyAttendanceAdapter.ViewHolder>() {
@@ -33,8 +35,14 @@ class ModifyAttendanceAdapter(val context: Context) :
 
         holder.itemView.apply {
 
-            txtDepartment.text = modal.subject_name
-            txtSubject.text = modal.total_present
+            txtSubject.text = modal.subject_name
+            txtBatch.text = modal.batch
+            txtTopic.text = modal.topic_name
+            txtLabGroup.text = modal.lab_group
+            txtPresent.text = modal.total_present
+            txtDate.text = modal.date
+            txtTime.text = modal.time_slot
+            txtLecture.text = modal.lecture
 
         }
     }

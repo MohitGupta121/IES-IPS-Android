@@ -17,14 +17,14 @@
             android:id="@+id/txt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Batch - "
+            android:text="Subject - "
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/student_name"
+            android:id="@+id/txtSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" B1"
@@ -38,14 +38,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Department - "
+            android:text="Batch - "
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt1" />
 
         <TextView
-            android:id="@+id/txtDepartment"
+            android:id="@+id/txtBatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="false"
@@ -61,14 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Subject - "
+            android:text="Topic - "
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt2" />
 
         <TextView
-            android:id="@+id/txtSubject"
+            android:id="@+id/txtTopic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Programming and Problem Solving"
@@ -82,14 +82,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Subject Code - "
+            android:text="Lab Group - "
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt3" />
 
         <TextView
-            android:id="@+id/txtSubjectCode"
+            android:id="@+id/txtLabGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" ESC-102"
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Lab Group"
+            android:text="Present - "
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txt6"
@@ -112,7 +112,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt4" />
 
         <TextView
-            android:id="@+id/LabGroup"
+            android:id="@+id/txtPresent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AB"
@@ -126,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Present"
+            android:text="Date - "
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txt7"
@@ -134,7 +134,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt5" />
 
         <TextView
-            android:id="@+id/Present"
+            android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="63"
@@ -149,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Date-"
+            android:text="Time - "
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txt8"
@@ -157,7 +157,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt6" />
 
         <TextView
-            android:id="@+id/Date"
+            android:id="@+id/txtTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" 19-Aug-2022"
@@ -171,7 +171,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Time-"
+            android:text="Lecture - "
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/action"
@@ -179,7 +179,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt7" />
 
         <TextView
-            android:id="@+id/Time"
+            android:id="@+id/txtLecture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" 1:40 PM - 3:20 PM"

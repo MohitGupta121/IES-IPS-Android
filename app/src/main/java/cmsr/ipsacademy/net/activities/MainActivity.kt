@@ -18,6 +18,7 @@ import cmsr.ipsacademy.net.helpers.SharedPreferencesHelper
 import cmsr.ipsacademy.net.api.controller
 import cmsr.ipsacademy.net.databinding.ActivityMainBinding
 import cmsr.ipsacademy.net.helpers.AppConstants
+import kotlinx.android.synthetic.main.fragment_first.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                     .getStudentDetails(computer_code).execute()
 
                 if (res.body() != null)
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         binding.name.text = res.body()!!.student_info[0].student_name
                     }
             }
@@ -98,8 +99,9 @@ class MainActivity : AppCompatActivity() {
                     .getFacultyDetails(computer_code).execute()
 
                 if (res.body() != null) {
-                    withContext(Dispatchers.Main){
-                        binding.name.text = res.body()!!.faculty_info[0].first_name + " " + res.body()!!.faculty_info[0].last_name
+                    withContext(Dispatchers.Main) {
+                        binding.name.text =
+                            res.body()!!.faculty_info[0].first_name + " " + res.body()!!.faculty_info[0].last_name
                     }
                 }
             }
