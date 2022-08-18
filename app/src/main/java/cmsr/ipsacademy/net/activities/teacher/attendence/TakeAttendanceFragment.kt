@@ -181,7 +181,7 @@ class TakeAttendanceFragment : Fragment() {
 
     private fun selectAllStudents() {
 
-        binding.takeAttendanceSelectAllStudent.setOnClickListener{
+        binding.takeAttendanceSelectAllStudent.setOnClickListener {
 
             val attendCheckBox = it as CheckBox
 
@@ -315,7 +315,7 @@ class TakeAttendanceFragment : Fragment() {
 
         val timeItem: ArrayList<String> = ArrayList()
 
-        if (lect_type==1){
+        if (lect_type == 1) {
             timeItem.add("09:45 AM - 10:35 AM")
             timeItem.add("10:35 AM - 11:25 AM")
             timeItem.add("11:25 AM - 12:20 PM")
