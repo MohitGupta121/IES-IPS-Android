@@ -224,6 +224,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/take_attendance_select_all_student"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                        app:layout_constraintStart_toEndOf="@+id/textView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/take_attendance_students_name_recyclerview"
                         android:layout_width="match_parent"

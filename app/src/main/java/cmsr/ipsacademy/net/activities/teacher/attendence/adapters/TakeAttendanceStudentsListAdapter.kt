@@ -1,6 +1,7 @@
 package cmsr.ipsacademy.net.activities.teacher.attendence.adapters
 
 import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,8 @@ class TakeAttendanceStudentsListAdapter(
     val takeAttendanceFragment: TakeAttendanceFragment
 ) :
     RecyclerView.Adapter<TakeAttendanceStudentsListAdapter.RowViewHolder>() {
+
+    var selectAllStudent: Boolean = false
 
     private lateinit var myList: List<StudentByBatchIdItem>
     private lateinit var mlistener: onItemClickListener
@@ -48,6 +51,17 @@ class TakeAttendanceStudentsListAdapter(
         }
 
         holder.itemView.check_box.isChecked = modal.isSelected
+
+        Log.d("selectall", selectAllStudent.toString()  +  takeAttendanceFragment.presentStudentList.size.toString())
+
+        if (selectAllStudent){
+            modal.isSelected = true
+            holder.itemView.check_box.isChecked = true
+
+        }else {
+            modal.isSelected = false
+            holder.itemView.check_box.isChecked = false
+        }
 
         holder.itemView.check_box.setOnClickListener {
 

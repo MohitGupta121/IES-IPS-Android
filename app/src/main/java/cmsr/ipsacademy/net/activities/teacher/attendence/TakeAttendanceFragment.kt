@@ -10,9 +10,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,6 +68,7 @@ class TakeAttendanceFragment : Fragment() {
         selectToadyDate()
         getAllStudents()
         setupStudentsDetailsRecyclerView()
+        selectAllStudents()
         submitAttendance()
 
     }
@@ -176,6 +175,26 @@ class TakeAttendanceFragment : Fragment() {
 
             }
 
+        }
+
+    }
+
+    private fun selectAllStudents() {
+
+        binding.takeAttendanceSelectAllStudent.setOnClickListener{
+
+            val attendCheckBox = it as CheckBox
+
+            if (attendCheckBox.isChecked) {
+                myAdapter.selectAllStudent = true
+                myAdapter.notifyDataSetChanged()
+                presentStudentList.addAll(studentList)
+
+            } else if (!attendCheckBox.isChecked) {
+                myAdapter.selectAllStudent = false
+                myAdapter.notifyDataSetChanged()
+                presentStudentList.removeAll(studentList.toSet())
+            }
         }
 
     }
@@ -296,16 +315,17 @@ class TakeAttendanceFragment : Fragment() {
 
         val timeItem: ArrayList<String> = ArrayList()
 
-//        if (lect_type==1){
-//            timeItem.add("09:45 AM - 10:35 AM")
-//            timeItem.add("10:35 AM - 11:25 AM")
-//            timeItem.add("11:25 AM - 12:20 PM")
-//            timeItem.add("12:20 PM - 01:10 PM")
-//            timeItem.add("01:40 PM - 02:30 PM")
-//            timeItem.add("02:30 PM - 03:20 PM")
-//            timeItem.add("03:20 PM - 04:05 PM")
-//            timeItem.add("04:05 PM - 04:50 PM")
-//        } else if (lect_type==2){
+        if (lect_type==1){
+            timeItem.add("09:45 AM - 10:35 AM")
+            timeItem.add("10:35 AM - 11:25 AM")
+            timeItem.add("11:25 AM - 12:20 PM")
+            timeItem.add("12:20 PM - 01:10 PM")
+            timeItem.add("01:40 PM - 02:30 PM")
+            timeItem.add("02:30 PM - 03:20 PM")
+            timeItem.add("03:20 PM - 04:05 PM")
+            timeItem.add("04:05 PM - 04:50 PM")
+        }
+//        else if (lect_type==2){
 //            timeItem.add("09:45 AM - 11:25 AM")
 //            timeItem.add("10:35 AM - 12:20 PM")
 //            timeItem.add("12:20 PM - 02:30 PM")
