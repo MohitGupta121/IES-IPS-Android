@@ -52,11 +52,6 @@ class TakeAttendanceStudentsListAdapter(
 
         holder.itemView.check_box.isChecked = modal.isSelected
 
-        Log.d(
-            "selectall",
-            selectAllStudent.toString() + takeAttendanceFragment.presentStudentList.size.toString()
-        )
-
         if (selectAllStudent) {
             modal.isSelected = true
             holder.itemView.check_box.isChecked = true
