@@ -2,16 +2,16 @@ package cmsr.ipsacademy.net.api
 
 import cmsr.ipsacademy.net.activities.models.LoginModel
 import cmsr.ipsacademy.net.activities.models.faculty.FacultyInfoModel
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.subjects.FacultySubjectDetailsModel
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.subjects.FacultySubjectDetailsModel
 import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.lecture_category.LectureCategory
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.lecture_types.LectureTypes
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.modify_attendance.ModifyAttendance
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.students_by_batch_id.StudentByBatchId
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.submit_attendance.AttendInfoRecord
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.submit_attendance.AttendInfoSubmit
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.time_slots.TimeSlots
-import cmsr.ipsacademy.net.activities.teacher.attendence.models.topics.TopicsFromBatchId
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.lecture_category.LectureCategory
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.lecture_types.LectureTypes
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.modify_attendance.ModifyAttendance
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.students_by_batch_id.StudentByBatchId
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.submit_attendance.AttendInfoRecord
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.submit_attendance.AttendInfoSubmit
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.time_slots.TimeSlots
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.topics.TopicsFromBatchId
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 import retrofit2.Call

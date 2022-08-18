@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".activities.teacher.attendence.TeacherFragment"
+            android:name=".activities.teacher.attendance.TeacherFragment"
             android:exported="true"/>
         <activity
             android:name=".activities.hod.HodActivity"

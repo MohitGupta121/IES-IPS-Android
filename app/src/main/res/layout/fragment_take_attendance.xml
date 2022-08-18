@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
         android:elevation="-10dp"
-        tools:context=".activities.teacher.attendence.TakeAttendanceFragment">
+        tools:context=".activities.teacher.attendance.TakeAttendanceFragment">
 
 
         <ScrollView
