@@ -51,9 +51,9 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_40sdp"
                 android:fontFamily="@font/varela_round"
-                android:text="@string/name"
-                android:textColor="#FF0000"
+                android:text="@string/name"              
                 android:textSize="@dimen/_20ssp" />
+                android:textColor="@color/btn_red_color" />
 
             <TextView
                 android:id="@+id/designation"
@@ -85,9 +85,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_marginTop="@dimen/_50sdp"
-        android:background="#22367F"
+        android:background="@color/cmsblue"
         app:itemIconTint="@color/white"
-        app:itemTextColor="#FFFFFF"
+        app:itemTextColor="@color/white"
         app:menu="@menu/student_menu" />
 
 

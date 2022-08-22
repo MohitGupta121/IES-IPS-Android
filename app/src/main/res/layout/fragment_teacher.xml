@@ -36,10 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:background="#22367F"
+        android:layout_marginTop="@dimen/_50sdp"        
+        android:background="@color/cmsblue"
         app:itemIconTint="@color/white"
-        app:itemTextColor="#FFFFFF"
+        app:itemTextColor="@color/white"
         app:menu="@menu/teacher_menu"
         tools:ignore="MissingConstraints" />
 
