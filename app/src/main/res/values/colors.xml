@@ -9,11 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="cmsblue">#22367F</color>
     <color name="bg_color">#d3d3d3</color>
-    <color name="red_color">#FF0000</color>
+    <color name="btn_red_color">#FF0000</color>
     <color name="dark_grey_color">#707070</color>
-    <color name="dark_blue_color">#22367F</color>
     <color name="color_black">#000000</color>
-    <color name="light_blue_color">#46b8da</color>
+    <color name="btn_light_blue_color">#46b8da</color>
     <color name="color_light_green">#5cb85c</color>
     <color name="light_grey_color">#10000000</color>
+    <color name="color_spinner_background">#FDF9F9</color>
 </resources>
