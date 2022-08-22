@@ -61,7 +61,7 @@
                         android:layout_marginRight="60dp"
                         android:fontFamily="@font/varela_round"
                         android:text=""
-                        android:textColor="#FF0000"
+                        android:textColor="@color/btn_red_color"
                         android:textSize="20dp" />
 
                     <TextView
@@ -119,7 +119,7 @@
                         android:fontFamily="@font/varela_round"
                         android:text="@string/Hyperlink"
                         android:textAlignment="center"
-                        android:textColor="#707070"
+                        android:textColor="@color/dark_grey_color"
                         android:textSize="12dp" />
 
                 </androidx.cardview.widget.CardView>
@@ -136,7 +136,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:layout_marginTop="60dp"
-            android:background="#22367F"
+            android:background="@color/cmsblue"
             android:theme="@style/NavigationView"
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/white"

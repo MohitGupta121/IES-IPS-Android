@@ -34,7 +34,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_marginTop="60dp"
-        android:background="#22367F"
+        android:background="@color/cmsblue"
         app:itemIconTint="@color/white"
         app:itemTextColor="#FFFFFF"
         app:menu="@menu/principal_menu" />
