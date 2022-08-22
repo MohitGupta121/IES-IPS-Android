@@ -12,11 +12,9 @@ import cmsr.ipsacademy.net.activities.teacher.attendance.models.students_by_batc
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.student_name
 import kotlinx.android.synthetic.main.attendance_student_table_list.view.*
 
-class TakeAttendanceStudentsListAdapter(
-    val context: Context,
-    private val takeAttendanceFragment: TakeAttendanceFragment
-) :
-    RecyclerView.Adapter<TakeAttendanceStudentsListAdapter.RowViewHolder>() {
+class UpdateAttendanceStudentsListAdapter(
+    val context: Context) :
+    RecyclerView.Adapter<UpdateAttendanceStudentsListAdapter.RowViewHolder>() {
 
     var selectAllStudent: Boolean = false
 
@@ -51,14 +49,14 @@ class TakeAttendanceStudentsListAdapter(
 
         holder.itemView.check_box.isChecked = modal.isSelected
 
-        if (selectAllStudent) {
-            modal.isSelected = true
-            holder.itemView.check_box.isChecked = true
-
-        } else {
-            modal.isSelected = false
-            holder.itemView.check_box.isChecked = false
-        }
+//        if (selectAllStudent) {
+//            modal.isSelected = true
+//            holder.itemView.check_box.isChecked = true
+//
+//        } else {
+//            modal.isSelected = false
+//            holder.itemView.check_box.isChecked = false
+//        }
 
         holder.itemView.check_box.setOnClickListener {
 
@@ -67,10 +65,10 @@ class TakeAttendanceStudentsListAdapter(
 
             if (attendCheckBox.isChecked) {
                 modal.isSelected = true
-                takeAttendanceFragment.presentStudentList.add(attendStudent)
+//                takeAttendanceFragment.presentStudentList.add(attendStudent)
             } else if (!attendCheckBox.isChecked) {
                 modal.isSelected = false
-                takeAttendanceFragment.presentStudentList.remove(attendStudent)
+//                takeAttendanceFragment.presentStudentList.remove(attendStudent)
             }
 
 //           mlistener.onItemClick(holder.adapterPosition)
