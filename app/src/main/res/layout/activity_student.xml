@@ -52,7 +52,7 @@
                 android:layout_marginRight="60dp"
                 android:fontFamily="@font/varela_round"
                 android:text="@string/name"
-                android:textColor="#FF0000"
+                android:textColor="@color/red_color"
                 android:textSize="20dp" />
 
             <TextView
@@ -85,9 +85,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_marginTop="60dp"
-        android:background="#22367F"
+        android:background="@color/dark_blue_color"
         app:itemIconTint="@color/white"
-        app:itemTextColor="#FFFFFF"
+        app:itemTextColor="@color/white"
         app:menu="@menu/student_menu" />
 
 
