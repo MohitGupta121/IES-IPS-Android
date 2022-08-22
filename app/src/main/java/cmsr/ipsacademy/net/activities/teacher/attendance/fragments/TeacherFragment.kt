@@ -1,4 +1,4 @@
-package cmsr.ipsacademy.net.activities.teacher.attendance
+package cmsr.ipsacademy.net.activities.teacher.attendance.fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

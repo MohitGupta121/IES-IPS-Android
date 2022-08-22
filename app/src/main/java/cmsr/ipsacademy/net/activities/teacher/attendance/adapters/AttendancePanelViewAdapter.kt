@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.activities.teacher.attendance.ModifyAttendanceFragment
+import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.ModifyAttendanceFragment
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.subjects.FacultySubjectDetailsModelItem
-import cmsr.ipsacademy.net.activities.teacher.attendance.TakeAttendanceFragment
+import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.TakeAttendanceFragment
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.*
 
 class AttendancePanelViewAdapter(val context: Context) :

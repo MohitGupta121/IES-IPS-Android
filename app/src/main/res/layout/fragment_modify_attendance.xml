@@ -11,7 +11,7 @@
         android:id="@+id/modify_attendance_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.teacher.attendance.ModifyAttendanceFragment">
+        tools:context=".activities.teacher.attendance.fragments.ModifyAttendanceFragment">
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/progress_modify_attendance_data"

@@ -1,4 +1,4 @@
-package cmsr.ipsacademy.net.activities.teacher.attendance
+package cmsr.ipsacademy.net.activities.teacher.attendance.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import cmsr.ipsacademy.net.activities.teacher.attendance.adapters.AttendancePanelViewAdapter
 import cmsr.ipsacademy.net.activities.teacher.attendance.adapters.ModifyAttendanceAdapter
 import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller

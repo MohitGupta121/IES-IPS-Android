@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import cmsr.ipsacademy.net.R
-import cmsr.ipsacademy.net.activities.teacher.attendance.TakeAttendanceFragment
+import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.TakeAttendanceFragment
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.students_by_batch_id.StudentByBatchIdItem
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.student_name
 import kotlinx.android.synthetic.main.attendance_student_table_list.view.*

@@ -1,4 +1,4 @@
-package cmsr.ipsacademy.net.activities.teacher.attendance
+package cmsr.ipsacademy.net.activities.teacher.attendance.fragments
 
 import android.app.DatePickerDialog
 import android.os.Build
@@ -12,7 +12,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cmsr.ipsacademy.net.R
