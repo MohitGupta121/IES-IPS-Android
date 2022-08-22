@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -37,17 +39,22 @@ class ModifyAttendanceFragment : Fragment() {
 
     private fun modifyAttendance(batch_id: String) {
 
+        binding.progressModifyAttendanceData.visibility = VISIBLE
+
         lifecycleScope.launch(Dispatchers.IO) {
             val res = controller.getInstance().create(ApiSet::class.java)
                 .modifyAttendance(batch_id).execute()
 
-            if (res.body() != null) {
+            if (res.isSuccessful) {
                 Log.d(
                     "MODIFY",
                     res.body()
                         .toString()
                 )
+
                 withContext(Dispatchers.Main) {
+                    binding.progressModifyAttendanceData.visibility = GONE
+
                     myAdapter = ModifyAttendanceAdapter(requireContext())
                     myAdapter.setData(res.body()!!)
                     myAdapter.notifyDataSetChanged()
