@@ -26,21 +26,21 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="75dp">
+            android:layout_height="@dimen/_60sdp">
 
             <ImageView
                 android:id="@+id/calender"
-                android:layout_width="60dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="15dp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:src="@drawable/ic_baseline_calendar_month_24" />
 
             <ImageView
                 android:id="@+id/dropdown"
-                android:layout_width="60dp"
-                android:layout_height="42dp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_gravity="right"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
             <TextView
@@ -48,23 +48,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="60dp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_40sdp"
                 android:fontFamily="@font/varela_round"
                 android:text="@string/name"
                 android:textColor="#FF0000"
-                android:textSize="20dp" />
+                android:textSize="@dimen/_20ssp" />
 
             <TextView
                 android:id="@+id/designation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="60dp"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginRight="@dimen/_40sdp"
                 android:fontFamily="@font/varela_round"
                 android:text="Student"
-                android:textSize="10dp" />
+                android:textSize="@dimen/_10ssp" />
 
         </androidx.cardview.widget.CardView>
 
@@ -74,7 +74,7 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="@dimen/_50sdp"
             app:navGraph="@navigation/nav_graph" />
 
     </LinearLayout>
@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="@dimen/_50sdp"
         android:background="#22367F"
         app:itemIconTint="@color/white"
         app:itemTextColor="#FFFFFF"

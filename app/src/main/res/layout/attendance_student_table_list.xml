@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:padding="@dimen/_8sdp">
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/check_box"
@@ -23,8 +23,9 @@
             android:id="@+id/student_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/_12sdp"
             android:text="Mohit Gupta"
+            android:textSize="@dimen/_11ssp"
             app:layout_constraintBottom_toBottomOf="@+id/check_box"
             app:layout_constraintStart_toEndOf="@+id/check_box"
             app:layout_constraintTop_toTopOf="@+id/check_box" />
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="025836974123"
+            android:textSize="@dimen/_11ssp"
             app:layout_constraintBottom_toBottomOf="@+id/student_lab_group"
             app:layout_constraintEnd_toStartOf="@+id/student_lab_group"
             app:layout_constraintStart_toEndOf="@+id/student_name"
@@ -43,8 +45,9 @@
             android:id="@+id/student_lab_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:text="A"
+            android:textSize="@dimen/_11ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@drawable/ies_toolbar_image"
-                android:elevation="20dp"
+                android:elevation="@dimen/_20sdp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
                 android:id="@+id/headerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="20dp"
+                android:elevation="@dimen/_20sdp"
                 app:layout_constraintTop_toBottomOf="@+id/toolBar">
 
                 <androidx.cardview.widget.CardView
@@ -46,10 +46,10 @@
 
                     <Spinner
                         android:id="@+id/profile_dropdown"
-                        android:layout_width="60dp"
-                        android:layout_height="48dp"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_48sdp"
                         android:layout_gravity="right"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:entries="@array/profile_dropdown" />
 
                     <TextView
@@ -57,29 +57,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="60dp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_60sdp"
                         android:fontFamily="@font/varela_round"
                         android:text=""
                         android:textColor="#FF0000"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/_20ssp" />
 
                     <TextView
                         android:id="@+id/role"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginRight="60dp"
+                        android:layout_marginTop="@dimen/_50sdp"
+                        android:layout_marginRight="@dimen/_60sdp"
                         android:fontFamily="@font/varela_round"
                         android:text=""
-                        android:textSize="10dp" />
+                        android:textSize="@dimen/_10ssp" />
 
                     <Spinner
                         android:id="@+id/spinner2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_margin="18dp"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_margin="@dimen/_18sdp"
                         android:background="@drawable/ic_calender_main_activity" />
 
                 </androidx.cardview.widget.CardView>
@@ -102,7 +102,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearLayoutCompat"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="@dimen/_80sdp"
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <androidx.cardview.widget.CardView
@@ -120,7 +120,7 @@
                         android:text="@string/Hyperlink"
                         android:textAlignment="center"
                         android:textColor="#707070"
-                        android:textSize="12dp" />
+                        android:textSize="@dimen/_12ssp" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="@dimen/_60sdp"
             android:background="#22367F"
             android:theme="@style/NavigationView"
             app:itemIconTint="@color/white"

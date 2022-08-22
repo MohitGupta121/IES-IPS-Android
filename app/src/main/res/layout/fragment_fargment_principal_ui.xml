@@ -21,8 +21,8 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginRight="@dimen/_50sdp"
             android:background="@drawable/calogo"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="@dimen/_50sdp"
         android:background="#22367F"
         app:itemIconTint="@color/white"
         app:itemTextColor="#FFFFFF"
