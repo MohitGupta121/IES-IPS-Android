@@ -3,7 +3,7 @@
     <item>
         <shape>
 
-            <solid android:color="#FDF9F9" />
+            <solid android:color="@color/color_spinner_background" />
 
             <size
                 android:width="150dp"
