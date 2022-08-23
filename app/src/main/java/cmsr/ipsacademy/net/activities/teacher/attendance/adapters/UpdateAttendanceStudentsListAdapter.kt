@@ -8,17 +8,19 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.TakeAttendanceFragment
+import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.ViewAttendanceUpdate
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.modify_attendance.UpdateAttendanceItem
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.students_by_batch_id.StudentByBatchIdItem
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.student_name
 import kotlinx.android.synthetic.main.attendance_student_table_list.view.*
 
 class UpdateAttendanceStudentsListAdapter(
-    val context: Context) :
+    val context: Context, private val updateAttendanceFragment: ViewAttendanceUpdate) :
     RecyclerView.Adapter<UpdateAttendanceStudentsListAdapter.RowViewHolder>() {
 
     var selectAllStudent: Boolean = false
 
-    private lateinit var myList: List<StudentByBatchIdItem>
+    private lateinit var myList: List<UpdateAttendanceItem>
     private lateinit var mlistener: onItemClickListener
 
     interface onItemClickListener {
@@ -42,12 +44,14 @@ class UpdateAttendanceStudentsListAdapter(
 
         holder.itemView.apply {
 //            student_name.text = (holder.adapterPosition + 1).toString()
-            student_name.text = modal.student_name
-            student_enroll_number.text = modal.enrollment_no
-            student_lab_group.text = modal.lab_group_name
+            student_name.text = modal.name
+            student_enroll_number.text = modal.uno
+            student_lab_group.text = modal.student_computer_code
         }
 
         holder.itemView.check_box.isChecked = modal.isSelected
+
+        modal.isSelected = modal.attend.contentEquals("1")
 
 //        if (selectAllStudent) {
 //            modal.isSelected = true
@@ -61,14 +65,14 @@ class UpdateAttendanceStudentsListAdapter(
         holder.itemView.check_box.setOnClickListener {
 
             val attendCheckBox = it as CheckBox
-            val attendStudent = myList[holder.adapterPosition].computer_code
+            val attendStudent = myList[holder.adapterPosition].student_computer_code
 
             if (attendCheckBox.isChecked) {
                 modal.isSelected = true
-//                takeAttendanceFragment.presentStudentList.add(attendStudent)
+                updateAttendanceFragment.presentStudentList.add(attendStudent)
             } else if (!attendCheckBox.isChecked) {
                 modal.isSelected = false
-//                takeAttendanceFragment.presentStudentList.remove(attendStudent)
+                updateAttendanceFragment.presentStudentList.remove(attendStudent)
             }
 
 //           mlistener.onItemClick(holder.adapterPosition)
@@ -76,7 +80,7 @@ class UpdateAttendanceStudentsListAdapter(
 
     }
 
-    fun setData(newList: List<StudentByBatchIdItem>) {
+    fun setData(newList: List<UpdateAttendanceItem>) {
         myList = newList
         notifyDataSetChanged()
     }

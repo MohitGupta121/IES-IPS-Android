@@ -14,7 +14,7 @@ import cmsr.ipsacademy.net.activities.teacher.attendance.models.modify_attendanc
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.txtSubject
 import kotlinx.android.synthetic.main.modify_attendance_rv_item.view.*
 
-class ModifyAttendanceAdapter(val context: Context) :
+class ModifyAttendanceAdapter(val context: Context, val semester: String) :
     RecyclerView.Adapter<ModifyAttendanceAdapter.ViewHolder>() {
 
 
@@ -48,7 +48,7 @@ class ModifyAttendanceAdapter(val context: Context) :
             val fragment: ViewAttendanceUpdate = ViewAttendanceUpdate.newInstance()
             val activity = it.context as AppCompatActivity
             val bundle = Bundle()
-            bundle.putString("batch_id", modal.batch_id)
+            bundle.putString("attend_info", modal.attend_info)
             fragment.arguments = bundle
             activity.supportFragmentManager.beginTransaction()
                 .replace(R.id.frame_layout_container, fragment).addToBackStack(null).commit()

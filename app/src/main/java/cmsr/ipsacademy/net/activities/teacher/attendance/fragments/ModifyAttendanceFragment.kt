@@ -22,6 +22,7 @@ class ModifyAttendanceFragment : Fragment() {
 
     private lateinit var binding: FragmentModifyAttendanceBinding
     private lateinit var myAdapter: ModifyAttendanceAdapter
+    private lateinit var semester: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,6 +30,7 @@ class ModifyAttendanceFragment : Fragment() {
         val arguments = this.arguments
         if (arguments != null) {
             val batch_id = arguments.getString("batch_id").toString()
+            semester = arguments.getString("semester").toString()
             modifyAttendance(batch_id)
         }
 
@@ -54,7 +56,7 @@ class ModifyAttendanceFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     binding.progressModifyAttendanceData.visibility = GONE
 
-                    myAdapter = ModifyAttendanceAdapter(requireContext())
+                    myAdapter = ModifyAttendanceAdapter(requireContext(), semester)
                     myAdapter.setData(res.body()!!)
                     myAdapter.notifyDataSetChanged()
                     binding.recyclerViewModifyAttendance.adapter = myAdapter

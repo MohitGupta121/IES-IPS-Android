@@ -73,6 +73,7 @@ class TakeAttendanceFragment : Fragment() {
 
     }
 
+
     private fun submitAttendance() {
 
         var latest_record_id: String = "7854"
@@ -238,6 +239,7 @@ class TakeAttendanceFragment : Fragment() {
 
                     for (i in 0 until res.body()!!.size) {
                         studentList.add(res.body()!![i].computer_code)
+
                     }
                 }
             }
