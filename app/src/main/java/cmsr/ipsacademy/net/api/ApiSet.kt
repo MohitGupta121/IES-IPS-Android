@@ -7,6 +7,8 @@ import cmsr.ipsacademy.net.activities.models.student.StudentInfoModel
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.lecture_category.LectureCategory
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.lecture_types.LectureTypes
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.modify_attendance.ModifyAttendance
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.modify_attendance.StudentUpdateAttendance
+import cmsr.ipsacademy.net.activities.teacher.attendance.models.modify_attendance.UpdateAttendance
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.students_by_batch_id.StudentByBatchId
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.submit_attendance.AttendInfoRecord
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.submit_attendance.AttendInfoSubmit
@@ -98,5 +100,19 @@ interface ApiSet {
     fun modifyAttendance(
         @Field("batch_id") batch_id: String
     ): Call<ModifyAttendance>
+
+    @FormUrlEncoded
+    @POST("update_view_attendance.php")
+    fun updateViewAttendance(
+        @Field("attend_info") attend_info: String
+    ): Call<UpdateAttendance>
+
+    @FormUrlEncoded
+    @POST("update_student_attendance.php")
+    fun updateStudentAttendance(
+        @Field("is_attend") is_attend: String,
+        @Field("attend_info") attend_info: String,
+        @Field("student_comp_code") student_comp_code: String
+    ): Call<StudentUpdateAttendance>
 
 }
