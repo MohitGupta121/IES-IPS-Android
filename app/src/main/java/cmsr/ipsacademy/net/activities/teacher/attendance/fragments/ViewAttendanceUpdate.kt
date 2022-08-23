@@ -62,7 +62,7 @@ class ViewAttendanceUpdate : Fragment() {
                             .updateStudentAttendance("1", attend_info, comp).execute()
                         if (res2.isSuccessful)
                             Log.e("updatePresent: ", res2.body().toString())
-                            submitAction2 = true
+                        submitAction2 = true
                     }
                 } else {
                     submitAction2 = true
@@ -74,7 +74,7 @@ class ViewAttendanceUpdate : Fragment() {
 
                         val res2 = controller.getInstance().create(ApiSet::class.java)
                             .updateStudentAttendance("0", attend_info, comp).execute()
-                        if (res2.isSuccessful){
+                        if (res2.isSuccessful) {
                             Log.e("updatePresent: ", res2.body().toString())
                             submitAction2 = true
                         }
@@ -139,7 +139,8 @@ class ViewAttendanceUpdate : Fragment() {
     }
 
     private fun setupRecyclerview() {
-        binding.updateAttendanceStudentsNameRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        binding.updateAttendanceStudentsNameRecyclerview.layoutManager =
+            LinearLayoutManager(requireContext())
     }
 
     companion object {

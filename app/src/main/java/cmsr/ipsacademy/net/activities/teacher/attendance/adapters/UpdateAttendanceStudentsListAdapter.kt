@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.attendance_panel_table_list.view.student_n
 import kotlinx.android.synthetic.main.attendance_student_table_list.view.*
 
 class UpdateAttendanceStudentsListAdapter(
-    val context: Context, private val updateAttendanceFragment: ViewAttendanceUpdate) :
+    val context: Context, private val updateAttendanceFragment: ViewAttendanceUpdate
+) :
     RecyclerView.Adapter<UpdateAttendanceStudentsListAdapter.RowViewHolder>() {
 
     var selectAllStudent: Boolean = false
@@ -43,15 +44,12 @@ class UpdateAttendanceStudentsListAdapter(
         val modal = myList[position]
 
         holder.itemView.apply {
-//            student_name.text = (holder.adapterPosition + 1).toString()
             student_name.text = modal.name
             student_enroll_number.text = modal.uno
             student_lab_group.text = modal.student_computer_code
         }
 
         holder.itemView.check_box.isChecked = modal.isSelected
-
-//        modal.isSelected = modal.attend.contentEquals("1")
 
         if (modal.attend.contentEquals("1") || modal.isSelected) {
             modal.isSelected = true
@@ -77,7 +75,6 @@ class UpdateAttendanceStudentsListAdapter(
                 updateAttendanceFragment.absentStudentList.add(attendStudent)
             }
 
-//           mlistener.onItemClick(holder.adapterPosition)
         }
 
     }
