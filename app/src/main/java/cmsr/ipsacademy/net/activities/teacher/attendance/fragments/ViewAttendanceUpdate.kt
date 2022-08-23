@@ -25,7 +25,7 @@ class ViewAttendanceUpdate : Fragment() {
     private lateinit var attend_info: String
     private val studentList: ArrayList<String> = ArrayList()
     val presentStudentList: ArrayList<String> = ArrayList()
-    private val absentStudentList: ArrayList<String> = ArrayList()
+    val absentStudentList: ArrayList<String> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,13 +48,6 @@ class ViewAttendanceUpdate : Fragment() {
         binding.updateAttendanceSubmitButton.setOnClickListener {
 
             Log.e("present", presentStudentList.size.toString())
-//
-//            println(studentList.minus(presentStudentList.toSet()))
-//
-            absentStudentList.addAll(studentList.minus(presentStudentList.toSet()))
-            println("Absent:   " + absentStudentList.toSet())
-
-//            binding.progressSubmitAttendance.visibility = View.VISIBLE
 
             lifecycleScope.launch(Dispatchers.IO) {
 
@@ -66,8 +59,9 @@ class ViewAttendanceUpdate : Fragment() {
                         val comp = presentStudentList[i]
 
                         val res2 = controller.getInstance().create(ApiSet::class.java)
-                            .updateStudentAttendance(attend_info, "1", comp).execute()
+                            .updateStudentAttendance("1", attend_info, comp).execute()
                         if (res2.isSuccessful)
+                            Log.e("updatePresent: ", res2.body().toString())
                             submitAction2 = true
                     }
                 } else {
@@ -79,7 +73,7 @@ class ViewAttendanceUpdate : Fragment() {
                         val comp = absentStudentList[i]
 
                         val res2 = controller.getInstance().create(ApiSet::class.java)
-                            .updateStudentAttendance(attend_info, "0", comp).execute()
+                            .updateStudentAttendance("0", attend_info, comp).execute()
                         if (res2.isSuccessful){
                             Log.e("updatePresent: ", res2.body().toString())
                             submitAction2 = true
@@ -95,32 +89,18 @@ class ViewAttendanceUpdate : Fragment() {
                     submitAction2.toString() + submitAction3.toString()
                 )
 
-//                if (submitAction2 && submitAction3) {
-//
-//                    val res3 = controller.getInstance().create(ApiSet::class.java)
-//                        .modifyAttendance(batch_id).execute()
-//                    if (res3.isSuccessful) {
-//                        Log.d(
-//                            "MODIFY",
-//                            res3.body()
-//                                .toString()
-//                        )
-//                    }
-//
-//                    withContext(Dispatchers.Main) {
-//
-//                        binding.progressSubmitAttendance.visibility = View.GONE
-//
-//                        Toast.makeText(
-//                            requireContext(),
-//                            "Modify Attendance + ${batch_id}",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//
-//                        openModifyAttendance(batch_id)
-//
-//                    }
-//                }
+                if (submitAction2 && submitAction3) {
+
+                    withContext(Dispatchers.Main) {
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Attendance Updated",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+                }
 
             }
 
