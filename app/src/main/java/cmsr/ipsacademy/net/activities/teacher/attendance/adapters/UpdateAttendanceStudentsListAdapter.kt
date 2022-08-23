@@ -51,16 +51,16 @@ class UpdateAttendanceStudentsListAdapter(
 
         holder.itemView.check_box.isChecked = modal.isSelected
 
-        modal.isSelected = modal.attend.contentEquals("1")
+//        modal.isSelected = modal.attend.contentEquals("1")
 
-//        if (selectAllStudent) {
-//            modal.isSelected = true
-//            holder.itemView.check_box.isChecked = true
-//
-//        } else {
-//            modal.isSelected = false
-//            holder.itemView.check_box.isChecked = false
-//        }
+        if (modal.attend.contentEquals("1") || modal.isSelected) {
+            modal.isSelected = true
+            holder.itemView.check_box.isChecked = true
+
+        } else {
+            modal.isSelected = false
+            holder.itemView.check_box.isChecked = false
+        }
 
         holder.itemView.check_box.setOnClickListener {
 
@@ -70,9 +70,11 @@ class UpdateAttendanceStudentsListAdapter(
             if (attendCheckBox.isChecked) {
                 modal.isSelected = true
                 updateAttendanceFragment.presentStudentList.add(attendStudent)
+                updateAttendanceFragment.absentStudentList.remove(attendStudent)
             } else if (!attendCheckBox.isChecked) {
                 modal.isSelected = false
                 updateAttendanceFragment.presentStudentList.remove(attendStudent)
+                updateAttendanceFragment.absentStudentList.add(attendStudent)
             }
 
 //           mlistener.onItemClick(holder.adapterPosition)
