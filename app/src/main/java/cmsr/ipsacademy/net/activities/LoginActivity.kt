@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.widget.Button
 import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.api.ApiSet
 import cmsr.ipsacademy.net.api.controller
@@ -24,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
     private var editTextComputerCode: EditText? = null
     private var editTextPassword: EditText? = null
-    private var loginButton: ImageView? = null
+    private var loginButton: Button? = null
     private var sharedPreference: SharedPreferencesHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
