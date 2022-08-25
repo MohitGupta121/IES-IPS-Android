@@ -44,6 +44,9 @@ public class UserActivity extends AppCompatActivity {
             if (sharedPreferencesHelper.getValueString(AppConstants.user_role).equals("Principal")) {
                 FirebaseMessaging.getInstance().subscribeToTopic("all");
             }
+            if (sharedPreferencesHelper.getValueString(AppConstants.user_role).equals("Student")) {
+                FirebaseMessaging.getInstance().subscribeToTopic("teacherNoti");
+            }
         }catch (Exception e){
             Log.e("e", e.toString());
         }
@@ -58,8 +61,8 @@ public class UserActivity extends AppCompatActivity {
                         notificationTitle.setText("");
                         notificationMessage.setText("");
                     }
-                    if (sharedPreferencesHelper.getValueString(AppConstants.user_role).equals("HOD")) {
-                        FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/all", notificationTitle.getText().toString(), notificationMessage.getText().toString(), getApplicationContext(), UserActivity.this);
+                    if (sharedPreferencesHelper.getValueString(AppConstants.user_role).equals("Teacher")) {
+                        FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/teacherNoti", notificationTitle.getText().toString(), notificationMessage.getText().toString(), getApplicationContext(), UserActivity.this);
                         notificationsSender.SendNotifications();
                         notificationTitle.setText("");
                         notificationMessage.setText("");
