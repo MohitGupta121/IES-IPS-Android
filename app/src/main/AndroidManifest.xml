@@ -16,14 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".activities.Teacher.TeacherFragment"
+            android:name=".activities.teacher.attendance.fragments.TeacherFragment"
             android:exported="true"/>
         <activity
-            android:name=".activities.HOD.HodActivity"
+            android:name=".activities.hod.HodActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

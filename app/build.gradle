@@ -70,6 +70,17 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //Progress Bar
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
+    //For ssdp Layout
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+    implementation 'com.intuit.ssp:ssp-android:1.1.0'
+
+
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subject - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" B1"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/txt1"
+            app:layout_constraintStart_toEndOf="@+id/txt1"
+            app:layout_constraintTop_toTopOf="@+id/txt1" />
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Batch - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt1" />
+
+        <TextView
+            android:id="@+id/txtBatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text=" Computer Science and Engineering"
+            android:textColor="@color/black"
+            app:flow_verticalBias="1.0"
+            app:layout_constraintBottom_toBottomOf="@+id/txt2"
+            app:layout_constraintStart_toEndOf="@+id/txt2"
+            app:layout_constraintTop_toTopOf="@+id/txt2" />
+
+        <TextView
+            android:id="@+id/txt3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Topic - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt2" />
+
+        <TextView
+            android:id="@+id/txtTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Programming and Problem Solving"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/txt3"
+            app:layout_constraintStart_toEndOf="@+id/txt3"
+            app:layout_constraintTop_toTopOf="@+id/txt3" />
+
+        <TextView
+            android:id="@+id/txt4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Lab Group - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt3" />
+
+        <TextView
+            android:id="@+id/txtLabGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ESC-102"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/txt4"
+            app:layout_constraintStart_toEndOf="@+id/txt4"
+            app:layout_constraintTop_toTopOf="@+id/txt4" />
+
+
+        <TextView
+            android:id="@+id/txt5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Present - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txt6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt4" />
+
+        <TextView
+            android:id="@+id/txtPresent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AB"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/txt5"
+            app:layout_constraintStart_toEndOf="@+id/txt5"
+            app:layout_constraintTop_toTopOf="@+id/txt5" />
+
+        <TextView
+            android:id="@+id/txt6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Date - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txt7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt5" />
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="63"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/txt6"
+            app:layout_constraintStart_toEndOf="@+id/txt6"
+            app:layout_constraintTop_toTopOf="@+id/txt6" />
+
+
+        <TextView
+            android:id="@+id/txt7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Time - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txt8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt6" />
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 19-Aug-2022"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/txt7"
+            app:layout_constraintStart_toEndOf="@+id/txt7"
+            app:layout_constraintTop_toTopOf="@+id/txt7" />
+
+        <TextView
+            android:id="@+id/txt8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Lecture - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/action"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt7" />
+
+        <TextView
+            android:id="@+id/txtLecture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 1:40 PM - 3:20 PM"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/txt8"
+            app:layout_constraintStart_toEndOf="@+id/txt8"
+            app:layout_constraintTop_toTopOf="@+id/txt8" />
+
+        <TextView
+            android:id="@+id/action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Action - "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt8" />
+
+        <TextView
+            android:id="@+id/modify_attendance_particular_subject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/btn_light_blue_color"
+            android:elevation="10dp"
+            android:padding="6dp"
+            android:text="Modify"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/action"
+            app:layout_constraintStart_toEndOf="@+id/action"
+            app:layout_constraintTop_toTopOf="@+id/action"
+            app:layout_constraintVertical_bias="0.478" />
+
+        <TextView
+            android:id="@+id/view_attendance_particular_subject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/btn_red_color"
+            android:elevation="10dp"
+            android:layout_marginEnd="20dp"
+            android:padding="6dp"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/modify_attendance_particular_subject_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/modify_attendance_particular_subject_button"
+            app:layout_constraintTop_toTopOf="@+id/modify_attendance_particular_subject_button" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

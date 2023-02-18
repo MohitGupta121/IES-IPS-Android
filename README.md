@@ -1,6 +1,8 @@
 # IES IPS CMS
 Android application to manage student, teachers, HOD in college.
 
+<!-- https://youtu.be/X3cpe1vOYPU -->
+
 ![Build](https://github.com/MohitGupta121/DiseaseDetection/workflows/Build/badge.svg?branch=main)
 
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -45,7 +47,7 @@ Android application to manage student, teachers, HOD in college.
 
 # Package Structure
     
-    dev.hellosagar.assigmenthub    # Root Package
+    cmsr.ipsacademy.net    # Root Package
     .
     ├── data                # For data handling.
     │   └── repository      # Single source of data.   
@@ -131,7 +133,7 @@ SOFTWARE.
 
         git push  
         
-        
+    
          
 <h2>Contributors:</h2>
 

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Select Report"
-            android:textColor="#FF0000"
+            android:textColor="@color/btn_red_color"
             android:textSize="30sp" />
 
         <androidx.cardview.widget.CardView

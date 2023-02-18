@@ -1,66 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     tools:context=".activities.UserActivity">
 
     <TextView
         android:id="@+id/SignIn"
         android:layout_width="match_parent"
         android:layout_height="82dp"
-        android:text="Notification"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:layout_margin="50dp"
+
         android:gravity="center"
+        android:text="Message"
         android:textAlignment="center"
-        android:textSize="36sp" />
-
-    <EditText
-        android:id="@+id/noti_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/SignIn"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#30ffffff"
-        android:drawablePadding="15dp"
-        android:hint="Title"
-        android:padding="20dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
-
-    <EditText
-        android:id="@+id/noti_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/noti_title"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#30ffffff"
-        android:drawablePadding="15dp"
-        android:hint="Message"
-        android:padding="20dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/noti_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/noti_message"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/teal_200"
+        android:backgroundTint="@color/btn_light_blue_color"
         android:text="send"
         android:textAlignment="center"
-        android:textColor="#5E35B1" />
+        android:textColor="#5E35B1"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:elevation="2dp"
+        android:layout_margin="15dp"
+        app:layout_constraintTop_toBottomOf="@id/SignIn">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/noti_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/SignIn"
+            android:background="@drawable/edit_text_background"
+            android:drawablePadding="15dp"
+            android:hint="Title"
+            android:layout_margin="15dp"
+            android:padding="20dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <EditText
+            android:id="@+id/noti_message"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/noti_title"
+            android:background="@drawable/edit_text_background"
+            android:drawablePadding="15dp"
+            android:hint="Message"
+            android:padding="10dp"
+            android:lines="10"
+            android:minLines="5"
+            android:gravity="top|left"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
