@@ -11,6 +11,8 @@ import cmsr.ipsacademy.net.R
 import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.ModifyAttendanceFragment
 import cmsr.ipsacademy.net.activities.teacher.attendance.models.subjects.FacultySubjectDetailsModelItem
 import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.TakeAttendanceFragment
+import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.ViewAttendanceUpdate.Companion.newInstance
+import cmsr.ipsacademy.net.activities.teacher.attendance.fragments.ViewAttendenceFacultyFragment
 import kotlinx.android.synthetic.main.attendance_panel_table_list.view.*
 
 class AttendancePanelViewAdapter(val context: Context) :
@@ -56,6 +58,15 @@ class AttendancePanelViewAdapter(val context: Context) :
                 val bundle = Bundle()
                 bundle.putString("batch_id", modal.batch_id)
                 bundle.putString("semester", modal.semester)
+                fragment.arguments = bundle
+                activity.supportFragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout_container, fragment).addToBackStack(null).commit()
+            }
+            view_attendance_particular_subject_button.setOnClickListener {
+                val fragment:ViewAttendenceFacultyFragment = ViewAttendenceFacultyFragment.newInstance()
+                val activity = it.context as AppCompatActivity
+                val bundle = Bundle()
+                bundle.putString("batch_id", modal.batch_id)
                 fragment.arguments = bundle
                 activity.supportFragmentManager.beginTransaction()
                     .replace(R.id.frame_layout_container, fragment).addToBackStack(null).commit()
