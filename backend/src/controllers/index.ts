@@ -1,0 +1,10 @@
+export { default as authController } from './auth.controller';
+export { default as studentController } from './student.controller';
+export { default as facultyController } from './Faculty/faculty.controller'
+export { default as batchController } from './Faculty/batch.controller'
+export { default as studentReportController } from './Student/Result.controller'
+export { default as studentfeedbackController } from './Student/feedback.controller'
+export { default as commonController } from './common.contoller'
+export { default as notificationController } from './Faculty/notification.contoller'
+export { default as attendanceController } from './Faculty/attendance.controller'
+export { default as lmsController } from './Faculty/lms.controller'

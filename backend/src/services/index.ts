@@ -1,0 +1,12 @@
+export { default as authService } from './auth.service';
+export { default as userService } from './user.service';
+export { default as emailService } from './email.service';
+export { default as studentService } from './student.service';
+export { default as facultyService } from './faculty/faculty.service'
+export { default as attendanceService } from './faculty/attendance.service'
+export { default as studentReportService } from './Student/Result.service'
+export { default as studentFeedbackService } from './Student/Feedback'
+export { default as lmsService } from './faculty/lms.service'
+export { default as studentAttendanceService } from './Student/CumullativeAttendance'
+export { default as commonService } from './common.service'
+export { default as notificationService } from './faculty/notification.service'

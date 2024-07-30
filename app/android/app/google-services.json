@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "553132109928",
+    "project_id": "cms-fcm-1b68d",
+    "storage_bucket": "cms-fcm-1b68d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:553132109928:android:3a95aa2968f0da53264bdd",
+        "android_client_info": {
+          "package_name": "com.cms_react_native"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "553132109928-5o18pjug9rjalub77daj0barq9lj8plq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAHeymY_0bgJZduDVVUplNPBb-tVCSB44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "553132109928-5o18pjug9rjalub77daj0barq9lj8plq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/DMSans-Italic-VariableFont_opsz,wght.ttf",
+      "sha1": "00b55563b41311b9021be08aeaaf91bd4727c6f7"
+    },
+    {
+      "path": "assets/fonts/DMSans-VariableFont_opsz,wght.ttf",
+      "sha1": "bd912858c0f8887c01a56b09e6b1ca1cf81418ee"
+    }
+  ]
+}

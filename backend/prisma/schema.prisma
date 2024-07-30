@@ -1,0 +1,2143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ATKT {
+  id                      Int      @id @default(autoincrement())
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(32)
+  department_id           Int
+  specialisation          Int      @default(0)
+  batch_id                Int
+  semester                Int
+  college_subject_code    String   @db.VarChar(50)
+  university_subject_code String   @db.VarChar(50)
+  subject_type            String   @db.VarChar(11)
+  orignal_session         Int
+  current_session         Int
+  earn_credit             Int
+  total_credit            Int
+  grade                   String?  @default("0") @db.VarChar(50)
+  earn_marks              Int
+  result                  String   @db.VarChar(11)
+  eligible                Int
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+  exam_form               Int?
+  form_forward            Int?
+}
+
+model academic_session {
+  academic_session_id Int     @id @default(autoincrement())
+  academic_session    String  @db.VarChar(32)
+  active              Boolean
+}
+
+model add_atkt_result {
+  id                      Int      @id @default(autoincrement())
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(32)
+  department_id           Int
+  batch_id                Int
+  semester                Int
+  college_subject_code    String   @db.VarChar(50)
+  university_subject_code String   @db.VarChar(50)
+  subject_type            String   @db.VarChar(11)
+  earn_credit             Int
+  grade                   String   @db.VarChar(11)
+  total_credit            Int
+  result                  String   @db.VarChar(50)
+  earn_marks              Int
+  academic_session        Int
+  grace_marks             Int?     @default(0)
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_cat1i {
+  api_data_id Int
+  api_id      Int
+  sno         Int
+  sas         String @db.VarChar(30)
+  ccnc        String @db.Text
+  nsc         Int
+  nahcof      Int
+  nahcon      Int
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_cat1ii {
+  api_data_id Int
+  api_id      Int
+  sno         Int
+  sas         String @db.VarChar(30)
+  cnctp       String @db.Text
+  asf         Int
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_cat1iii {
+  api_data_id Int
+  api_id      Int
+  sno         Int
+  sas         String @db.VarChar(30)
+  activity    String @db.VarChar(500)
+  pe          String @db.VarChar(500)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_cat1iv {
+  api_data_id Int
+  api_id      Int
+  sno         Int
+  sas         String @db.VarChar(30)
+  activity    String @db.VarChar(500)
+  pe          Int
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_cat1v {
+  api_data_id Int
+  api_id      Int
+  sno         Int
+  sas         String @db.VarChar(30)
+  activity    String @db.VarChar(500)
+  pe          Int
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_cat4 {
+  api_data_id Int
+  api_id      Int
+  sno         String @db.VarChar(10)
+  score       String @db.VarChar(5)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_cr {
+  api_id Int
+  cr1    Int
+  cr2    Int
+  cr3    Int
+  cr4    Int
+  cr5    Int
+  cr6    Int
+  cr7    Int
+  cr8    Int
+  cr9    Int
+  cr10   Int
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_crp {
+  api_id Int
+  cr1    Int
+  cr2    Int
+  cr3    Int
+  cr4    Int
+  cr5    Int
+  cr6    Int
+  cr7    Int
+  cr8    Int
+  cr9    Int
+  cr10   Int
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360_score {
+  api_data_id Int
+  api_id      Int
+  sno         String @db.VarChar(10)
+  score       String @db.VarChar(5)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api360lab_cr {
+  api_id Int
+  cr1    Int
+  cr2    Int
+  cr3    Int
+  cr4    Int
+  cr5    Int
+  cr6    Int
+  cr7    Int
+  cr8    Int
+  cr9    Int
+  cr10   Int
+
+  @@ignore
+}
+
+model api_cat1i {
+  api_data_id Int    @id @default(autoincrement())
+  api_id      Int
+  sno         String @db.VarChar(5)
+  course      String @db.LongText
+  level       String @db.VarChar(50)
+  mode        String @db.VarChar(50)
+  hours       String @db.VarChar(50)
+  percentage  String @db.VarChar(5)
+}
+
+model api_cat1ii {
+  api_data_id Int    @id @default(autoincrement())
+  api_id      Int
+  sno         String @db.VarChar(5)
+  course      String @db.LongText
+  consulted   String @db.VarChar(250)
+  prescribed  String @db.VarChar(250)
+  resource    String @db.VarChar(250)
+}
+
+model api_cat1iii {
+  api_data_id Int    @id @default(autoincrement())
+  api_id      Int
+  sno         String @db.VarChar(5)
+  description String @db.LongText
+}
+
+model api_cat1iv {
+  api_data_id Int    @id @default(autoincrement())
+  api_id      Int
+  sno         String @db.VarChar(5)
+  type        String @db.VarChar(100)
+  duties      String @db.VarChar(50)
+  extent      String @db.VarChar(50)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api_cat2 {
+  api_data_id Int
+  api_id      Int
+  sno         String @db.VarChar(5)
+  type        String @db.LongText
+  av          String @db.VarChar(50)
+  sub         Int
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api_info {
+  api_id                BigInt
+  faculty_computer_code Int
+  academic_session      Int     @default(9)
+  submited              Boolean @default(false)
+  hod_approval          Boolean @default(false)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model api_score {
+  api_data_id Int
+  api_id      Int
+  sno         String @db.VarChar(10)
+  score       String @db.VarChar(5)
+
+  @@ignore
+}
+
+model assign_detail {
+  id               Int     @id @default(autoincrement())
+  assign_id        Int
+  answer_id        Int
+  comp_code        Int
+  academic_session Int
+  sess_code        Int
+  cllg_sub_code    String  @db.VarChar(100)
+  assign_no        String  @db.VarChar(100)
+  submit           Int?    @default(0)
+  marks_submit     Int     @default(0)
+  path             String  @db.VarChar(500)
+  img_path         String? @db.VarChar(500)
+}
+
+model assign_faculty_lms {
+  assign_faculty_id     BigInt   @id @default(autoincrement())
+  apply_id              String   @db.VarChar(20)
+  status                Boolean
+  faculty_date          DateTime @db.Date
+  faculty_computer_code Int
+  assigned_class_dept   String   @db.VarChar(255)
+  assigned_section      String   @db.VarChar(255)
+  lecture_type          String   @db.VarChar(255)
+  start_time            String   @db.VarChar(255)
+  end_time              String   @db.VarChar(255)
+  other_responsibility  String   @db.Text
+}
+
+model assign_info {
+  assign_id        Int @id @default(autoincrement())
+  comp_code        Int
+  academic_session Int
+  submit           Int @default(0)
+}
+
+model assign_student {
+  id               Int      @id @default(autoincrement())
+  uid              Int
+  computer_code    Int
+  enrollment_no    String   @db.VarChar(20)
+  student_name     String   @db.VarChar(64)
+  semester         Int?
+  student_session  Int
+  academic_session Int
+  home_dept        Int
+  specialization   Int      @default(0)
+  course           String?  @db.VarChar(64)
+  user_stamp       Int
+  time_stamp       DateTime @default(now()) @db.Timestamp(0)
+  ip               String   @db.VarChar(100)
+  active           Boolean  @default(true)
+  remark           String   @db.VarChar(100)
+}
+
+model assigned_roles {
+  faculty_computer_code Int     @unique(map: "faculty_computer_code")
+  department            Int
+  admin                 Boolean @default(false)
+  principal             Boolean @default(false)
+  hod                   Boolean @default(false)
+  mtech_hod             Int
+  faculty               Int     @default(0) @db.TinyInt
+  lab_assistant         Boolean @default(false)
+  office                Boolean @default(false)
+  lms_cordinator        Int     @default(0) @db.TinyInt
+  railway_cordinator    Int     @default(0) @db.TinyInt
+  ea                    Int     @default(0) @db.TinyInt
+  master                Boolean @default(false)
+  secure_password       String  @db.VarChar(255)
+}
+
+model assigned_roles_subject_class {
+  id                    Int @id @default(autoincrement())
+  faculty_computer_code Int
+  assigned_role         Int
+  academic_session      Int
+  department            Int
+}
+
+model assignment_draft {
+  id               Int    @id @default(autoincrement())
+  assign_id        Int
+  answer_id        Int
+  comp_code        Int
+  academic_session Int
+  sess_code        Int
+  clg_sub_code     String @db.VarChar(100)
+  assign_no        String @db.VarChar(100)
+  draft_submit     Int    @default(1)
+  draft_path       String @db.VarChar(500)
+}
+
+model attend_info_new {
+  attend_info           BigInt    @id @default(autoincrement())
+  batch_id              Int?
+  faculty_computer_code Int?
+  date                  DateTime? @db.Date
+  lecture_type          Int?
+  time_slot_id          Int?
+  topic                 Int?
+  lab_group             String?   @db.VarChar(10)
+  academic_session      Int
+  ip                    String?   @db.VarChar(32)
+  time_stamp            DateTime? @default(now()) @db.Timestamp(0)
+  remark                String    @db.VarChar(32)
+}
+
+model attend_info_other {
+  attend_info_other_id Int      @id @default(autoincrement()) @db.UnsignedInt
+  faculty_comp_code    Int
+  specialization       Int      @default(0)
+  lecture_type         Int
+  date                 DateTime @db.Date
+  academic_session     Int
+  reason               String   @db.VarChar(100)
+}
+
+model attend_record_new {
+  attend_record_id      BigInt  @id @default(autoincrement()) @db.UnsignedBigInt
+  student_computer_code Int
+  attend_info           BigInt
+  attend                Boolean
+}
+
+model attend_record_other {
+  attend_record_other_id Int     @id @default(autoincrement()) @db.UnsignedInt
+  student_computer_code  Int
+  attend_info_other_id   Int     @db.UnsignedInt
+  attend                 Boolean
+}
+
+model batch_coordinate {
+  batch_co_id           Int      @id @default(autoincrement())
+  faculty_computer_code Int
+  batch                 Int
+  active                Int      @default(1)
+  academic_session      Int
+  timestamp             DateTime @default(now()) @db.Timestamp(0)
+  ip                    String   @db.VarChar(100)
+  remark                String   @db.VarChar(20)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model category_criteria {
+  id       Int
+  reserved Float @db.Float
+  general  Float @db.Float
+
+  @@ignore
+}
+
+model choice_filling {
+  id                  Int      @id @default(autoincrement())
+  comp_code           Int
+  student_department  Int
+  academic_session    Int
+  semester            Int
+  subject_department  Int
+  university_sub_code String   @db.VarChar(32)
+  college_sub_code    String   @db.VarChar(32)
+  subject_chosen      String   @db.VarChar(64)
+  credits             Int
+  Batch_id            Int
+  time_stamp          DateTime @default(now()) @db.Timestamp(0)
+  ip                  String   @db.VarChar(100)
+  remark              String   @db.VarChar(32)
+}
+
+model choice_filling_mtech {
+  id                  Int      @id @default(autoincrement())
+  comp_code           Int
+  student_department  Int
+  academic_session    Int
+  semester            Int
+  subject_department  Int
+  university_sub_code String   @db.VarChar(32)
+  college_sub_code    String   @db.VarChar(32)
+  specialization      Int      @default(0)
+  subject_chosen      String   @db.VarChar(64)
+  credits             Int
+  Batch_id            Int
+  time_stamp          DateTime @default(now()) @db.Timestamp(0)
+  ip                  String   @db.VarChar(100)
+  remark              String   @db.VarChar(32)
+}
+
+model co {
+  co_id             BigInt  @id @default(autoincrement())
+  co_name           String  @db.VarChar(10)
+  co                String  @db.Text
+  subject_code      String  @db.VarChar(15)
+  department        Int
+  specialization    Int     @default(0)
+  academic_session  Int
+  active            Boolean
+  bt_level          String  @db.VarChar(20)
+  excepted_co_level Int
+  PO1               Int
+  PO2               Int
+  PO3               Int
+  PO4               Int
+  PO5               Int
+  PO6               Int
+  PO7               Int
+  PO8               Int
+  PO9               Int
+  PO10              Int
+  PO11              Int
+  PO12              Int
+  PSO1              Int
+  PSO2              Int
+  PSO3              Int
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model configure_scheme {
+  id                Int
+  subject_scheme_id Int
+  event_name        String @db.VarChar(100)
+  event_marks       Int
+  event_category_id Int
+
+  @@ignore
+}
+
+model counselling_documents_name {
+  id            Int    @id @default(autoincrement())
+  uid           Int
+  document_name String @db.VarChar(500)
+}
+
+model counselling_duty {
+  id            Int    @id @default(autoincrement())
+  assigned_to   Int
+  assigned_by   Int
+  assigned_role Int
+  academic_year String @db.VarChar(12)
+}
+
+model counselling_status {
+  id          Int    @id @default(autoincrement())
+  status_type String @db.VarChar(50)
+  status_code Int
+}
+
+model counselling_verification {
+  uid                           Int      @id
+  entry_by                      String   @db.VarChar(200)
+  entry_by_computer_code        Int
+  verification_by               String   @db.VarChar(200)
+  verification_by_computer_code Int
+  entry_date                    DateTime @db.DateTime(0)
+  verify_date                   DateTime @db.DateTime(0)
+}
+
+model course {
+  course_id   Int     @id @default(autoincrement())
+  course_name String  @db.VarChar(64)
+  course_code String  @db.VarChar(20)
+  active      Boolean
+}
+
+model cumulative_attendance {
+  sno                   Int      @id @default(autoincrement())
+  computer_code         Int
+  semester              Int
+  department            Int
+  academic_session      Int
+  student_attendance    Int
+  total_attendance      Int
+  remedial              Int
+  cumulative_attendance Int
+  timestamp             DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model department {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(100)
+  dept_code String  @db.VarChar(10)
+  course    Int
+  core_dept Boolean
+  active    Boolean
+}
+
+model department_me {
+  id              Int     @id @default(autoincrement())
+  department_name String  @db.VarChar(75)
+  dept_code       Int
+  department_code String  @db.VarChar(10)
+  department_type String  @db.VarChar(15)
+  active          Boolean
+}
+
+model department_po {
+  id               Int    @id @default(autoincrement())
+  clg_subject_code String @db.VarChar(11)
+  batch_id         Int
+  academic         Int
+  PO1              Int?
+  PO2              Int?
+  PO3              Int?
+  PO4              Int?
+  PO5              Int?
+  PO6              Int?
+  PO7              Int?
+  PO8              Int?
+  PO9              Int?
+  PO10             Int?
+  PO11             Int?
+  PO12             Int?
+  PSO1             Int?
+  PSO2             Int?
+  PSO3             Int?
+}
+
+model designation {
+  id          Int    @id @default(autoincrement())
+  d_order     Int
+  designation String @db.VarChar(100)
+  active      Int
+}
+
+model event_category {
+  event_category_id   BigInt  @id @default(autoincrement())
+  event_category_name String  @db.VarChar(32)
+  short_name          String  @db.VarChar(10)
+  lecture             String  @db.VarChar(11)
+  active              Boolean
+}
+
+model event_data {
+  event_data_id BigInt @id @default(autoincrement())
+  event_info    Int
+  question_no   String @db.VarChar(5)
+  question      String @db.Text
+  co            String @db.VarChar(11)
+  max_marks     Float  @db.Float
+}
+
+model event_ha_submission_date {
+  id              Int      @id @default(autoincrement())
+  event_info      Int
+  submission_date DateTime @db.Date
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model event_info {
+  event_info_id         BigInt   @id @default(autoincrement())
+  event_category        Int
+  event_name            String   @db.VarChar(32)
+  academic_session      Int
+  section               Int
+  subject               String   @db.VarChar(15)
+  faculty_computer_code Int
+  date_of_creation      DateTime @db.Date
+  timestamp             DateTime @default(now()) @db.Timestamp(0)
+}
+
+model event_marks {
+  student_computer_code Int
+  event_data            Int
+  marks                 Float
+  attend                Boolean
+
+  @@unique([student_computer_code, event_data], map: "student_computer_code")
+}
+
+model event_practical_group_date {
+  id           Int      @id @default(autoincrement())
+  event_info   Int
+  event_name   String   @db.VarChar(100)
+  co           String   @db.VarChar(500)
+  group_a_date DateTime @db.Date
+  group_b_date DateTime @db.Date
+}
+
+model events_document_name {
+  id            Int    @id @default(autoincrement())
+  event_info_id Int
+  document_name String @db.VarChar(5000)
+}
+
+model exam_form_details {
+  id                       Int      @id @default(autoincrement())
+  form_forward_date        DateTime @db.Date
+  payment_last_date        DateTime @db.Date
+  late_fee_last_date       DateTime @db.Date
+  late_fee_after_last_date DateTime @db.Date
+  form_closing_date        DateTime @db.Date
+  payment                  Float    @db.Float
+  portal_fees              Float    @db.Float
+  late_fee_charge          Float    @db.Float
+  late_fees_after_exam     Float    @db.Float
+  semester                 Int
+  course                   String   @default("B.Tech.") @db.VarChar(100)
+  academic_session         Int
+  entry_time               DateTime @default(now()) @db.Timestamp(0)
+  outside_mp_fee           Float    @db.Float
+}
+
+model exam_form_forward {
+  computer_code    String   @db.VarChar(100)
+  enrollment_no    String   @db.VarChar(100)
+  semester         String   @db.VarChar(100)
+  department_id    String   @db.VarChar(100)
+  academic_session String   @db.VarChar(100)
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, semester, academic_session])
+}
+
+model exam_time_table {
+  sno                 Int      @id @default(autoincrement())
+  dept                Int
+  sem                 Int
+  university_sub_code String   @db.VarChar(11)
+  clg_sub_code        String   @db.VarChar(11)
+  type                String   @db.VarChar(11)
+  exam_date           DateTime @db.Date
+  start_time          DateTime @db.Time(0)
+  end_time            DateTime @db.Time(0)
+  academic_session    Int
+}
+
+model exit_feedback_dept {
+  id            Int   @id @default(autoincrement())
+  department_id Int
+  academic_id   Int
+  PO1           Float @db.Float
+  PO2           Float @db.Float
+  PO3           Float @db.Float
+  PO4           Float @db.Float
+  PO5           Float @db.Float
+  PO6           Float @db.Float
+  PO7           Float @db.Float
+  PO8           Float @db.Float
+  PO9           Float @db.Float
+  PO10          Float @db.Float
+  PO11          Float @db.Float
+  PO12          Float @db.Float
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model f_1 {
+  ansaction_ID  String?  @map("ansaction ID") @db.VarChar(19)
+  Date          String?  @db.VarChar(10)
+  PayU_ID       BigInt?  @map("PayU ID")
+  Amount        Decimal? @db.Decimal(6, 2)
+  Status        String?  @db.VarChar(12)
+  Customer_Name String?  @map("Customer Name") @db.VarChar(33)
+  Bank_Name     String?  @map("Bank Name") @db.VarChar(22)
+  Payment_Type  String?  @map("Payment Type") @db.VarChar(11)
+  UDF_1         String?  @map("UDF 1") @db.VarChar(12)
+  UDF_2         Int?     @map(" UDF 2")
+  UDF_3         Int?     @map("UDF 3")
+  UDF_4         Int?     @map("UDF 4")
+  UDF_5         Int?     @map("UDF 5")
+  Field_1       String?  @map("Field 1") @db.VarChar(33)
+  Field_2       String?  @map("Field 2") @db.VarChar(11)
+  Field_3       String?  @map("Field 3") @db.VarChar(33)
+
+  @@ignore
+}
+
+model faculty_info {
+  id                          Int      @id @default(autoincrement())
+  active                      Boolean
+  temp_hod                    Boolean
+  computer_code               Int?     @unique(map: "computer_code")
+  department                  Int
+  aadhar                      BigInt?  @unique(map: "aadhar")
+  title                       String   @db.VarChar(5)
+  last_name                   String   @db.VarChar(64)
+  first_name                  String   @db.VarChar(64)
+  middle_name                 String   @db.VarChar(64)
+  date_of_birth               DateTime @db.Date
+  gender                      String   @db.VarChar(1)
+  mobile1                     BigInt
+  mobile2                     BigInt
+  email                       String   @db.VarChar(255)
+  blood_group                 String   @db.VarChar(3)
+  father_name                 String   @db.VarChar(255)
+  mother_name                 String   @db.VarChar(255)
+  category                    String   @db.VarChar(64)
+  religion                    String   @db.VarChar(64)
+  minority                    Boolean
+  handicap                    Boolean
+  address_line1               String   @db.Text
+  address_line2               String   @db.Text
+  district                    String   @db.VarChar(64)
+  pincode                     Int
+  city                        String   @db.VarChar(64)
+  state                       String   @db.VarChar(64)
+  pan_no                      String   @db.VarChar(64)
+  designation                 String   @db.VarChar(64)
+  edu_qualification           String   @db.VarChar(20)
+  appointment                 String   @db.VarChar(64)
+  appointment_type            String   @db.VarChar(64)
+  faculty_type                String   @db.VarChar(64)
+  date_of_join                DateTime @db.Date
+  work_experience             Int
+  other_clg_teach_experience  Int
+  research_experience         Int
+  patents                     Int
+  international_publishcation Int
+  national_publishcation      Int
+  no_of_books                 Int
+  no_of_pg_guided             Int
+  no_of_doctorate_guided      Int
+  govt_approved               Boolean
+  university_approved         Int
+  ug_percent                  Float    @db.Float
+  ug_college                  String   @db.VarChar(64)
+  ug_university               String   @db.VarChar(64)
+  ug_pass_year                Int      @db.Year
+  ug_branch                   String   @db.VarChar(64)
+  pg_percentage               Float    @db.Float
+  pg_college                  String   @db.VarChar(64)
+  pg_university               String   @db.VarChar(64)
+  pg_pass_year                Int      @db.Year
+  pg_specialization           String   @db.VarChar(64)
+  phd_percentage              Float    @db.Float
+  phd_college                 String   @db.VarChar(64)
+  phd_university              String   @db.VarChar(64)
+  phd_topic                   String   @db.Text
+  rollno10                    String   @db.VarChar(50)
+  rollno_12                   Int
+  date_join                   DateTime @db.Date
+  date_leave                  DateTime @db.Date
+  rollno_diploma              String   @db.VarChar(15)
+  rollno_ug                   String   @db.VarChar(15)
+  rollno_pg                   String   @db.VarChar(15)
+  caste                       String   @db.VarChar(50)
+  ips_acc                     Int
+  nationalize_ifsc            String   @db.VarChar(50)
+  nationalize_name            String   @db.VarChar(255)
+  nationalize_branch          String   @db.VarChar(50)
+  nationalize_acc             Int
+  phd_pass_year               Float    @db.Float
+  pg_course                   String   @db.VarChar(50)
+  ug_course                   String   @db.VarChar(50)
+  percent12                   Float    @db.Float
+  percent10                   Float    @db.Float
+  pass_year_12                Int      @db.Year
+  pass_year_10                Int      @db.Year
+  other_course                String   @db.VarChar(255)
+  other_branch                String   @db.VarChar(255)
+  other_college               String   @db.VarChar(255)
+  other_university            String   @db.VarChar(255)
+  other_rollno                String   @db.VarChar(255)
+  other_percentage            Float    @db.Float
+  other_pass_year             Int      @db.Year
+  voter_id                    String   @db.VarChar(255)
+  husband_name                String   @db.VarChar(255)
+  current_salary              Int?
+}
+
+model feedback_attendance {
+  id         Int    @id @default(autoincrement())
+  department String @db.VarChar(20)
+  value      String @db.VarChar(20)
+}
+
+model feedback_class {
+  id               Int      @id @default(autoincrement())
+  feedback_id      String   @unique(map: "feedback_id") @db.VarChar(200)
+  computer_code    Int
+  date_created     DateTime @default(now()) @db.Timestamp(0)
+  dated            DateTime @db.Date
+  department       Int
+  academic_id      Int
+  semester         Int
+  major            Int      @db.TinyInt
+  comment          Int      @db.TinyInt
+  hod_status       Int      @db.TinyInt
+  principal_status Int      @db.TinyInt
+  num_of_stud      Int
+  type             Int      @db.TinyInt
+  active           Int      @db.TinyInt
+  delete_status    Int      @default(0) @db.TinyInt
+}
+
+model feedback_co {
+  id               Int    @id @default(autoincrement())
+  feedback_id      String @db.VarChar(100)
+  clg_subject_code String @db.VarChar(100)
+  batch_id         Int
+  a                Int
+  b                Int
+  c                Int
+  d                Int
+  e                Int
+  co_id            String @db.VarChar(10)
+  academic_session Int
+}
+
+model feedback_co_id {
+  id               Int    @id @default(autoincrement())
+  feedback_id      String @db.VarChar(100)
+  clg_subject_code String @db.VarChar(100)
+  batch_id         Int
+  num_of_student   Int
+  status           Int
+  active           Int
+  academic_session Int
+}
+
+model feedback_comments {
+  uid           Int    @id @default(autoincrement())
+  feedback_id   String @db.VarChar(30)
+  computer_code Int
+  comments      String @db.VarChar(1000)
+}
+
+model feedback_facility {
+  id               Int    @id @default(autoincrement())
+  feedback_id      String @db.VarChar(200)
+  academic_session Int
+  department       Int
+  year             Int
+  semester         Int
+  a                Int
+  b                Int
+  c                Int
+  d                Int
+  e                Int
+  f                Int
+  g                Int
+  h                Int
+  i                Int
+  j                Int
+  k                Int
+  l                Int
+  m                Int
+  n                Int
+  o                Int
+  p                Int
+  q                Int
+  r                Int
+  s                Int
+  t                Int
+  u                Int
+  v                Int
+}
+
+model feedback_facility_comments {
+  id            Int    @id @default(autoincrement())
+  feedback_id   String @db.VarChar(200)
+  computer_code Int
+  comment       String @db.VarChar(1000)
+}
+
+model feedback_facility_id {
+  id               Int    @id @default(autoincrement())
+  feedback_id      String @db.VarChar(200)
+  department       Int
+  year             Int
+  semester         Int
+  num_of_student   Int
+  status           Int
+  active           Int
+  academic_session Int
+}
+
+model feedback_major {
+  uid          Int    @id @default(autoincrement())
+  fid          String @db.VarChar(20)
+  computercode String @db.VarChar(20)
+  p            String @db.VarChar(20)
+  kos          String @db.VarChar(20)
+  mot          String @db.VarChar(20)
+  c            String @db.VarChar(20)
+  project      String @db.VarChar(100)
+  hod          String @db.VarChar(10)
+  principal    String @db.VarChar(10)
+}
+
+model feedback_po {
+  id            Int       @id @default(autoincrement())
+  feedback_id   String    @db.VarChar(200)
+  semester      Int
+  academic_id   Int
+  date          DateTime? @db.Date
+  num_of_stud   Int
+  computer_code Int
+  status        Int
+  active        Int
+}
+
+model feedback_po_record {
+  id          Int    @id @default(autoincrement())
+  feedback_id String @db.VarChar(50)
+  semester    Int
+  academic_id Int
+  po_id       Int
+  a           Int
+  b           Int
+  c           Int
+  d           Int
+  e           Int
+}
+
+model feedback_student {
+  id            Int    @id @default(autoincrement())
+  computer_code Int
+  feedback_id   String @db.VarChar(20)
+}
+
+model feedback_student_co {
+  id            Int    @id @default(autoincrement())
+  computer_code Int
+  feedback_id   String @db.VarChar(200)
+}
+
+model feedback_sub_cor {
+  id                    Int    @id @default(autoincrement())
+  feedback_id           String @db.VarChar(200)
+  faculty_computer_code String @db.VarChar(20)
+  clg_sub_code          String @db.VarChar(200)
+  student_comp_code     Int
+  batch_id              Int
+  a                     Float  @db.Float
+  b                     Float  @db.Float
+  c                     Float  @db.Float
+  d                     Float  @db.Float
+  e                     Float  @db.Float
+  f                     Float  @db.Float
+  g                     Float  @db.Float
+  h                     Float  @db.Float
+  i                     Float  @db.Float
+  j                     Float  @db.Float
+  k                     Float  @db.Float
+  l                     Float  @db.Float
+  m                     Float  @db.Float
+  n                     Float  @db.Float
+  active                Int    @default(1) @db.TinyInt
+}
+
+model grade_list {
+  id                    Int      @id @default(autoincrement())
+  faculty_computer_code Int
+  department            Int
+  university_sub_code   String   @db.VarChar(20)
+  clg_sub_code          String   @db.VarChar(20)
+  subject_name          String   @db.VarChar(1000)
+  subject_type          String   @db.VarChar(10)
+  batch_id              Int
+  grade1                Int
+  grade2                Int
+  grade3                Int
+  grade4                Int
+  grade5                Int
+  grade6                Int
+  academic_session      Int
+  entry_time            DateTime @default(now()) @db.Timestamp(0)
+  ip                    String   @db.VarChar(50)
+}
+
+model leave_apply {
+  apply_id              String   @id @db.VarChar(50)
+  apply_date            DateTime @db.Date
+  faculty_computer_code Int
+  session               String   @db.VarChar(20)
+  start_date            DateTime @db.Date
+  end_date              DateTime @db.Date
+  days                  Float    @db.Float
+  pre_balance           Float    @db.Float
+  leave_type            String   @db.VarChar(20)
+  reason                String   @db.Text
+  hod_approval          Boolean
+  principal_approval    Boolean
+}
+
+model leave_apply_limit {
+  id         Int    @id @default(autoincrement())
+  leave_type String @db.VarChar(5)
+  days       Int    @db.TinyInt
+  active     Int    @db.TinyInt
+}
+
+model lecture_type {
+  lecture_id   Int    @id @default(autoincrement())
+  lecture_type String @db.VarChar(25)
+  weight       Int
+}
+
+model lecture_type_other {
+  lecture_type_other_id Int     @id
+  lecture_type          String  @db.VarChar(255)
+  lecture_weight        Boolean
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model lms {
+  faculty_computer_code Int
+  academic_session      Int
+  cl                    Float @db.Float
+  dl                    Float @db.Float
+  el                    Float @db.Float
+  ol                    Float @db.Float
+  lwp                   Float @db.Float
+  sl                    Float @db.Float
+  ab                    Float @db.Float
+  ml                    Float @db.Float
+  sdl                   Float @db.Float
+  vl                    Float @db.Float
+  od                    Float @db.Float
+
+  @@unique([faculty_computer_code, academic_session], map: "faculty_computer_code")
+}
+
+model lock_endsem {
+  id                Int      @id @default(autoincrement())
+  faculty_comp_code Int
+  department_id     Int
+  academic_session  Int
+  batch_id          Int
+  event_category    Int
+  lock_marks        Int
+  lock_grade        Int
+  lock_grade_range  Int
+  lock_credit       Int
+  timestamp         DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model lock_sessional_data {
+  id                      Int      @id @default(autoincrement())
+  college_subject_code    String   @db.VarChar(32)
+  university_subject_code String   @db.VarChar(32)
+  type                    String   @db.VarChar(10)
+  department              Int
+  specialization          Int      @default(0)
+  batch_id                Int
+  semester                Int
+  academic_session        Int
+  status                  Int
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+  ip                      String   @db.VarChar(50)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model lock_sessional_faculty {
+  id                Int      @id @default(autoincrement())
+  faculty_comp_code Int
+  department_id     Int
+  batch_id          Int
+  academic_session  Int
+  event_category    Int
+  lock_status       Int
+  entry_time        DateTime @default(now()) @db.Timestamp(0)
+  ip                String   @db.VarChar(50)
+}
+
+model login {
+  id            Int     @id @default(autoincrement())
+  computer_code Int
+  password      String  @default("827ccb0eea8a706c4c34a16891f84e7b") @db.VarChar(255)
+  is_student    Boolean @default(false)
+  token         Int?    @default(0)
+}
+
+model login_ {
+  id           String  @unique(map: "id") @db.VarChar(100)
+  username     String  @unique(map: "username") @db.VarChar(100)
+  computercode String? @unique(map: "computercode") @db.VarChar(100)
+  password     String  @db.VarChar(100)
+  type         String? @db.VarChar(100)
+  email        String? @db.VarChar(100)
+  name         String? @db.VarChar(100)
+  gender       String? @db.VarChar(100)
+  address      String? @db.VarChar(500)
+  mobile       String? @db.VarChar(10)
+  dob          String? @db.VarChar(100)
+  dept         String? @db.VarChar(100)
+  designation  String? @db.VarChar(100)
+  CL           String? @db.VarChar(100)
+  OL           String? @db.VarChar(50)
+  EL           String? @db.VarChar(100)
+  LWP          String? @db.VarChar(100)
+  DL           String? @db.VarChar(100)
+  did          Int
+  joindate     String  @db.VarChar(100)
+  outdate      String  @db.VarChar(100)
+  status       String  @db.VarChar(100)
+  pwdchange    String  @db.VarChar(5)
+  usersystem   String  @db.VarChar(50)
+  session      String  @db.VarChar(20)
+  power        String  @db.VarChar(10)
+  des          String  @db.VarChar(50)
+}
+
+model mandatory_subjects {
+  id                      Int      @id @default(autoincrement())
+  university_subject_code String   @db.VarChar(100)
+  clg_subject_code        String   @db.VarChar(100)
+  type                    String   @db.VarChar(100)
+  department              Int
+  entrytime               DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model marksheet_print_status {
+  id               Int      @id @default(autoincrement())
+  section_id       Int
+  semester         Int
+  department_id    Int
+  specialization   Int      @default(0)
+  academic_session Int
+  status           Int      @db.TinyInt
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+  ip               String   @db.VarChar(50)
+}
+
+model marksheet_print_timestamp {
+  id               Int      @id @default(autoincrement())
+  section_id       Int
+  semester         Int
+  department_id    Int
+  specialization   Int
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+  ip               String   @db.VarChar(50)
+}
+
+model marksheet_record_22 {
+  marksheet_no      Int      @id
+  computer_code     Int
+  enrollment_number String   @db.VarChar(32)
+  section_id        Int
+  department        Int
+  specialization    Int
+  semester          Int
+  academic_session  Int
+  entry_time        DateTime @default(now()) @db.Timestamp(0)
+  ip                String   @db.VarChar(50)
+}
+
+model marksheet_record_23 {
+  marksheet_no      Int      @id
+  computer_code     Int
+  enrollment_number String   @db.VarChar(32)
+  section_id        Int
+  department        Int
+  specialization    Int
+  semester          Int
+  academic_session  Int
+  course            String   @db.VarChar(200)
+  entry_time        DateTime @default(now()) @db.Timestamp(0)
+  ip                String   @db.VarChar(50)
+}
+
+model marksheet_record_24 {
+  marksheet_no      Int      @id
+  computer_code     Int
+  enrollment_number String   @db.VarChar(32)
+  section_id        Int
+  department        Int
+  specialization    Int
+  semester          Int
+  academic_session  Int
+  course            String   @db.VarChar(200)
+  entry_time        DateTime @default(now()) @db.Timestamp(0)
+  ip                String   @db.VarChar(50)
+}
+
+model module {
+  sno              Int      @id @default(autoincrement())
+  department       Int
+  specialization   Int
+  department_type  String   @db.VarChar(100)
+  semester         Int
+  endsem_module    Boolean
+  sessional_module Boolean
+  exam_module      Boolean
+  result_live      Boolean
+  timestamp        DateTime @default(now()) @db.Timestamp(0)
+}
+
+model mtech_semester_credit {
+  id                  Int      @id @unique(map: "id") @default(autoincrement())
+  semester            Int
+  min_credit          Int
+  max_credit          Int
+  academic_session_id Int
+  department          Int
+  specialization      Int
+  user_stamp          Int
+  time_stamp          DateTime @default(now()) @db.Timestamp(0)
+  ip                  String   @db.VarChar(100)
+  remark              String   @db.VarChar(100)
+}
+
+model mtech_specialization {
+  specialization_id   Int      @id @default(autoincrement())
+  specialization_name String   @db.VarChar(250)
+  specialization_code String   @db.VarChar(250)
+  department_id       Int
+  department_type     String   @db.VarChar(250)
+  active              Int
+  entry_time          DateTime @default(now()) @db.Timestamp(0)
+}
+
+model overall_result_history {
+  id                  Int      @id @default(autoincrement())
+  computer_code       Int
+  enrollment_no       String   @db.VarChar(255)
+  specialization      Int      @default(0)
+  earn_credit_1       Int
+  opted_credit_1      Int
+  sgpa_1              Float    @db.Float
+  earn_credit_2       Int
+  opted_credit_2      Int
+  sgpa_2              Float    @db.Float
+  earn_credit_3       Int
+  opted_credit_3      Int
+  sgpa_3              Float    @db.Float
+  earn_credit_4       Int
+  opted_credit_4      Int
+  sgpa_4              Float    @db.Float
+  earn_credit_5       Int
+  opted_credit_5      Int
+  sgpa_5              Float    @db.Float
+  earn_credit_6       Int
+  opted_credit_6      Int
+  sgpa_6              Float    @db.Float
+  earn_credit_7       Int
+  opted_credit_7      Int
+  sgpa_7              Float    @db.Float
+  earn_credit_8       Int
+  opted_credit_8      Int
+  sgpa_8              Float    @db.Float
+  total_opted_credits Int
+  achieved_credits    Int
+  cgpa                Float    @db.Float
+  timestamp           DateTime @default(now()) @db.Timestamp(0)
+}
+
+model po {
+  po_id            Int    @id @default(autoincrement())
+  po_name          String @db.VarChar(5)
+  po_heading       String @db.VarChar(200)
+  po               String @db.Text
+  department       Int
+  academic_session Int
+  active           Int
+}
+
+model quiz_question_bank {
+  question_id      Int     @id @default(autoincrement())
+  clg_subject_code String  @db.Text
+  co_id            Int
+  question         String  @db.Text
+  option_a         String  @db.Text
+  option_b         String  @db.Text
+  option_c         String  @db.Text
+  option_d         String  @db.Text
+  correct_answer   String  @db.Text
+  active           Boolean @default(true)
+}
+
+model quiz_questions {
+  id          Int @id @default(autoincrement())
+  test_id     Int
+  question_id Int
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model quiz_student_response {
+  student_computer_code Int
+  test_id               Int
+  question_id           Int
+  question_response     String? @db.Text
+
+  @@ignore
+}
+
+model quiz_test_detail {
+  test_id               Int      @id @default(autoincrement())
+  test_detail           String   @db.Text
+  subject_id            String   @db.VarChar(11)
+  faculty_computer_code Int
+  batch_id              Int
+  academic_id           Int
+  no_of_questions       Int
+  timestamp             DateTime @default(now()) @db.Timestamp(0)
+  active                Int      @default(0)
+}
+
+model railway_form {
+  rail_id         BigInt    @id @default(autoincrement())
+  computer_code   Int
+  station_from    String    @db.VarChar(200)
+  station_to      String    @db.VarChar(64)
+  concession_type Int
+  academic_id     Int
+  start_date      DateTime? @db.Date
+  end_date        DateTime? @db.Date
+  remark          String?   @db.Text
+  sem             Int?
+  apply_date      DateTime  @db.Date
+  hod             Boolean   @default(false)
+  principal       Boolean   @default(false)
+  ready           Boolean   @default(false)
+}
+
+model railway_leave_record {
+  id              Int      @id @default(autoincrement())
+  concession_type Int
+  academic_id     Int
+  start_date      DateTime @db.Date
+  end_date        DateTime @db.Date
+  semester        Int?
+  active          Boolean  @default(true)
+
+  @@unique([concession_type, academic_id, semester], map: "concession_type")
+}
+
+model result_entry_status_relative {
+  id               Int      @id @default(autoincrement())
+  semester         Int
+  department_id    Int
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+}
+
+model result_entry_status_relative_mtech {
+  id               Int      @id @default(autoincrement())
+  semester         Int
+  department_id    Int
+  specialization   Int
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+}
+
+model roles {
+  id        Int     @id @default(autoincrement())
+  user_type String  @db.VarChar(64)
+  active    Boolean @default(true)
+}
+
+model rubrics {
+  id               Int @id @default(autoincrement())
+  theory           Int
+  practical        Int
+  no_of_po         Int
+  no_of_pso        Int
+  department       Int
+  academic_session Int
+}
+
+model score_and_level {
+  id               Int    @id @default(autoincrement())
+  x                Int
+  del_x            Int
+  y                Int
+  clg_subject_code String @db.VarChar(10)
+  academic_session Int
+}
+
+model semester {
+  sem_id Int     @id
+  year   Int
+  active Boolean
+}
+
+model semester_credit {
+  id                  Int      @id @unique(map: "id") @default(autoincrement())
+  semester            Int
+  min_credit          Int
+  max_credit          Int
+  academic_session_id Int
+  department          Int
+  user_stamp          Int
+  time_stamp          DateTime @default(now()) @db.Timestamp(0)
+  ip                  String   @db.VarChar(100)
+  remark              String   @db.VarChar(100)
+}
+
+model session_credits {
+  id             Int      @id @default(autoincrement())
+  session        String   @db.VarChar(100)
+  session_id     Int
+  dept_id        Int
+  credit_1st_sem Int
+  credit_2nd_sem Int
+  credit_3rd_sem Int
+  credit_4th_sem Int
+  credit_5th_sem Int
+  credit_6th_sem Int
+  credit_7th_sem Int
+  credit_8th_sem Int
+  year_count     Int
+  timestamp      DateTime @default(now()) @db.Timestamp(0)
+}
+
+model site_settings {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique(map: "name") @db.VarChar(255)
+  description String  @db.VarChar(255)
+  short_code  String  @unique(map: "short_code") @db.VarChar(30)
+  value       String? @db.VarChar(30)
+  is_active   Boolean
+}
+
+model student_atkt_main_result_22 {
+  computer_code    Int
+  enrollment_no    String   @db.VarChar(32)
+  department_id    Int
+  specialization   Int
+  course           String   @default("B.Tech.") @db.VarChar(100)
+  semester         Int
+  SGPA             Float    @db.Float
+  CGPA             Float?   @db.Float
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, semester, academic_session])
+}
+
+model student_atkt_main_result_23 {
+  computer_code    Int
+  enrollment_no    String   @db.VarChar(32)
+  department_id    Int
+  specialization   Int
+  course           String   @default("B.Tech.") @db.VarChar(100)
+  semester         Int
+  SGPA             Float    @db.Float
+  CGPA             Float?   @db.Float
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, semester, academic_session])
+}
+
+model student_atkt_main_result_24 {
+  computer_code    Int
+  enrollment_no    String   @db.VarChar(32)
+  department_id    Int
+  specialization   Int
+  course           String   @default("B.Tech.") @db.VarChar(100)
+  semester         Int
+  SGPA             Float    @db.Float
+  CGPA             Float?   @db.Float
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, semester, academic_session])
+}
+
+model student_atkt_result_22 {
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(32)
+  department_id           Int
+  specialization          Int
+  course                  String   @default("B.Tech.") @db.VarChar(100)
+  atkt_semester           Int
+  college_subject_code    String   @db.VarChar(50)
+  university_subject_code String   @db.VarChar(50)
+  subject_type            String   @db.VarChar(11)
+  earn_credit             Int
+  grade                   String   @db.VarChar(11)
+  grade_point             Int
+  total_credit            Int
+  result                  String   @db.VarChar(50)
+  academic_session        Int
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+  ip                      String   @db.VarChar(50)
+
+  @@id([computer_code, enrollment_no, college_subject_code, university_subject_code, subject_type])
+}
+
+model student_atkt_result_23 {
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(32)
+  department_id           Int
+  specialization          Int
+  course                  String   @default("B.Tech.") @db.VarChar(100)
+  atkt_semester           Int
+  college_subject_code    String   @db.VarChar(50)
+  university_subject_code String   @db.VarChar(50)
+  subject_type            String   @db.VarChar(11)
+  earn_credit             Int
+  grade                   String   @db.VarChar(11)
+  grade_point             Int
+  total_credit            Int
+  result                  String   @db.VarChar(50)
+  academic_session        Int
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+  ip                      String   @db.VarChar(50)
+
+  @@id([computer_code, enrollment_no, college_subject_code, university_subject_code, subject_type])
+}
+
+model student_backlog_record_relative {
+  id                  Int      @id @default(autoincrement())
+  computer_code       Int
+  enrollment_no       String   @db.VarChar(20)
+  home_department_id  Int
+  study_department_id Int
+  atkt_sem            Int
+  university_sub_code String   @db.VarChar(100)
+  clg_sub_code        String   @db.VarChar(100)
+  sub_type            String   @db.VarChar(11)
+  total_credit        Int
+  earn_credit         Int
+  grade_value         Int
+  atkt_status         Int
+  atkt_cleared_sem    Int?
+  entry_time          DateTime @default(now()) @db.Timestamp(0)
+}
+
+model student_college_info_new {
+  id               Int      @id @default(autoincrement())
+  computer_code    Int
+  enrollment_no    String   @db.VarChar(20)
+  student_name     String   @db.VarChar(64)
+  student_session  Int
+  academic_session Int
+  batch_id         Int
+  batch_name       String   @db.VarChar(64)
+  semester         Int
+  lab_group_name   String?  @db.VarChar(2)
+  course           String   @db.VarChar(20)
+  home_dept        Int
+  specialization   Int
+  show_attendance  Boolean  @default(true)
+  user_stamp       Int
+  time_stamp       DateTime @default(now()) @db.Timestamp(0)
+  ip               String   @db.VarChar(100)
+  remark           String   @db.VarChar(50)
+}
+
+model student_data {
+  sno              Int      @id @default(autoincrement())
+  computer_code    Int
+  semester         Int
+  academic_session Int
+  detained         Int      @db.TinyInt
+  timestamp        DateTime @default(now()) @db.Timestamp(0)
+}
+
+model student_end_sem_result {
+  id                      Int      @id @default(autoincrement())
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(20)
+  department_id           Int
+  university_subject_code String   @db.VarChar(20)
+  college_subject_code    String   @db.VarChar(20)
+  subject_type            String   @db.VarChar(10)
+  batch_id                Int
+  event_info_id           Int
+  co1                     Float
+  co2                     Float
+  co3                     Float
+  co4                     Float
+  co5                     Float
+  total_marks             Float?   @default(0)
+  earn_credit             Int?     @default(0)
+  grade                   String?  @db.VarChar(11)
+  academic_session        Int
+  faculty_computer_code   Int
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+  ip                      String   @db.VarChar(50)
+}
+
+model student_left_subject {
+  id                  Int      @id @default(autoincrement())
+  comp_code           Int
+  student_department  Int
+  academic_session    Int
+  semester            Int
+  university_sub_code String   @db.VarChar(100)
+  college_sub_code    String   @db.VarChar(100)
+  subject_name        String   @db.VarChar(100)
+  subject_department  Int
+  credit              Int
+  type                Int
+  timestamp           DateTime @default(now()) @db.Timestamp(0)
+  ip                  String   @db.VarChar(100)
+  remark              String?  @db.VarChar(100)
+  status              Int      @default(0)
+}
+
+model student_left_subject_mtech {
+  id                  Int      @id @default(autoincrement())
+  comp_code           Int
+  student_department  Int
+  academic_session    Int
+  semester            Int
+  specialization      Int
+  university_sub_code String   @db.VarChar(100)
+  college_sub_code    String   @db.VarChar(100)
+  subject_name        String   @db.VarChar(100)
+  subject_department  Int
+  credit              Int
+  type                Int
+  timestamp           DateTime @default(now()) @db.Timestamp(0)
+  ip                  String   @db.VarChar(100)
+  remark              String?  @db.VarChar(100)
+  status              Int      @default(0)
+}
+
+model student_main_result_relative {
+  id                       Int      @id @default(autoincrement())
+  computer_code            Int
+  enrollment_no            String   @db.VarChar(50)
+  specialization           Int
+  course                   String   @default("B.Tech.") @db.VarChar(100)
+  cordinator_computer_code Int
+  home_department_id       Int
+  study_department_id      Int
+  semester                 Int
+  total_credit             Int
+  result                   String   @db.VarChar(50)
+  total_backlog            Int
+  sgpa                     Float
+  cgpa                     Float
+  submit_flag              Int
+  entry_time               DateTime @default(now()) @db.Timestamp(0)
+}
+
+model student_main_result_relative_21 {
+  computer_code    Int
+  enrollment_no    String   @db.VarChar(32)
+  department_id    Int
+  specialization   Int
+  course           String   @default("B.Tech.") @db.VarChar(100)
+  semester         Int
+  SGPA             Float
+  CGPA             Float
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, semester, academic_session])
+}
+
+model student_main_result_relative_23 {
+  computer_code    Int
+  enrollment_no    String   @db.VarChar(32)
+  department_id    Int
+  specialization   Int
+  course           String   @default("B.Tech.") @db.VarChar(100)
+  semester         Int
+  SGPA             Float
+  CGPA             Float
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, semester, academic_session])
+}
+
+model student_main_result_relative_24 {
+  computer_code    Int
+  enrollment_no    String   @db.VarChar(32)
+  department_id    Int
+  specialization   Int
+  course           String   @default("B.Tech.") @db.VarChar(100)
+  semester         Int
+  SGPA             Float
+  CGPA             Float
+  academic_session Int
+  entry_time       DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, semester, academic_session])
+}
+
+model student_result_relative {
+  id                      Int      @id @default(autoincrement())
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(20)
+  department_id           Int
+  specialization          Int
+  course                  String   @default("B.Tech.") @db.VarChar(100)
+  batch_id                Int
+  semester                Int
+  college_subject_code    String   @db.VarChar(50)
+  university_subject_code String   @db.VarChar(200)
+  subject_type            String   @db.VarChar(11)
+  earn_credit             Int
+  grade                   String   @db.VarChar(11)
+  total_credit            Int
+  result                  String   @db.VarChar(50)
+  earn_marks              Float
+  academic_session        Int
+  grace_marks             Int
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+}
+
+model student_result_relative_21 {
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(32)
+  department_id           Int
+  specialization          Int
+  course                  String   @default("B.Tech.") @db.VarChar(100)
+  batch_id                Int
+  semester                Int
+  college_subject_code    String   @db.VarChar(50)
+  university_subject_code String   @db.VarChar(50)
+  subject_type            String   @db.VarChar(11)
+  earn_credit             Int
+  grade                   String   @db.VarChar(11)
+  total_credit            Int
+  result                  String   @db.VarChar(50)
+  earn_marks              Float
+  academic_session        Int
+  grace_marks             Int?     @default(0)
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, batch_id, college_subject_code, university_subject_code, subject_type])
+}
+
+model student_result_relative_23 {
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(32)
+  department_id           Int
+  specialization          Int
+  course                  String   @default("B.Tech.") @db.VarChar(100)
+  batch_id                Int
+  semester                Int
+  college_subject_code    String   @db.VarChar(50)
+  university_subject_code String   @db.VarChar(50)
+  subject_type            String   @db.VarChar(11)
+  earn_credit             Int
+  grade                   String   @db.VarChar(11)
+  total_credit            Int
+  result                  String   @db.VarChar(50)
+  earn_marks              Float
+  academic_session        Int
+  grace_marks             Int?     @default(0)
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, batch_id, college_subject_code, university_subject_code, subject_type])
+}
+
+model student_result_relative_24 {
+  computer_code           Int
+  enrollment_no           String   @db.VarChar(32)
+  department_id           Int
+  specialization          Int
+  course                  String   @default("B.Tech.") @db.VarChar(100)
+  batch_id                Int
+  semester                Int
+  college_subject_code    String   @db.VarChar(50)
+  university_subject_code String   @db.VarChar(50)
+  subject_type            String   @db.VarChar(11)
+  earn_credit             Int
+  grade                   String   @db.VarChar(11)
+  total_credit            Int
+  result                  String   @db.VarChar(50)
+  earn_marks              Float
+  academic_session        Int
+  grace_marks             Int?     @default(0)
+  entry_time              DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([computer_code, enrollment_no, batch_id, college_subject_code, university_subject_code, subject_type])
+}
+
+model student_session {
+  student_session_id Int    @id @unique(map: "student_session_id") @default(autoincrement())
+  name               String @db.VarChar(9)
+}
+
+model student_subject_result_relative {
+  id                      Int    @id @default(autoincrement())
+  computer_code           Int
+  enrollment_no           String @db.VarChar(50)
+  home_department_id      Int
+  study_department_id     Int
+  semester                Int
+  university_subject_code String @db.VarChar(50)
+  college_subject_code    String @db.VarChar(50)
+  subject_type            String @db.VarChar(50)
+  total_credit            Int
+  earn_credit             Int
+  grade_point             Int
+}
+
+model subject_batch {
+  batch_id            Int      @id @default(autoincrement())
+  subject_name        String   @db.VarChar(100)
+  batch               String   @db.VarChar(10)
+  type                String   @db.VarChar(10)
+  clg_sub_code        String   @db.VarChar(32)
+  university_sub_code String   @db.VarChar(32)
+  max_student         Int
+  academic_session_id Int
+  department          Int
+  specialization      Int
+  course              String   @default("B.Tech.") @db.VarChar(100)
+  semester            Int
+  ip                  String   @db.VarChar(32)
+  remark              String?  @db.VarChar(255)
+  time_stamp          DateTime @default(now()) @db.Timestamp(0)
+  user_stamp          Int
+  flag                Int      @default(1)
+}
+
+model subject_category {
+  id            Int     @id @default(autoincrement())
+  category      String  @db.VarChar(255)
+  category_code String  @db.VarChar(32)
+  active        Boolean @default(true)
+}
+
+model subject_code {
+  id                Int      @id @default(autoincrement())
+  sub_code          String   @db.VarChar(32)
+  hod_computer_code Int
+  department        Int
+  time_stamp        DateTime @default(now()) @db.Timestamp(0)
+  ip                String   @db.VarChar(20)
+}
+
+model subject_elective_division {
+  id            Int    @id @default(autoincrement())
+  elective_code String @default("No") @db.VarChar(11)
+}
+
+model subject_new {
+  id                  Int      @id @default(autoincrement())
+  semester            Int
+  academic_session    Int
+  clg_sub_code        String   @db.VarChar(32)
+  university_sub_code String   @db.VarChar(32)
+  subject_name        String   @db.VarChar(255)
+  type                String   @db.VarChar(11)
+  priority            String?  @db.VarChar(43)
+  scheme_id           Int
+  department          Int
+  specialization      Int
+  course              String   @default("B.Tech.") @db.VarChar(100)
+  active              Boolean  @default(true)
+  elective            Int
+  user_stamp          Int
+  time_stamp          DateTime @default(now()) @db.Timestamp(0)
+  ip                  String   @db.VarChar(255)
+  remark              String?  @db.VarChar(255)
+}
+
+model subject_new_credits {
+  id                  Int      @id @default(autoincrement())
+  college_sub_code    String   @db.VarChar(32)
+  university_sub_code String   @db.VarChar(32)
+  type                String   @db.VarChar(11)
+  department          Int
+  specialization      Int
+  credit              Int      @default(0)
+  end_sem             Int      @default(0)
+  mst                 Int      @default(0)
+  assignment          Int      @default(0)
+  labwork_sessional   Int      @default(0)
+  academic_session    Int
+  semester            Int
+  course              String   @db.VarChar(20)
+  entry_time          DateTime @default(now()) @db.Timestamp(0)
+  ip                  String   @db.VarChar(100)
+  remark              String   @db.VarChar(100)
+}
+
+model subject_scheme {
+  id          Int    @id @default(autoincrement())
+  scheme_name String @db.VarChar(75)
+  dept_id     Int
+}
+
+model summer_term {
+  id                  Int    @id @default(autoincrement())
+  computer_code       Int
+  enrollment_no       String @db.VarChar(32)
+  student_name        String @db.VarChar(64)
+  university_sub_code String @db.VarChar(32)
+  subject_type        String @db.VarChar(10)
+  student_session     Int
+  academic_session    Int
+  st_academic_session Int
+  home_dept           Int
+  batch_id            Int
+  batch_name          String @db.VarChar(64)
+  semester            Int
+  earn_marks          Float
+  result              String @db.VarChar(50)
+  active              Int
+}
+
+model temp_assigned_duty {
+  id            Int      @id @default(autoincrement())
+  assigned_to   Int
+  assigned_by   Int
+  assigned_role Int
+  start_date    DateTime @db.Date
+  end_date      DateTime @db.Date
+  academic_year Int
+}
+
+model temp_student_data {
+  uid                        BigInt    @id @default(autoincrement())
+  computer_code              Int?
+  enrollment_number          String?   @db.VarChar(20)
+  date_of_admission          DateTime? @db.Date
+  quota_of_admission         String?   @db.VarChar(32)
+  mode_of_admission          String?   @db.VarChar(32)
+  admission_round            String?   @db.VarChar(64)
+  student_session            Int?
+  academic_session           String?   @db.VarChar(12)
+  course                     String?   @db.VarChar(50)
+  specialization             Int?      @default(0)
+  home_dept                  Int?
+  study_dept                 Int?
+  aadhar_no                  BigInt?   @unique(map: "aadhar_no")
+  student_name               String?   @db.VarChar(200)
+  student_hindi_name         String    @db.VarChar(200)
+  student_mobile             BigInt?
+  student_pmobile            BigInt?
+  student_email              String?   @db.VarChar(255)
+  student_gender             String?   @db.VarChar(1)
+  student_date_of_birth      String?   @db.VarChar(12)
+  blood_group                String?   @db.VarChar(3)
+  category                   String?   @db.VarChar(10)
+  sub_caste                  String    @db.VarChar(50)
+  religion                   String?   @db.VarChar(32)
+  minority                   Boolean?
+  handicap                   Boolean?
+  father_name                String?   @db.VarChar(200)
+  father_mobile              BigInt?
+  father_email               String?   @db.VarChar(255)
+  father_occupation          String?   @db.VarChar(64)
+  father_occ_description     String?   @db.VarChar(200)
+  mother_name                String?   @db.VarChar(200)
+  mother_mobile              BigInt?
+  mother_email               String?   @db.VarChar(255)
+  mother_occupation          String?   @db.VarChar(64)
+  mother_occ_description     String?   @db.VarChar(200)
+  guardian_name              String?   @db.VarChar(200)
+  guardian_address           String?   @db.Text
+  guardian_mobile            BigInt?
+  guardian_email             String?   @db.VarChar(255)
+  guardian_occupation        String?   @db.VarChar(64)
+  guardian_occ_description   String?   @db.VarChar(200)
+  guardian_relation          String?   @db.VarChar(32)
+  hostel                     Boolean?
+  extra_activity             String?   @db.VarChar(64)
+  domicile_state             String?   @db.VarChar(100)
+  add_local                  String?   @db.VarChar(200)
+  add_permanent              String?   @db.VarChar(200)
+  pincode_local              String?   @db.VarChar(6)
+  pincode_permanent          String?   @db.VarChar(6)
+  district_local             String?   @db.VarChar(100)
+  district_permanent         String?   @db.VarChar(100)
+  state_local                String?   @db.VarChar(200)
+  state_permanent            String?   @db.VarChar(200)
+  migration_no               String?   @db.VarChar(20)
+  board12_name               String?   @db.VarChar(100)
+  board12_year               Int?      @db.Year
+  board12_physics            Float?    @db.Float
+  board12_chemistry          Float?    @db.Float
+  board12_maths              Float?    @db.Float
+  board12_total              Float?    @db.Float
+  board12_maxmarks           Float?    @db.Float
+  board10_name               String?   @db.VarChar(100)
+  board10_year               Int?      @db.Year
+  board10_cgpa               Float?    @db.Float
+  board10_total              Float?    @db.Float
+  board10_maxmarks           Float?    @db.Float
+  other_course               String?   @db.VarChar(100)
+  other_university           String?   @db.VarChar(100)
+  other_year                 Int?      @db.Year
+  other_cgpa                 Float?    @db.Float
+  jee_rollno                 String?   @db.VarChar(20)
+  jee_marks                  Float?    @db.Float
+  jee_rank                   BigInt?
+  jee_markskeet              Boolean?
+  gate_rollno                Int
+  gate_marks                 Int
+  gate_percentile            Int
+  gate_rank                  Int
+  document_verification_slip Boolean?
+  registration_slip          Boolean?
+  marksheet12                Boolean?
+  marksheet10                Boolean?
+  marksheet_other            Boolean?
+  tc                         Boolean?
+  gap_certificate            Boolean?
+  migration                  Boolean?
+  caste_certificate          Boolean?
+  income_certificate         Boolean?
+  admission_slip             Boolean?
+  domicile                   Boolean?
+  fees_deposit               Boolean?
+  aadhar_document            Boolean?
+  photos                     Boolean?
+  status                     Boolean?
+  lab_group                  String?   @db.VarChar(1)
+  jk_migrant                 Boolean
+  is_refered                 Boolean
+  document_status            Boolean
+}
+
+model time_slots {
+  id         Int    @id @default(autoincrement())
+  start_time String @db.VarChar(255)
+  end_time   String @db.VarChar(255)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model topic {
+  topic_id     Int     @id @default(autoincrement())
+  subject_code String  @db.VarChar(10)
+  topic_name   String  @db.Text
+  active       Boolean
+}
+
+model txn_details {
+  id                  Int      @id @default(autoincrement())
+  computer_code       Int
+  enrollment          String   @db.VarChar(20)
+  firstname           String   @db.VarChar(100)
+  email               String   @db.VarChar(50)
+  phone               BigInt
+  student_section_id  Int
+  study_department_id Int
+  semester            Int
+  academic_session    Int
+  amount              Float    @db.Float
+  extra_charge        Float    @db.Float
+  productinfo         String   @db.VarChar(50)
+  txn_key             String   @db.VarChar(100)
+  txnid               String   @db.VarChar(20)
+  txn_date            DateTime @db.Date
+  resphash            String   @db.VarChar(500)
+  status              String   @db.VarChar(50)
+  status_to_show      String   @db.VarChar(100)
+  msg                 String   @db.VarChar(100)
+  msg1                String   @db.VarChar(100)
+  timestamp           DateTime @default(now()) @db.Timestamp(0)
+}
+
+model year_coordinator {
+  id                    Int      @id @default(autoincrement())
+  faculty_computer_code Int
+  year                  Int
+  dept_id               Int
+  specialization        Int
+  academic_session      Int
+  timestamp             DateTime @default(now()) @db.Timestamp(0)
+  userstamp             Int
+  ip                    String   @db.VarChar(100)
+  remark                String   @db.VarChar(100)
+  active                Int      @default(1)
+}
+
+model app_login {
+  id         Int      @id @default(autoincrement())
+  token      String   @db.VarChar(256)
+  uid        String   @db.VarChar(256)
+  is_student Boolean
+  created_at DateTime @default(now()) @db.DateTime(0)
+}
+
+model notification_device_token {
+  id            Int    @id @default(autoincrement())
+  computer_code Int
+  device_token  String @db.VarChar(500)
+}
+
+model notification_msg {
+  id                   Int    @id @default(autoincrement())
+  msg                  String @db.VarChar(1000)
+  sender_computer_code Int
+}
+
+model academic_calender {
+  id               Int      @id @default(autoincrement())
+  academic_session Int
+  date             DateTime @db.Date
+  category         String   @db.VarChar(100)
+  name             String   @db.VarChar(100)
+  description      String   @db.VarChar(500)
+}
