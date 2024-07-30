@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Animated, StyleSheet, useWindowDimensions, View } from 'react-native'
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import { Button, DataTable, Text, useTheme } from 'react-native-paper'
 import {Carousel} from "react-native-basic-carousel";
 import CMScard from '../../../components/cms_card';
@@ -20,6 +20,13 @@ import CustomLoading from '../../../components/customLoading';
 import NoData from '../../../components/noData';
 import { commonActionTypes } from '../../../redux/common/types';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import Animated, { useSharedValue, withSpring, withTiming  } from 'react-native-reanimated';
+import { storage } from '../../../App';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import AnimatedOutlineButton from '../../../components/animatedOutlineButton';
+import { useAcademicSession } from '../../../hooks/query/common';
+import { useGetBatches } from '../../../hooks/query/staff';
+import useCollapsibleCustomHeader from '../../../hooks/useCollapsibleHeader';
 
 const AttendancePanel = () => {
   
@@ -47,13 +54,11 @@ const AttendancePanel = () => {
     },
     carousel: {
       alignItems : "center",
-      verticalAlign : "center",
       marginVertical : 'auto',
       alignSelf : "center",
       paddingBottom : 50,
     },
     rootContainer: {
-      marginTop: 50, 
       flex: 1, 
       // alignItems: 'center',
     },
@@ -88,49 +93,20 @@ const AttendancePanel = () => {
     }
   });
 
-  useQuery(
-    commonApi.academicSession.name,
-    () => commonApi.academicSession.fetch(),
-    {
-      onSuccess: data => {
-        let current = data.find(item => item.active)
-        dispatch({
-          type: commonActionTypes.AcademicSession,
-          payload: {
-            sessions: [...data],
-            current: {...current},
-          },
-        });
-      },
-    },
-  );
 
 
   type User = Pick<reducerData["User"] , "user" >;
-  const user:User["user"] = useSelector((state:RootState)=>state.common.User.user)
+  const [ {user} , setUser ] = useMMKVStorage<User>("User" , storage , {user:{}});
   
-  
-  const current_session = useSelector((store:RootState)=>store.common.AcademicSession.current.academic_session_id)
-  const departments  = useSelector((store:RootState)=>store.common.Departments)||[]
+  const {current_academic_session_id:current_session} = useAcademicSession();
+  const [departments ,setDepartments]:[any, (prevalue:any)=>void]  = useMMKVStorage("Departments" , storage , []);
 
 
 
-  const facultySubjects = useSelector((store:RootState)=>store.staff.Batches)
-  // useEffect(()=>{console.log(facultySubjects)} , [facultySubjects])
+  const { facultySubjects , queryState:{isLoading , isError}} = useGetBatches(user.computer_code ,current_session);
+  // useEffect(()=>{console.log("session : " , current_session)} , [current_session])
 
-  const {isFetching , isError } = useQuery(staffApi.getBatches.name , ()=>staffApi.getBatches.fetch(
-    {
-    computer_code : user.computer_code,
-    session_id : current_session,
-  }
-) , {
-    onSuccess : (data)=>{
-      dispatch({
-        type : staffActionType.Batches,
-        payload : [...data]
-      })
-    }
-  })
+  const {onScroll , headerHeight} = useCollapsibleCustomHeader();
 
   const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -138,10 +114,12 @@ const AttendancePanel = () => {
       navigator.pop();
       return true;
     })
-    
 
 
-  const renderItem = useCallback(({ index , item }) =>{return (
+  const renderItem = useCallback(({ index , item }:{index:number , item:any|undefined}) =>{
+    if( !item) return null;
+    if( !item.subject ) return null;
+    return (
     <CMScard style={styles.cardStyle} >
      <Text variant='labelLarge' style={styles.heading} >{item.subject.subject_name}</Text>
      <DataTable>
@@ -202,17 +180,17 @@ const AttendancePanel = () => {
         </DataTable.Row>
      </DataTable>
      <View style={styles.buttonConatiner}>
-          <TouchableOpacity onPress={()=>navigator.navigate('Take Attendance' , {batch_id : item.subject.batch_id})} ><Button icon="edit" labelStyle={styles.buttonLabel} textColor={theme.colors.blue} style={[styles.button,{borderColor : theme.colors.blue , backgroundColor : theme.colors.container_background}]} mode="outlined" >Take Attendance</Button></TouchableOpacity>
-          <TouchableOpacity onPress={()=>navigator.navigate('View Attendance' , {batch_id : item.subject.batch_id})} ><Button icon="align-center" labelStyle={styles.buttonLabel} textColor={theme.colors.red} style={[styles.button,{borderColor : theme.colors.red , backgroundColor : theme.colors.container_red}]} mode="outlined" >View Attendance</Button></TouchableOpacity>
-          <TouchableOpacity onPress={()=>navigator.navigate('Modify Attendance' , {batch_id : item.subject.batch_id})} ><Button icon="edit-3" labelStyle={styles.buttonLabel} textColor={theme.colors.yellow} style={[styles.button,{borderColor : theme.colors.yellow , backgroundColor : theme.colors.container_yellow}]} mode="outlined" >Modify</Button></TouchableOpacity>
-          <TouchableOpacity onPress={()=>navigator.navigate('Lecture Plan' , {batch_id : item.subject.batch_id})} ><Button icon="clipboard" labelStyle={styles.buttonLabel} textColor={theme.colors.green} style={[styles.button,{borderColor : theme.colors.green , backgroundColor : theme.colors.container_green}]} mode="outlined" >Lecture Plan</Button></TouchableOpacity>
+          <AnimatedOutlineButton onPress={()=>navigator.navigate('Take Attendance' , {batch_id : item.subject.batch_id})} icon="edit" labelStyle={styles.buttonLabel} style={styles.button} color='blue'>Take Attendance</AnimatedOutlineButton>
+          <AnimatedOutlineButton onPress={()=>navigator.navigate('View Attendance' , {batch_id : item.subject.batch_id})} icon="align-center" labelStyle={styles.buttonLabel} style={styles.button} color='red' >View Attendance</AnimatedOutlineButton>
+          <AnimatedOutlineButton onPress={()=>navigator.navigate('Modify Attendance' , {batch_id : item.subject.batch_id})} icon="edit-3" labelStyle={styles.buttonLabel} style={styles.button} color='yellow' >Modify</AnimatedOutlineButton>
+          <AnimatedOutlineButton onPress={()=>navigator.navigate('Lecture Plan' , {batch_id : item.subject.batch_id})} icon="clipboard" labelStyle={styles.buttonLabel} style={styles.button} color='green' >Lecture Plan</AnimatedOutlineButton>
         </View>
     </CMScard>
    )} , [facultySubjects , departments])
 
 
    if(isError) return  <CustomError text={"data not Fetched"} />
-   if(isFetching) return(
+   if(isLoading) return(
     <CustomLoading />
   )
 
@@ -220,7 +198,7 @@ const AttendancePanel = () => {
    
    return (
     <GestureHandlerRootView style={{flex :1}}>
-    <ScrollView style={styles.rootContainer}>
+    <ScrollView onScroll={onScroll} style={[styles.rootContainer, {paddingTop:headerHeight}]} >
       <CMScard>
       <View>
         <Text>Total Batches : {facultySubjects?.length}</Text>
@@ -251,5 +229,5 @@ const AttendancePanel = () => {
   )
 }
 
-export default AttendancePanel
+export default memo(AttendancePanel)
 

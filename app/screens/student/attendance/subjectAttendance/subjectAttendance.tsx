@@ -1,7 +1,7 @@
 import { BackHandler, StyleSheet, ScrollView, View , FlatList, useWindowDimensions, Pressable } from 'react-native'
-import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { List, useTheme, Text ,Chip, Surface, Title} from 'react-native-paper';
+import { List, useTheme, Text ,Chip, Surface, Title, withTheme} from 'react-native-paper';
 import { themeType } from '../../../../theme';
 import dayjs from 'dayjs';
 import NoData from '../../../../components/noData';
@@ -18,6 +18,7 @@ import { Portal } from '@gorhom/portal';
 import { BottomSheetModalRef } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModalProvider/types';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../../routes/routes';
+import Animated, { SlideInLeft, useSharedValue, withTiming, ZoomIn } from 'react-native-reanimated';
 
 
 const SubjectAttendance:FC<any> = () => {
@@ -26,29 +27,34 @@ const SubjectAttendance:FC<any> = () => {
     const theme:themeType = useTheme();
     const window = useWindowDimensions();
     const styles = StyleSheet.create({
-        calendarStyle : {
-            minWidth: 200,
-            width :window.width - 30 ,
-            maxWidth: 600,
-            borderRadius: 35,
-            padding: 15,
-            backgroundColor: theme.colors.cms_card_background,
-        },
-        progressScroll:{
-            flexDirection: 'row',
-            flex:1,
-            alignSelf:"center"
-        },
-        progressCard:{
-            padding: 10,
-            gap : 10,
-            width : 150,
-            justifyContent:'center',
-        }
-    })
+      calendarStyle: {
+        minWidth: 200,
+        width: window.width - 30,
+        maxWidth: 600,
+        borderRadius: 35,
+        padding: 15,
+        backgroundColor: theme.colors.cms_card_background,
+      },
+      progressScroll: {
+        flexDirection: 'row',
+        flex: 1,
+        alignSelf: 'center',
+      },
+      progressCard: {
+        padding: 10,
+        gap: 10,
+        width: 150,
+        justifyContent: 'center',
+      },
+      scrollView: {
+        marginTop: 50,
+        maxWidth: 1000,
+        alignSelf: 'center'
+      },
+    });
     
     useEffect( ()=>{
-        navigator.setOptions({title : params?.title , })
+        navigator.setOptions({title : params?.title })
     } , [params])
 
     useBackHandler(()=>{
@@ -144,6 +150,9 @@ const SubjectAttendance:FC<any> = () => {
     const absent_attendance_list = useMemo(()=>total_attendance_list.filter(item=>!item.attendance)  , [total_attendance_list])
 
 
+    const absentScale = useSharedValue(1);
+    const presentScale = useSharedValue(1);
+    const totalScale = useSharedValue(1);
 
     const dismissModal = useCallback(()=>{
         setOpenSheet(false)
@@ -159,7 +168,7 @@ const SubjectAttendance:FC<any> = () => {
         <GestureHandlerRootView style={{flex: 1}}>
 
         <BottomSheetModalProvider>
-            <ScrollView style={{ marginTop : 50  , maxWidth:1000 , alignSelf: 'center',}}>
+            <ScrollView style={styles.scrollView}  showsVerticalScrollIndicator={false}>
                 <View style={{padding:10}}>
                     <Text variant='headlineSmall'  > Attendance Summary</Text>
                 </View>
@@ -173,7 +182,10 @@ const SubjectAttendance:FC<any> = () => {
                     </Text>
                 </CMScard>
                 <ScrollView  overScrollMode='always' horizontal={true} style={styles.progressScroll} contentContainerStyle={{justifyContent:"center"}}>
-                    <TouchableOpacity onPress={()=>setSheet({
+
+
+                    <Animated.View style={{transform:[{scale:absentScale}]}} entering={ZoomIn.delay(100)}>
+                    <TouchableOpacity onPressIn={()=>absentScale.value=withTiming(0.9,{duration:500})} onPressOut={()=>absentScale.value=withTiming(1,{duration:500})} onPress={()=>setSheet({
                         lectures : absent_attendance_list,
                         open:true
                     })}>
@@ -193,7 +205,10 @@ const SubjectAttendance:FC<any> = () => {
                           </View>
                     </CMScard>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>setSheet({
+                    </Animated.View>
+
+                    <Animated.View style={{transform:[{scale:presentScale}]}} entering={ZoomIn.delay(100)}>
+                    <TouchableOpacity onPressIn={()=>presentScale.value=withTiming(0.9,{duration:500})} onPressOut={()=>presentScale.value=withTiming(1,{duration:500})} onPress={()=>setSheet({
                         lectures : present_attendance_list,
                         open:true
                     })}>
@@ -213,7 +228,10 @@ const SubjectAttendance:FC<any> = () => {
                           </View>
                     </CMScard>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>setSheet({
+                    </Animated.View>
+                    
+                    <Animated.View style={{transform:[{scale:totalScale}]}} entering={ZoomIn.delay(100)}>
+                    <TouchableOpacity onPressIn={()=>totalScale.value=withTiming(0.9,{duration:500})} onPressOut={()=>totalScale.value=withTiming(1,{duration:500})} onPress={()=>setSheet({
                         lectures : total_attendance_list,
                         open:true
                     })}>
@@ -229,6 +247,8 @@ const SubjectAttendance:FC<any> = () => {
                           <Text variant='labelLarge'>Total</Text>
                     </CMScard>
                     </TouchableOpacity>
+                    </Animated.View>
+                    
                 </ScrollView>
                 <View style={{padding:10}}>
                     <Text variant='headlineSmall'  > Monthly attendance</Text>
@@ -262,7 +282,7 @@ const SubjectAttendance:FC<any> = () => {
       }
     
         
-const AttendanceListBottomSheet= props=>{
+const AttendanceListBottomSheet= memo((props:{open:boolean , lectures:any[] , dismissModal:()=>void})=>{
 
             const theme:themeType = useTheme();
             const styles = StyleSheet.create({
@@ -321,7 +341,7 @@ const AttendanceListBottomSheet= props=>{
                   },
           
               });
-
+            //   console.log("bottom")
 
               const Modalref = useRef<BottomSheetModal>(null);
 
@@ -329,17 +349,20 @@ const AttendanceListBottomSheet= props=>{
                 if (props.open) Modalref.current?.present()
                 // else Modalref.current?.dismiss()
             
-              } , [props.open , Modalref])
+              } , [props.open , Modalref.current])
 
               const window = useWindowDimensions();
 
+              const snapPoints = useMemo(()=>[500 , window.height - 100] , [window]);
+
 
               const backdrop = useCallback((backdropProps:BottomSheetBackdropProps)=>(
-                <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
+                <BottomSheetBackdrop {...backdropProps} onPress={props.dismissModal} appearsOnIndex={0} disappearsOnIndex={-1} />
               ) , [])
 
               const AttendanceTile = useCallback(({item}:{item:any})=>{
                 return (
+
                     <List.Item
                     title={item.attendance?"Present":"Absent"}
                     titleNumberOfLines={1}
@@ -372,7 +395,7 @@ const AttendanceListBottomSheet= props=>{
                 ref = {Modalref}
                 index={0}
                 enableDismissOnClose
-                snapPoints={[500 , window.height - 100]}
+                snapPoints={snapPoints}
                 onDismiss={props.dismissModal}
                 handleIndicatorStyle={{
                     backgroundColor: theme.colors.primary,
@@ -400,8 +423,8 @@ const AttendanceListBottomSheet= props=>{
                     />
                 }
                 </BottomSheetModal>
-    )}
+    )})
 
 
 
-export default SubjectAttendance;
+export default memo(SubjectAttendance);

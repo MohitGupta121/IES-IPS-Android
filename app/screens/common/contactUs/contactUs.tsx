@@ -10,11 +10,13 @@ import {themeType} from '../../../theme';
 import { useBackHandler } from '@react-native-community/hooks';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../routes/routes';
+import useCollapsibleCustomHeader from '../../../hooks/useCollapsibleHeader';
 
 const ContactUs = () => {
   const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const theme: themeType = useTheme();
   const window = useWindowDimensions();
+  const {onScroll , headerHeight} = useCollapsibleCustomHeader();
 
   const styles = StyleSheet.create({
     tableCellStyle: {
@@ -37,6 +39,7 @@ const ContactUs = () => {
   return (
     <ScrollView
       style={{flex: 1}}
+      onScroll={onScroll}
       contentContainerStyle={{
         minHeight: window.height - 50,
         paddingTop: 60,

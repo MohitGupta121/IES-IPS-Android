@@ -1,5 +1,5 @@
 import { Animated, BackHandler, Dimensions, FlatList, ScrollView, StyleSheet,  View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { ActivityIndicator, IconButton, List, TouchableRipple, useTheme ,Text} from 'react-native-paper';
 import IosSafeArea from '../../../components/iosSafeArea';
 import { useNavigation } from '@react-navigation/native';
@@ -21,32 +21,35 @@ import { RootState } from '../../../redux/store';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../routes/routes';
 import { FlashList } from "@shopify/flash-list";
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { storage } from '../../../App';
+import { commonActionTypes } from '../../../redux/common/types';
+import { reducerData } from '../../../redux/common/reducer';
+import useCollapsibleCustomHeader from '../../../hooks/useCollapsibleHeader';
+import { useAcademicSession } from '../../../hooks/query/common';
+import { useStudentAttendance } from '../../../hooks/query/student';
 
 const Attendance = () => {
     const theme:themeType = useTheme();
-    const user = useSelector((store:RootState)=>store.common.User.user);
-    const attendance = useSelector((store:RootState)=>store.student.Attendance);
+    type User = Pick<reducerData['User'], 'user'>;
+    const [ {user} , setUser ] = useMMKVStorage<User>("User" , storage , {user:{}});
+
+    // const attendance = useSelector((store:RootState)=>store.student.Attendance);
+    const {current_academic_session_id:current_session} = useAcademicSession();
+    const {attendance, queryStatus:{isLoading , refetch}} = useStudentAttendance(current_session , user.computer_code);
     const dispatch = useDispatch();
 
-    const current_session = useSelector((store:RootState)=>store.common.AcademicSession?.current?.academic_session_id)
 
-
-    const {isFetching , refetch} = useQuery(studentApi.studentAttendance.name , ()=>studentApi.studentAttendance.fetch({academic_session:current_session, computer_code:user.computer_code}),
-    {
-      onSuccess:(data)=>{
-        dispatch({type:studentActionTypes.Attendance , payload : data})
-      }
-    });
     
+    const {onScroll , headerHeight} = useCollapsibleCustomHeader();
 
     const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     useBackHandler(()=>{
+      dispatch({type:studentActionTypes.Attendance , payload : []});
       navigator.pop();
       return true;
     })
-
-    const window = useWindowDimensions();
 
     const [refresh , setRefresh] = useState(false)
 
@@ -58,7 +61,7 @@ const Attendance = () => {
       })
     }
 
-    if(isFetching) return(
+    if(isLoading) return(
       <CustomLoading />
     )
 
@@ -66,9 +69,9 @@ const Attendance = () => {
     <>
         <FlashList
           data={attendance}
-          windowSize={2}
-          initialNumToRender={10}
-          contentContainerStyle={{paddingTop: 50, paddingBottom: 20, gap: 10 , minHeight: window.height-100}}
+          onScroll={onScroll}
+          contentContainerStyle={{ paddingBottom: 20 , paddingTop: headerHeight }}
+          style={{flex:1 , }}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({item}) => <ItemList item={item} />}
           refreshControl={(
@@ -80,4 +83,4 @@ const Attendance = () => {
   );
 }
 
-export default Attendance
+export default memo(Attendance)

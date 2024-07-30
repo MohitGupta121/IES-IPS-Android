@@ -6,7 +6,7 @@ import {SafeAreaView} from 'react-native';
 import {loginStyle} from './studentLogin';
 import {TextInput, Button} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
-import {Link, useNavigation} from '@react-navigation/native';
+import {CommonActions, Link, useNavigation} from '@react-navigation/native';
 import {themeType} from '../../../theme';
 import { loginPayload } from '../../../api/student/studentApi';
 import { useMutation } from 'react-query';
@@ -17,6 +17,8 @@ import { useDispatch } from 'react-redux';
 import { commonActionTypes } from '../../../redux/common/types';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../routes/routes';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { useLogin } from '../../../hooks/query/staff';
 
 const StaffLogin: FC = () => {
   const theme: themeType = useTheme();
@@ -29,17 +31,26 @@ const StaffLogin: FC = () => {
   const [showPass ,setShowPass] = useState(true);
 
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const staffLoginMutation = useMutation((data:loginPayload)=>staffApi.login.fetch(data) , {
-    onSuccess : (data )=>{
+  const [ user , setUser ] = useMMKVStorage("User" , storage , {});
+
+  const {mutate:staffLoginMutation} = useLogin( {
+    onSuccess : (data:any )=>{
 
         data.user.type = userType.staff;
-        storage.set("user-login" , JSON.stringify(data));
+        storage.setString("user-login" , JSON.stringify(data));
+        setUser(data);
         // @ts-ignore
-        dispatch({type:commonActionTypes.UserLoginDetails , payload : JSON.parse(storage.getString('user-login'))}),
+        // dispatch({type:commonActionTypes.UserLoginDetails , payload : JSON.parse(storage.getString('user-login'))}),
         // @ts-ignore
-        navigation.navigate({name :"Dashboard" });
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'Dashboard' }],
+          })
+        );
+      
     }
   });
   
@@ -89,7 +100,7 @@ const StaffLogin: FC = () => {
           }}>
           Submit
         </Button>
-        <Button>Forget Password</Button>
+        {/* <Button>Forget Password</Button> */}
         
       </View>
     </SafeAreaView>

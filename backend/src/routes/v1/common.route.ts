@@ -162,3 +162,83 @@ router.post('/academicCalender', commonContoller.postAcademicCalender);
  */
 
 router.get('/getDepartments', commonContoller.getDepartments);
+/**
+ * @swagger
+ * /common/getFacultyByDepartment:
+ *   get:
+ *     summary: Retrieve a list of departments
+ *     tags: [Common]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: department_id
+ *         schema:
+ *           type: number
+ *         description: The ID of the department to retrieve
+ *     responses:
+ *       "200":
+ *         description: A list of departments
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 1
+ *                   name:
+ *                     type: string
+ *                     example: Human Resources
+ *       "401":
+ *         description: Unauthorized
+ *       "500":
+ *         description: Internal server error
+ */
+
+router.get('/getFacultyByDepartment', commonContoller.getFacultyByDepartment);
+/**
+ * @swagger
+ * /common/getNameByComputerCode:
+ *   post:
+ *     summary: Get name by computer code
+ *     tags: [Common]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - computer_code
+ *               - user_type
+ *             properties:
+ *               computer_code:
+ *                 type: number
+ *                 description: The computer code of the user
+ *               user_type:
+ *                 type: string
+ *                 description: The type of the user
+ *     responses:
+ *       "200":
+ *         description: Successfully fetched the name
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The name of the user
+ *       "400":
+ *         description: Bad request
+ *       "401":
+ *         description: Unauthorized
+ *       "404":
+ *         description: User not found
+ */
+router.post('/getNameByComputerCode', commonContoller.getNameByComputerCode);

@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { NavigationContainer, useNavigation  , DefaultTheme} from '@react-navigation/native'
 import { NativeStackHeaderProps, NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack'
 import commonScreenProps, { commonRoutes } from './common';
@@ -11,6 +11,9 @@ import CustomHeader from '../components/customHeader';
 import { navigationRef, storage } from '../App';
 import { useDispatch } from 'react-redux';
 import { commonActionTypes } from '../redux/common/types';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import useCollapsibleCustomHeader from '../hooks/useCollapsibleHeader';
+import { LoginContext } from '../context/loginContext';
 
 
 export type RootStackParamList = staffRoutes & studentRoutes & commonRoutes;
@@ -33,21 +36,22 @@ const Routes = () => {
         
     }
     const dispatch = useDispatch();
-    const [isLoggedIn , setIsLoggedin] = useState(false)
+    const {isLoggedIn}  = useContext(LoginContext)
 
-    useEffect( ()=>{
-        if ( storage.contains('user-login')) {
-            setIsLoggedin(true)
-            let loginStorageData = storage.getString('user-login');
-            if (loginStorageData!== undefined)
-            dispatch({type:commonActionTypes.UserLoginDetails , payload : JSON.parse(loginStorageData)})
-          }
-          }, [])
+    // const [userLogin , setUserLogin] = useMMKVStorage('user-login' , storage , null)
+
+    console.log(isLoggedIn)
+
+    // useEffect( ()=>{
+    //     if ( userLogin ) {
+    //         setIsLoggedin(true)
+    //       }
+    // }, [userLogin])
           
-    useEffect(() => {
-      if (!isLoggedIn) navigationRef.navigate('Login');
-      else  navigationRef.navigate('Dashboard');
-    }, [isLoggedIn]);
+    // useEffect(() => {
+    //   if (!isLoggedIn) navigationRef.navigate<any>('Login');
+    //   else  navigationRef.navigate<any>('Dashboard');
+    // }, [isLoggedIn]);
 
     const navigationTheme: ReactNavigation.Theme = { 
         ... DefaultTheme ,
@@ -60,10 +64,15 @@ const Routes = () => {
             primary : theme.colors.primary,
         },
     }
-  return (
-    <NavigationContainer ref={navigationRef} theme={navigationTheme}>
 
+    const {expand}  = useCollapsibleCustomHeader();
+
+    // console.log("routes")
+  return (
+    <NavigationContainer ref={navigationRef} theme={navigationTheme} onStateChange={expand}>
         <Stack.Navigator screenOptions={screenOptions}>
+
+        {isLoggedIn?(<>
             <Stack.Group>
                 {commonScreenProps.map((item ,index)=><Stack.Screen {...item} key={index} />)}
             </Stack.Group>
@@ -74,6 +83,14 @@ const Routes = () => {
                 {staffScreenProps.map((item ,index)=><Stack.Screen {...item} key={index} />)}
             </Stack.Group>
 
+        </>
+        ):
+        (<>
+            <Stack.Group>
+                {commonScreenProps.map((item ,index)=>item.name!="Login"?null:<Stack.Screen {...item} key={index} />)}
+            </Stack.Group>
+            </>
+        )}
         </Stack.Navigator>
     </NavigationContainer>
   )

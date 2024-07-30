@@ -6,6 +6,7 @@ import { MD3Type, InternalTheme } from "react-native-paper/src/types";
 export type themeType = InternalTheme&{
     colors : Material3Scheme&{
         container_background: string,
+        container_background_opacity:string,
         white : string,
         red : string,
         black:string,
@@ -31,8 +32,9 @@ const customTheme =  {
             mode : "flat"
         },
     },
-    "colors":{
+    colors:{
         container_background: "#c7d1ff",
+        container_background_opacity: "#838cb3",
         white : "#ffffff",
         red : "#9b0000",
         black:"#000000",

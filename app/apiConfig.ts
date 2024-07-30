@@ -8,7 +8,7 @@ import  {Toast}  from 'react-native-toast-notifications';
 
 const config={
     baseURL: appConfig.baseURL,
-    timeout: 3000,
+    timeout: 6000,
     Headers:{
         'accept': 'application/json',
         'Content-Type': 'application/json'
@@ -20,12 +20,13 @@ const api = axios.create(config);
 api.interceptors.request.use((config)=>{
     let token;
     // @ts-ignore
-    if (storage.contains('user-login') ) token = JSON.parse(storage.getString('user-login'))
+    const userLogin = storage.getString('user-login');
+    if (userLogin ) token = JSON.parse(userLogin)
     config.headers.Authorization = token?.token?.token || "";
     return config
 })
 
-api.interceptors.response.use(null , (error:AxiosError)=>{
+api.interceptors.response.use(null , (error:AxiosError<any>)=>{
     console.info(error.request?._url);
     console.error(error.response?.data?.message);
     Toast.show( "some",{

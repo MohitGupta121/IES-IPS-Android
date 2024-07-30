@@ -32,9 +32,9 @@ model ATKT {
 }
 
 model academic_session {
-  academic_session_id Int     @id @default(autoincrement())
-  academic_session    String  @db.VarChar(32)
-  active              Boolean
+  academic_session_id Int    @id @default(autoincrement())
+  academic_session    String @db.VarChar(32)
+  active              Int?   @db.TinyInt
 }
 
 model add_atkt_result {
@@ -243,9 +243,9 @@ model api_cat2 {
 model api_info {
   api_id                BigInt
   faculty_computer_code Int
-  academic_session      Int     @default(9)
-  submited              Boolean @default(false)
-  hod_approval          Boolean @default(false)
+  academic_session      Int    @default(9)
+  submited              Int?   @db.TinyInt
+  hod_approval          Int?   @db.TinyInt
 
   @@ignore
 }
@@ -278,7 +278,7 @@ model assign_detail {
 model assign_faculty_lms {
   assign_faculty_id     BigInt   @id @default(autoincrement())
   apply_id              String   @db.VarChar(20)
-  status                Boolean
+  status                Int?     @db.TinyInt
   faculty_date          DateTime @db.Date
   faculty_computer_code Int
   assigned_class_dept   String   @db.VarChar(255)
@@ -311,25 +311,25 @@ model assign_student {
   user_stamp       Int
   time_stamp       DateTime @default(now()) @db.Timestamp(0)
   ip               String   @db.VarChar(100)
-  active           Boolean  @default(true)
+  active           Int?     @db.TinyInt
   remark           String   @db.VarChar(100)
 }
 
 model assigned_roles {
-  faculty_computer_code Int     @unique(map: "faculty_computer_code")
+  faculty_computer_code Int    @unique(map: "faculty_computer_code")
   department            Int
-  admin                 Boolean @default(false)
-  principal             Boolean @default(false)
-  hod                   Boolean @default(false)
+  admin                 Int?   @db.TinyInt
+  principal             Int?   @db.TinyInt
+  hod                   Int?   @db.TinyInt
   mtech_hod             Int
-  faculty               Int     @default(0) @db.TinyInt
-  lab_assistant         Boolean @default(false)
-  office                Boolean @default(false)
-  lms_cordinator        Int     @default(0) @db.TinyInt
-  railway_cordinator    Int     @default(0) @db.TinyInt
-  ea                    Int     @default(0) @db.TinyInt
-  master                Boolean @default(false)
-  secure_password       String  @db.VarChar(255)
+  faculty               Int?   @db.TinyInt
+  lab_assistant         Int?   @db.TinyInt
+  office                Int?   @db.TinyInt
+  lms_cordinator        Int?   @db.TinyInt
+  railway_cordinator    Int?   @db.TinyInt
+  ea                    Int?   @db.TinyInt
+  master                Int?   @db.TinyInt
+  secure_password       String @db.VarChar(255)
 }
 
 model assigned_roles_subject_class {
@@ -379,17 +379,17 @@ model attend_info_other {
 }
 
 model attend_record_new {
-  attend_record_id      BigInt  @id @default(autoincrement()) @db.UnsignedBigInt
+  attend_record_id      BigInt @id @default(autoincrement()) @db.UnsignedBigInt
   student_computer_code Int
   attend_info           BigInt
-  attend                Boolean
+  attend                Int?   @db.TinyInt
 }
 
 model attend_record_other {
-  attend_record_other_id Int     @id @default(autoincrement()) @db.UnsignedInt
+  attend_record_other_id Int  @id @default(autoincrement()) @db.UnsignedInt
   student_computer_code  Int
-  attend_info_other_id   Int     @db.UnsignedInt
-  attend                 Boolean
+  attend_info_other_id   Int  @db.UnsignedInt
+  attend                 Int? @db.TinyInt
 }
 
 model batch_coordinate {
@@ -448,15 +448,15 @@ model choice_filling_mtech {
 }
 
 model co {
-  co_id             BigInt  @id @default(autoincrement())
-  co_name           String  @db.VarChar(10)
-  co                String  @db.Text
-  subject_code      String  @db.VarChar(15)
+  co_id             BigInt @id @default(autoincrement())
+  co_name           String @db.VarChar(10)
+  co                String @db.Text
+  subject_code      String @db.VarChar(15)
   department        Int
-  specialization    Int     @default(0)
+  specialization    Int    @default(0)
   academic_session  Int
-  active            Boolean
-  bt_level          String  @db.VarChar(20)
+  active            Int?   @db.TinyInt
+  bt_level          String @db.VarChar(20)
   excepted_co_level Int
   PO1               Int
   PO2               Int
@@ -517,10 +517,10 @@ model counselling_verification {
 }
 
 model course {
-  course_id   Int     @id @default(autoincrement())
-  course_name String  @db.VarChar(64)
-  course_code String  @db.VarChar(20)
-  active      Boolean
+  course_id   Int    @id @default(autoincrement())
+  course_name String @db.VarChar(64)
+  course_code String @db.VarChar(20)
+  active      Int?   @db.TinyInt
 }
 
 model cumulative_attendance {
@@ -538,21 +538,21 @@ model cumulative_attendance {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model department {
-  id        Int     @id @default(autoincrement())
-  name      String  @db.VarChar(100)
-  dept_code String  @db.VarChar(10)
+  id        Int    @id @default(autoincrement())
+  name      String @db.VarChar(100)
+  dept_code String @db.VarChar(10)
   course    Int
-  core_dept Boolean
-  active    Boolean
+  core_dept Int?   @db.TinyInt
+  active    Int?   @db.TinyInt
 }
 
 model department_me {
-  id              Int     @id @default(autoincrement())
-  department_name String  @db.VarChar(75)
+  id              Int    @id @default(autoincrement())
+  department_name String @db.VarChar(75)
   dept_code       Int
-  department_code String  @db.VarChar(10)
-  department_type String  @db.VarChar(15)
-  active          Boolean
+  department_code String @db.VarChar(10)
+  department_type String @db.VarChar(15)
+  active          Int?   @db.TinyInt
 }
 
 model department_po {
@@ -585,11 +585,11 @@ model designation {
 }
 
 model event_category {
-  event_category_id   BigInt  @id @default(autoincrement())
-  event_category_name String  @db.VarChar(32)
-  short_name          String  @db.VarChar(10)
-  lecture             String  @db.VarChar(11)
-  active              Boolean
+  event_category_id   BigInt @id @default(autoincrement())
+  event_category_name String @db.VarChar(32)
+  short_name          String @db.VarChar(10)
+  lecture             String @db.VarChar(11)
+  active              Int?   @db.TinyInt
 }
 
 model event_data {
@@ -624,7 +624,7 @@ model event_marks {
   student_computer_code Int
   event_data            Int
   marks                 Float
-  attend                Boolean
+  attend                Int?  @db.TinyInt
 
   @@unique([student_computer_code, event_data], map: "student_computer_code")
 }
@@ -728,8 +728,8 @@ model f_1 {
 
 model faculty_info {
   id                          Int      @id @default(autoincrement())
-  active                      Boolean
-  temp_hod                    Boolean
+  active                      Int?     @db.TinyInt
+  temp_hod                    Int?     @db.TinyInt
   computer_code               Int?     @unique(map: "computer_code")
   department                  Int
   aadhar                      BigInt?  @unique(map: "aadhar")
@@ -747,8 +747,8 @@ model faculty_info {
   mother_name                 String   @db.VarChar(255)
   category                    String   @db.VarChar(64)
   religion                    String   @db.VarChar(64)
-  minority                    Boolean
-  handicap                    Boolean
+  minority                    Int?     @db.TinyInt
+  handicap                    Int?     @db.TinyInt
   address_line1               String   @db.Text
   address_line2               String   @db.Text
   district                    String   @db.VarChar(64)
@@ -771,7 +771,7 @@ model faculty_info {
   no_of_books                 Int
   no_of_pg_guided             Int
   no_of_doctorate_guided      Int
-  govt_approved               Boolean
+  govt_approved               Int?     @db.TinyInt
   university_approved         Int
   ug_percent                  Float    @db.Float
   ug_college                  String   @db.VarChar(64)
@@ -834,14 +834,14 @@ model feedback_class {
   department       Int
   academic_id      Int
   semester         Int
-  major            Int      @db.TinyInt
-  comment          Int      @db.TinyInt
-  hod_status       Int      @db.TinyInt
-  principal_status Int      @db.TinyInt
+  major            Int?     @db.TinyInt
+  comment          Int?     @db.TinyInt
+  hod_status       Int?     @db.TinyInt
+  principal_status Int?     @db.TinyInt
   num_of_stud      Int
-  type             Int      @db.TinyInt
-  active           Int      @db.TinyInt
-  delete_status    Int      @default(0) @db.TinyInt
+  type             Int?     @db.TinyInt
+  active           Int?     @db.TinyInt
+  delete_status    Int?     @db.TinyInt
 }
 
 model feedback_co {
@@ -997,7 +997,7 @@ model feedback_sub_cor {
   l                     Float  @db.Float
   m                     Float  @db.Float
   n                     Float  @db.Float
-  active                Int    @default(1) @db.TinyInt
+  active                Int?   @db.TinyInt
 }
 
 model grade_list {
@@ -1031,15 +1031,15 @@ model leave_apply {
   pre_balance           Float    @db.Float
   leave_type            String   @db.VarChar(20)
   reason                String   @db.Text
-  hod_approval          Boolean
-  principal_approval    Boolean
+  hod_approval          Int?     @db.TinyInt
+  principal_approval    Int?     @db.TinyInt
 }
 
 model leave_apply_limit {
   id         Int    @id @default(autoincrement())
   leave_type String @db.VarChar(5)
-  days       Int    @db.TinyInt
-  active     Int    @db.TinyInt
+  days       Int?   @db.TinyInt
+  active     Int?   @db.TinyInt
 }
 
 model lecture_type {
@@ -1049,9 +1049,9 @@ model lecture_type {
 }
 
 model lecture_type_other {
-  lecture_type_other_id Int     @id
-  lecture_type          String  @db.VarChar(255)
-  lecture_weight        Boolean
+  lecture_type_other_id Int    @id
+  lecture_type          String @db.VarChar(255)
+  lecture_weight        Int?   @db.TinyInt
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -1117,11 +1117,11 @@ model lock_sessional_faculty {
 }
 
 model login {
-  id            Int     @id @default(autoincrement())
+  id            Int    @id @default(autoincrement())
   computer_code Int
-  password      String  @default("827ccb0eea8a706c4c34a16891f84e7b") @db.VarChar(255)
-  is_student    Boolean @default(false)
-  token         Int?    @default(0)
+  password      String @default("827ccb0eea8a706c4c34a16891f84e7b") @db.VarChar(255)
+  is_student    Int?   @db.TinyInt
+  token         Int?   @default(0)
 }
 
 model login_ {
@@ -1171,7 +1171,7 @@ model marksheet_print_status {
   department_id    Int
   specialization   Int      @default(0)
   academic_session Int
-  status           Int      @db.TinyInt
+  status           Int?     @db.TinyInt
   entry_time       DateTime @default(now()) @db.Timestamp(0)
   ip               String   @db.VarChar(50)
 }
@@ -1234,10 +1234,10 @@ model module {
   specialization   Int
   department_type  String   @db.VarChar(100)
   semester         Int
-  endsem_module    Boolean
-  sessional_module Boolean
-  exam_module      Boolean
-  result_live      Boolean
+  endsem_module    Int?     @db.TinyInt
+  sessional_module Int?     @db.TinyInt
+  exam_module      Int?     @db.TinyInt
+  result_live      Int?     @db.TinyInt
   timestamp        DateTime @default(now()) @db.Timestamp(0)
 }
 
@@ -1311,16 +1311,16 @@ model po {
 }
 
 model quiz_question_bank {
-  question_id      Int     @id @default(autoincrement())
-  clg_subject_code String  @db.Text
+  question_id      Int    @id @default(autoincrement())
+  clg_subject_code String @db.Text
   co_id            Int
-  question         String  @db.Text
-  option_a         String  @db.Text
-  option_b         String  @db.Text
-  option_c         String  @db.Text
-  option_d         String  @db.Text
-  correct_answer   String  @db.Text
-  active           Boolean @default(true)
+  question         String @db.Text
+  option_a         String @db.Text
+  option_b         String @db.Text
+  option_c         String @db.Text
+  option_d         String @db.Text
+  correct_answer   String @db.Text
+  active           Int?   @db.TinyInt
 }
 
 model quiz_questions {
@@ -1363,9 +1363,9 @@ model railway_form {
   remark          String?   @db.Text
   sem             Int?
   apply_date      DateTime  @db.Date
-  hod             Boolean   @default(false)
-  principal       Boolean   @default(false)
-  ready           Boolean   @default(false)
+  hod             Int?      @db.TinyInt
+  principal       Int?      @db.TinyInt
+  ready           Int?      @db.TinyInt
 }
 
 model railway_leave_record {
@@ -1375,7 +1375,7 @@ model railway_leave_record {
   start_date      DateTime @db.Date
   end_date        DateTime @db.Date
   semester        Int?
-  active          Boolean  @default(true)
+  active          Int?     @db.TinyInt
 
   @@unique([concession_type, academic_id, semester], map: "concession_type")
 }
@@ -1398,9 +1398,9 @@ model result_entry_status_relative_mtech {
 }
 
 model roles {
-  id        Int     @id @default(autoincrement())
-  user_type String  @db.VarChar(64)
-  active    Boolean @default(true)
+  id        Int    @id @default(autoincrement())
+  user_type String @db.VarChar(64)
+  active    Int?   @db.TinyInt
 }
 
 model rubrics {
@@ -1423,9 +1423,9 @@ model score_and_level {
 }
 
 model semester {
-  sem_id Int     @id
+  sem_id Int  @id
   year   Int
-  active Boolean
+  active Int? @db.TinyInt
 }
 
 model semester_credit {
@@ -1464,7 +1464,7 @@ model site_settings {
   description String  @db.VarChar(255)
   short_code  String  @unique(map: "short_code") @db.VarChar(30)
   value       String? @db.VarChar(30)
-  is_active   Boolean
+  is_active   Int?    @db.TinyInt
 }
 
 model student_atkt_main_result_22 {
@@ -1588,7 +1588,7 @@ model student_college_info_new {
   course           String   @db.VarChar(20)
   home_dept        Int
   specialization   Int
-  show_attendance  Boolean  @default(true)
+  show_attendance  Int?     @db.TinyInt
   user_stamp       Int
   time_stamp       DateTime @default(now()) @db.Timestamp(0)
   ip               String   @db.VarChar(100)
@@ -1600,7 +1600,7 @@ model student_data {
   computer_code    Int
   semester         Int
   academic_session Int
-  detained         Int      @db.TinyInt
+  detained         Int?     @db.TinyInt
   timestamp        DateTime @default(now()) @db.Timestamp(0)
 }
 
@@ -1861,10 +1861,10 @@ model subject_batch {
 }
 
 model subject_category {
-  id            Int     @id @default(autoincrement())
-  category      String  @db.VarChar(255)
-  category_code String  @db.VarChar(32)
-  active        Boolean @default(true)
+  id            Int    @id @default(autoincrement())
+  category      String @db.VarChar(255)
+  category_code String @db.VarChar(32)
+  active        Int?   @db.TinyInt
 }
 
 model subject_code {
@@ -1894,7 +1894,7 @@ model subject_new {
   department          Int
   specialization      Int
   course              String   @default("B.Tech.") @db.VarChar(100)
-  active              Boolean  @default(true)
+  active              Int?     @db.TinyInt
   elective            Int
   user_stamp          Int
   time_stamp          DateTime @default(now()) @db.Timestamp(0)
@@ -1983,8 +1983,8 @@ model temp_student_data {
   category                   String?   @db.VarChar(10)
   sub_caste                  String    @db.VarChar(50)
   religion                   String?   @db.VarChar(32)
-  minority                   Boolean?
-  handicap                   Boolean?
+  minority                   Int?      @db.TinyInt
+  handicap                   Int?      @db.TinyInt
   father_name                String?   @db.VarChar(200)
   father_mobile              BigInt?
   father_email               String?   @db.VarChar(255)
@@ -2002,7 +2002,7 @@ model temp_student_data {
   guardian_occupation        String?   @db.VarChar(64)
   guardian_occ_description   String?   @db.VarChar(200)
   guardian_relation          String?   @db.VarChar(32)
-  hostel                     Boolean?
+  hostel                     Int?      @db.TinyInt
   extra_activity             String?   @db.VarChar(64)
   domicile_state             String?   @db.VarChar(100)
   add_local                  String?   @db.VarChar(200)
@@ -2033,31 +2033,31 @@ model temp_student_data {
   jee_rollno                 String?   @db.VarChar(20)
   jee_marks                  Float?    @db.Float
   jee_rank                   BigInt?
-  jee_markskeet              Boolean?
+  jee_markskeet              Int?      @db.TinyInt
   gate_rollno                Int
   gate_marks                 Int
   gate_percentile            Int
   gate_rank                  Int
-  document_verification_slip Boolean?
-  registration_slip          Boolean?
-  marksheet12                Boolean?
-  marksheet10                Boolean?
-  marksheet_other            Boolean?
-  tc                         Boolean?
-  gap_certificate            Boolean?
-  migration                  Boolean?
-  caste_certificate          Boolean?
-  income_certificate         Boolean?
-  admission_slip             Boolean?
-  domicile                   Boolean?
-  fees_deposit               Boolean?
-  aadhar_document            Boolean?
-  photos                     Boolean?
-  status                     Boolean?
+  document_verification_slip Int?      @db.TinyInt
+  registration_slip          Int?      @db.TinyInt
+  marksheet12                Int?      @db.TinyInt
+  marksheet10                Int?      @db.TinyInt
+  marksheet_other            Int?      @db.TinyInt
+  tc                         Int?      @db.TinyInt
+  gap_certificate            Int?      @db.TinyInt
+  migration                  Int?      @db.TinyInt
+  caste_certificate          Int?      @db.TinyInt
+  income_certificate         Int?      @db.TinyInt
+  admission_slip             Int?      @db.TinyInt
+  domicile                   Int?      @db.TinyInt
+  fees_deposit               Int?      @db.TinyInt
+  aadhar_document            Int?      @db.TinyInt
+  photos                     Int?      @db.TinyInt
+  status                     Int?      @db.TinyInt
   lab_group                  String?   @db.VarChar(1)
-  jk_migrant                 Boolean
-  is_refered                 Boolean
-  document_status            Boolean
+  jk_migrant                 Int?      @db.TinyInt
+  is_refered                 Int?      @db.TinyInt
+  document_status            Int?      @db.TinyInt
 }
 
 model time_slots {
@@ -2068,10 +2068,10 @@ model time_slots {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model topic {
-  topic_id     Int     @id @default(autoincrement())
-  subject_code String  @db.VarChar(10)
-  topic_name   String  @db.Text
-  active       Boolean
+  topic_id     Int    @id @default(autoincrement())
+  subject_code String @db.VarChar(10)
+  topic_name   String @db.Text
+  active       Int?   @db.TinyInt
 }
 
 model txn_details {
@@ -2117,7 +2117,7 @@ model app_login {
   id         Int      @id @default(autoincrement())
   token      String   @db.VarChar(256)
   uid        String   @db.VarChar(256)
-  is_student Boolean
+  is_student Int?     @db.TinyInt
   created_at DateTime @default(now()) @db.DateTime(0)
 }
 
@@ -2127,12 +2127,6 @@ model notification_device_token {
   device_token  String @db.VarChar(500)
 }
 
-model notification_msg {
-  id                   Int    @id @default(autoincrement())
-  msg                  String @db.VarChar(1000)
-  sender_computer_code Int
-}
-
 model academic_calender {
   id               Int      @id @default(autoincrement())
   academic_session Int
@@ -2140,4 +2134,13 @@ model academic_calender {
   category         String   @db.VarChar(100)
   name             String   @db.VarChar(100)
   description      String   @db.VarChar(500)
+}
+
+model notifications {
+  id                   BigInt   @id @default(autoincrement())
+  title                String?  @db.VarChar(100)
+  description          String?  @db.VarChar(500)
+  message              String?  @db.Text
+  timestamp            DateTime @default(now()) @db.DateTime(0)
+  sender_computer_code Int?
 }

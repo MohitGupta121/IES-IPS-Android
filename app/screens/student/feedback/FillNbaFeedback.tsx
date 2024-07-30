@@ -15,6 +15,13 @@ import { useBackHandler } from '@react-native-community/hooks';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../routes/routes';
 import { RootState } from '../../../redux/store';
+import { reducerData } from '../../../redux/common/reducer';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { commonActionTypes } from '../../../redux/common/types';
+import { storage } from '../../../App';
+import useCollapsibleCustomHeader from '../../../hooks/useCollapsibleHeader';
+import { useStudentInsertNbaFeedback } from '../../../hooks/query/student';
+import { useAcademicSession } from '../../../hooks/query/common';
 
 const FillNbaFeedback = () => {
     
@@ -31,21 +38,22 @@ const FillNbaFeedback = () => {
       return true;
     })
     
-    const current_session = useSelector((store:RootState)=>store.common.AcademicSession?.current.academic_session_id)
-    const user  = useSelector((store:RootState)=>store.common.User.user);
+    const {current_academic_session_id:current_session} = useAcademicSession();
+
+    type User = Pick<reducerData['User'], 'user'>;
+    const [ {user} , setUser ] = useMMKVStorage<User>("User" , storage , {user:{}});
     const feedback_list = useRoute<any>().params?.feedback_list;
 
 
     const [initial_values, set_initial_values] = useState({});
 
-    const feedback_mutation = useMutation({
-      mutationFn : (res:studentInsertNbaFeedback)=>studentApi.studentInsertNbaFeedback.fetch(res),
-      mutationKey : "insertNbaFeedback",
+    const {mutation:feedback_mutation} = useStudentInsertNbaFeedback({
       onSuccess : (data)=>{
         console.log(data) ;
         console.info("Feedback Submitted");
       }
-    })
+    }
+    );
 
     useEffect( ()=>{
         let values = {};
@@ -67,15 +75,17 @@ const FillNbaFeedback = () => {
       }
       console.log(res);
       feedback_mutation.mutate(res);
-      navigator.navigate("NbaFeedbackStatus" , { reload: true });
+      navigator.popTo("NbaFeedbackStatus" , { reload: true });
 
     }
+
+    const {onScroll , headerHeight} = useCollapsibleCustomHeader();
 
     
   return (
     <Formik initialValues={initial_values} onSubmit={onSubmit}>
         {(props)=>(
-        <ScrollView style={styles.container} contentContainerStyle={{paddingVertical:20 , alignItems:"center" ,paddingTop : 50}}>
+        <ScrollView onScroll={onScroll} style={styles.container} contentContainerStyle={{paddingVertical:20 , alignItems:"center" ,paddingTop : 50}}>
             {feedback_list.map(
               item=><PostNbaFeedback item={item} 
               set_feedback_rating={(rating)=>props.setFieldValue(item?.co_name , {co_id : item?.co_id,value:rating})} />

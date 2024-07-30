@@ -48,6 +48,23 @@ export type deleteAttendance = {
 export type getStudentByAttendInfoToModify = {
   attend_info : string,
 }
+// export type getLeaveBalance = {
+//   cl : number,
+//   dl : number,
+//   el : number,
+//   ol : number,
+//   lwp : number,
+//   sl : number,
+//   ab : number,
+//   ml : number,
+//   sdl : number,
+//   vl : number,
+//   od : number,
+// }
+export type getLeaveBalance ={
+  computer_code: number,
+  academic_session: number
+}
 
 export type markAttendanceToModify = {
   attendance: {
@@ -59,6 +76,67 @@ export type markAttendanceToModify = {
     enrollment: string;
   }[];
 };
+
+export type getLeaveChart = {
+  computer_code: number;
+}
+
+type LeaveType = 'cl' | 'el' | 'dl' | 'ol' | 'hdcl' | 'lwp' | 'sdl';
+
+interface AssignedClass {
+  assigned_class_dept: string;
+  assigned_section: string;
+  lecture_type: string;
+  start_time: string;
+  end_time: string;
+}
+
+interface LectureAssigned {
+  faculty_computer_code: number;
+  faculty_date: string;
+  assigned_class: AssignedClass[];
+}
+
+interface Responsibility {
+  faculty_computer_code: number;
+  faculty_date: string;
+  responsibility: string;
+}
+
+export interface leaveApply {
+  computer_code: number;
+  start_date: string;  // Date format
+  end_date: string;    // Date format
+  days: number;
+  leave_type: LeaveType;
+  reason: string;
+  lectures_assigned: LectureAssigned[];
+  other_responsibility: Responsibility[];
+  academic_session: number;
+}
+
+export interface getFacultyAssingment {
+  computer_code : number
+}
+
+export interface sendNotification {
+  title: string,
+  description: string,
+  message: string,
+  sender_computer_code: number,
+  send_to: number[]
+}
+export interface acceptFacultyAssignment {
+  assign_faculty_id : string,
+}
+export interface rejectFacultyAssignment {
+  assign_faculty_id : string,
+}
+export interface getAssignedFacultiesByApplyId {
+  apply_id : string
+}
+
+
 
 
 
@@ -102,6 +180,38 @@ const staffApi = {
     markAttendanceToModify : {
         name : "markAttendanceToModify",
         fetch : (payload : markAttendanceToModify)=>api.post(staffUrl.markAttendanceToModify , payload).then(res=>res.data)
+    },
+    getLeaveBalance : {
+        name : "getLeaveBalance",
+        fetch : (payload : getLeaveBalance)=>api.post(staffUrl.getLeaveBalance,payload).then(res=>res.data)
+    },
+    leaveApply : {
+        name : "leaveApply",
+        fetch : (payload : leaveApply)=>api.post(staffUrl.leaveApply,payload).then(res=>res.data)
+    },
+    getFacultyAssingment : {
+        name : "getFacultyAssingment",
+        fetch : (payload : getFacultyAssingment)=>api.post(staffUrl.getFacultyAssingment,payload).then(res=>res.data)
+    },
+    sendNotification : {
+        name : "sendNotification",
+        fetch : (payload : sendNotification)=>api.post(staffUrl.sendNotification,payload).then(res=>res.data)
+    },
+    acceptFacultyAssignment : {
+        name : "acceptFacultyAssignment",
+        fetch : (payload : acceptFacultyAssignment)=>api.post(staffUrl.acceptFacultyAssignment,payload).then(res=>res.data)
+    },
+    rejectFacultyAssignment : {
+        name : "rejectFacultyAssignment",
+        fetch : (payload : rejectFacultyAssignment)=>api.post(staffUrl.rejectFacultyAssignment,payload).then(res=>res.data)
+    },
+    getLeaveChart : {
+        name : "getLeaveChart",
+        fetch : (payload : getLeaveChart)=>api.post(staffUrl.getLeaveChart,payload).then(res=>res.data)
+    },
+    getAssignedFacultiesByApplyId : {
+        name : "getAssignedFacultiesByApplyId",
+        fetch : (payload : getAssignedFacultiesByApplyId)=>api.post(staffUrl.getAssignedFacultiesByApplyId,payload).then(res=>res.data)
     },
 };
 

@@ -5,6 +5,12 @@ import TakeAttendance from "../screens/staff/attendancePanel/takeAttendance";
 import ViewAttendance from "../screens/staff/attendancePanel/viewAttendance";
 import ModifyAttendance from "../screens/staff/attendancePanel/modifyAttendance";
 import LecturePlan from "../screens/staff/attendancePanel/lecturePlan";
+import LeaveApplication from "../screens/staff/leaveApplication/leaveApplication";
+import LeaveApply from "../screens/staff/leaveApplication/leaveApply";
+import LeaveChart from "../screens/staff/leaveApplication/leaveChart";
+import LeaveReport from "../screens/staff/leaveApplication/leaveReport";
+import NotifyBatches from "../screens/staff/notifyBatches/notifyBatches";
+import ViewFacultyAssigned from "../screens/staff/leaveApplication/ViewFacultyAssigned";
 
 
 const staffScreenProps:(RouteConfig<ParamListBase, string, StackNavigationState<ParamListBase>, NativeStackNavigationOptions, NativeStackNavigationEventMap,any>)[] = [
@@ -39,6 +45,49 @@ const staffScreenProps:(RouteConfig<ParamListBase, string, StackNavigationState<
     {
         name : "Lecture Plan",
         component : LecturePlan,
+        options : {
+            headerShown : true
+        }
+    },
+    {
+        name : "Leave Application",
+        component : LeaveApplication,
+        options : {
+            headerShown : true
+        }
+    },
+    {
+        name : "Leave Apply",
+        component : LeaveApply,
+        options : {
+            headerShown : true
+        }
+    },
+    {
+        name : "Leave Chart",
+        component : LeaveChart,
+        options : {
+            headerShown : true
+        }
+    },
+    {
+        name : "View Faculty Assigned",
+        component : ViewFacultyAssigned,
+        options : {
+            headerShown : true,
+            title:"Faculty Assigned"
+        }
+    },
+    {
+        name : "Leave Report",
+        component : LeaveReport,
+        options : {
+            headerShown : true
+        }
+    },
+    {
+        name : "Notify Batches",
+        component : NotifyBatches,
         options : {
             headerShown : true
         }

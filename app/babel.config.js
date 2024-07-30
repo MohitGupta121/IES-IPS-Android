@@ -6,5 +6,8 @@ module.exports = {
     ]
     }
   },
-  plugins : ['react-native-reanimated/plugin'],
+  plugins : [
+    '@babel/plugin-proposal-export-namespace-from',
+    'react-native-reanimated/plugin',
+  ],
 };

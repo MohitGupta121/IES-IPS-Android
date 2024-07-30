@@ -2,6 +2,7 @@ import messaging from '@react-native-firebase/messaging';
 import { commonActionTypes } from '../redux/common/types';
 import store from '../redux/store'
 import { storage } from '../App';
+import { Platform } from 'react-native';
 export const notificationListener = () => {
   messaging().onNotificationOpenedApp(remoteMessage => {
     console.log(
@@ -46,9 +47,13 @@ export const notificationListener = () => {
     });
 };
 export const getToken = async () => {
+  if(Platform.OS == "ios"){
+    return "token"
+  }
   await messaging().registerDeviceForRemoteMessages();
   const token = await messaging().getToken();
   return token
+
 };
 
 export async function requestUserPermission() {

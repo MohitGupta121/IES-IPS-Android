@@ -1,14 +1,15 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { memo, useContext } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 import { List, useTheme } from 'react-native-paper'
 import { themeType } from '../../../theme'
-import { useNavigation } from '@react-navigation/native'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { commonActionTypes } from '../../../redux/common/types'
 import { storage } from '../../../App'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../routes/routes'
+import { LoginContext } from '../../../context/loginContext'
 
 
 type MenuListProps = {
@@ -26,6 +27,8 @@ const MenuList = (props:MenuListProps) => {
 
         }
     })
+
+    const {setLogin} = useContext(LoginContext)
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const dispatch = useDispatch();
@@ -93,9 +96,18 @@ const MenuList = (props:MenuListProps) => {
                 
                 dispatch({type:commonActionTypes.ClearUserLoginDetails});
                 
-                storage.clearAll();
-                // @ts-ignore
-                navigation.navigate("Login")
+                storage.clearStore();
+                setLogin({
+                    isLoggedIn:false,
+                    user:null
+                })
+                navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [{ name: 'Login' }],
+                    })
+                  );
+                
             }
         },
     ] 
@@ -116,4 +128,4 @@ const MenuList = (props:MenuListProps) => {
   )
 }
 
-export default MenuList
+export default memo(MenuList)

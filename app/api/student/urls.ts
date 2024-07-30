@@ -6,9 +6,10 @@ const studentUrl = {
     getAttendance : `${appConfig.student}getAttendance`,
     getReport : `${appConfig.student}getReport`,
     getNbaFeedback : `${appConfig.student}getNbaFeedback`,
+    insertNbaFeedback : `${appConfig.student}insertNbaFeedback`,
     getFacilityFeedback : `${appConfig.student}getFacilityFeedback`,
     getFacultyFeedback : `${appConfig.student}getFacultyfeedback`,
-    insertNbaFeedback : `${appConfig.student}insertNbaFeedback`,
+    InsertFacultyFeedback : `${appConfig.student}InsertFacultyFeedback`,
 };
 
 export default studentUrl;

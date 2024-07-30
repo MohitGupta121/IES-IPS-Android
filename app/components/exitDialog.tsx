@@ -2,12 +2,12 @@ import { StatusBar } from "react-native";
 import RNExitApp from "react-native-exit-app";
 import { Button, Dialog, Portal, Text, useTheme } from "react-native-paper";
 import { themeType } from "../theme";
+import { memo } from "react";
 
-const ExitDialog = props => {
+const ExitDialog = (props:{exitDialogVisible:boolean ,setExitDialogVisible:(prevalue:any)=>void }) => {
   const theme : themeType = useTheme();
     return (
       <Portal>
-        {props.exitDialogVisible ? <StatusBar backgroundColor={'#838cb3'} />: null}
         <Dialog
           visible={props.exitDialogVisible}
           onDismiss={() => props.setExitDialogVisible(false)}>
@@ -26,4 +26,4 @@ const ExitDialog = props => {
     );
   };
 
-  export default ExitDialog;
+  export default memo(ExitDialog);

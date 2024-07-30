@@ -11,6 +11,14 @@ const staffUrl = {
     deleteAttendance : `${appConfig.attendance}deleteAttendance`,
     getStudentByAttendInfoToModify : `${appConfig.attendance}getStudentByAttendInfoToModify`,
     markAttendanceToModify : `${appConfig.attendance}markAttendanceToModify`,
+    getLeaveBalance : `${appConfig.lms}getLeaveBalance`,
+    leaveApply : `${appConfig.lms}leaveApply`,
+    getLeaveChart : `${appConfig.lms}getLeaveChart`,
+    getAssignedFacultiesByApplyId : `${appConfig.lms}getAssignedFacultiesByApplyId`,
+    getFacultyAssingment : `${appConfig.lms}getFacultyAssingment`,
+    acceptFacultyAssignment : `${appConfig.lms}acceptFacultyAssignment`,
+    rejectFacultyAssignment : `${appConfig.lms}rejectFacultyAssignment`,
+    sendNotification : `${appConfig.notification}sendNotification`,
     
 };
 

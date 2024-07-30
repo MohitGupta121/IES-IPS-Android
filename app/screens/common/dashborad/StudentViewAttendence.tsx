@@ -1,5 +1,5 @@
 import { StyleSheet, View,TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import CMScard from '../../../components/cms_card'
 import {Col, Row, Grid} from 'react-native-paper-grid';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -13,24 +13,26 @@ import {Text } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import ProgressCustom from '../../../components/progressCustom';
 import { RootState } from '../../../redux/store';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { commonActionTypes } from '../../../redux/common/types';
+import { storage } from '../../../App';
+import { reducerData } from '../../../redux/common/reducer';
+import { useStudentCumulativeAttendance } from '../../../hooks/query/student';
+import { useAcademicSession } from '../../../hooks/query/common';
 
 const StudentViewAttendence = () => {
     
   const theme: themeType = useTheme();
 
 
-  const user = useSelector((store:RootState)=>store.common.User.user);
+  type User = Pick<reducerData['User'], 'user'>;
+  const [ {user} , setUser ] = useMMKVStorage<User>("User" , storage , {user:{}});
+
   const dispatch = useDispatch();
 
-  const current_session = useSelector((store:RootState)=>store.common.AcademicSession?.current?.academic_session_id)
+  const {current_academic_session_id:current_session} = useAcademicSession();
 
-  const { isFetching } = useQuery(studentApi.studentCumulativeAttendance.name , ()=>studentApi.studentCumulativeAttendance.fetch({academic_session : current_session , computer_code : user.computer_code }) , {
-    onSuccess : (data)=>{
-      dispatch({type:studentActionTypes.CommulativeAttendance , payload:data});
-    }
-  });
-
-  const attendance = useSelector((store:RootState)=>store.student.CummulativeAttendance);
+  const {attendance , queryStatus:{isFetching}}= useStudentCumulativeAttendance(current_session , user.computer_code) ;
 
   return (
       <CMScard>
@@ -122,6 +124,6 @@ const StudentViewAttendence = () => {
   );
 }
 
-export default StudentViewAttendence
+export default memo(StudentViewAttendence)
 
 const styles = StyleSheet.create({})

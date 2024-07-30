@@ -66,6 +66,6 @@ yarn-error.log
 /coverage
 andorid
 
-config.ts
 # Ignore Gradle build output directory
 build
+# !./node_modules/@gorhom

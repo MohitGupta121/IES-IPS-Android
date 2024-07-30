@@ -48,7 +48,7 @@ const getAttendance = async (computer_code: number, academic_session: number) =>
         attend_info: {
           in: attendInfoIds
         },
-        attend: true
+        attend: 1
       }
     });
 
@@ -129,7 +129,7 @@ const markStudentAttendance = async (
       data: {
         subject_code: subject?.clg_sub_code || '',
         topic_name: topic_name,
-        active: true
+        active: 1
       }
     });
     topic_id = topic.topic_id;
@@ -155,7 +155,7 @@ const markStudentAttendance = async (
         data: {
           student_computer_code: students[j].computer_code,
           attend_info: attend_info_new.attend_info,
-          attend: students[j].attend
+          attend: Number(students[j].attend)
         }
       });
     }
@@ -190,7 +190,7 @@ const getTopicForAttendance = async (batch_id: number) => {
   let topics = await prisma.topic.findMany({
     where: {
       subject_code: subject_batch?.clg_sub_code,
-      active: true
+      active: 1
     },
     select: {
       topic_name: true,
@@ -377,7 +377,7 @@ const markAttendanceToModify = async ( attendance : any[] )=>{
         attend_record_id : Number(attendance[i].attend_record_id),
       },
       data :{
-        attend : attendance[i].attend
+        attend : Number(attendance[i].attend)
       }
     })
 

@@ -3,7 +3,7 @@ import { userType } from "../../constants";
 import { Url } from "url";
 
 
-export type reducerData = {
+export interface reducerData  {
   User: {
     user:
       | {
@@ -84,9 +84,7 @@ export default function commonReducer(state:reducerData = initialState , action:
             }
 
         case commonActionTypes.ClearUserLoginDetails:
-            return {
-                ...state , User : {user : {}}
-            }
+            return initialState
         
 
         case commonActionTypes.ClearNotification:

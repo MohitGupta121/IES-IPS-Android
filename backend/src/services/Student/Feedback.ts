@@ -364,7 +364,7 @@ const getfacultyfeedback = async (
         clg_sub_code: clg_code?.clg_sub_code
       })
     }
-    return {teacherCriteria,response};
+    return {teacherCriteria,response , feedback_id : feedback_class.feedback_id};
   } catch (error) {
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, `${error}`);
   }
@@ -386,12 +386,12 @@ const InsertfacultyFeedback = async (
     if (feedback_student) {
       throw new ApiError(httpStatus.NOT_FOUND, 'feedback already submitted');
     }
-    for (let i = 0; i < data.subject.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       const element = data[i];
       await prisma.feedback_sub_cor.create({
         data: {
           feedback_id: feedback_id,
-          faculty_computer_code: element.faculty_computer_code,
+          faculty_computer_code: String(element.faculty_computer_code),
           clg_sub_code: element.clg_sub_code,
           student_comp_code: computer_code,
           batch_id: element.batch_id,

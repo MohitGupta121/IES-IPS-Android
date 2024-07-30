@@ -29,6 +29,8 @@ import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import { useBackHandler } from '@react-native-community/hooks';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../../routes/routes';
+import dataTableStyles from '../../../../cmsStyles/dataTableStyles';
+import useCollapsibleCustomHeader from '../../../../hooks/useCollapsibleHeader';
 
 const ViewReport = () => {
   const theme: themeType = useTheme();
@@ -39,15 +41,7 @@ const ViewReport = () => {
       fontSize: 15,
       fontWeight: '700',
     },
-    headerStyle: {
-      gap: 25,
-      // borderTopWidth: 1,
-      borderBottomWidth: 2,
-      height: 50,
-      display: 'flex',
-      alignItems: 'center',
-      paddingHorizontal: 3,
-    },
+    ...dataTableStyles,
     tableViewStyle: {
       shadowColor: '#000',
       shadowOffset: {
@@ -62,14 +56,11 @@ const ViewReport = () => {
       alignSelf: 'center',
     },
     ScrollStyle : {
-      marginTop: 50,
       maxWidth: '100%',
       alignSelf: 'center',
+      // flex:1,
     }
   });
-  // @ts-ignore
-  const user = useSelector(store => store.common.User.user);
-  const dispatch = useDispatch();
   const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const params: any = useRoute().params;
   useBackHandler(()=>{
@@ -110,9 +101,10 @@ const ViewReport = () => {
     (accumulator, currentValue) => accumulator + currentValue.total,
     0,
   );
+  const {onScroll , headerHeight} = useCollapsibleCustomHeader();
 
   return (
-    <ScrollView style={styles.ScrollStyle} contentContainerStyle={{paddingBottom : 50}}>
+    <ScrollView style={styles.ScrollStyle} onScroll={onScroll} contentContainerStyle={{paddingBottom : 50 , paddingTop: headerHeight }} showsVerticalScrollIndicator={false}>
       <View style={{padding: 10}}>
         <Text variant="headlineSmall"> Exam Performance</Text>
       </View>

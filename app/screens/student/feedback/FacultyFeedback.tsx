@@ -10,7 +10,7 @@ import NoData from '../../../components/noData';
 import CustomError from '../../../components/customError';
 import { useBackHandler } from '@react-native-community/hooks';
 import { RootState } from '../../../redux/store';
-import {Button, List, Text, useTheme } from "react-native-paper"
+import {Button, List, Text, TextInput, useTheme } from "react-native-paper"
 import { themeType } from '../../../theme';
 import Icon from "react-native-vector-icons/Feather"
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
@@ -20,9 +20,52 @@ import CMScard from '../../../components/cms_card';
 import { Rating } from 'react-native-ratings';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../routes/routes';
+import { reducerData } from '../../../redux/common/reducer';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { commonActionTypes } from '../../../redux/common/types';
+import { storage } from '../../../App';
+import { useInsertFacultyFeedback, useStudentFacultyfeedback } from '../../../hooks/query/student';
+import { useAcademicSession } from '../../../hooks/query/common';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { Toast } from 'react-native-toast-notifications';
+
+
+type feedbackType = {
+  computer_code: number,
+  feedback_id: number,
+  comment: string,
+  data: {
+      faculty_computer_code: number,
+      clg_sub_code: string,
+      batch_id: number,
+      a: number,
+      b: number,
+      c: number,
+      d: number,
+      e: number,
+      f: number,
+      g: number,
+      h: number,
+      i: number,
+      j: number,
+      k: number,
+      l: number,
+      m: number,
+      n: number
+    }[]
+}
+
+const defaultFeedbackValue = {
+  computer_code: 0,
+  feedback_id: 0,
+  comment: "",
+  data: []
+}
+
 const FacultyFeedbackStatus = () => {
     const window = useWindowDimensions();
     const theme:themeType = useTheme();
+    const dimension = useWindowDimensions();
     const styles = StyleSheet.create({
       fListContainer: {
         paddingTop: 50,
@@ -30,53 +73,64 @@ const FacultyFeedbackStatus = () => {
         gap: 10,
         minHeight: window.height - 100,
       },
-      mainContainer:{
-        paddingBottom : 30,
-      }
+      mainContainer: {
+        paddingBottom: 30,
+      },
+      comment: {margin: 10,
+        alignSelf: 'center',
+        maxWidth: 500,
+        width:dimension.width-20,
+
+      },
     });
     const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     useBackHandler(()=>{
-      navigator.pop();
+        dispatch({type : studentActionTypes.FacultyFeedback , payload : {}})
+        navigator.pop();
       return true;
     })
     
-      const current_session = useSelector((store:RootState)=>store.common.AcademicSession?.current.academic_session_id)
-      const user  = useSelector((store:RootState)=>store.common.User.user);
+      const {current_academic_session_id:current_session} = useAcademicSession();
+      type User = Pick<reducerData['User'], 'user'>;
+      const [ {user} , setUser ] = useMMKVStorage<User>("User" , storage , {user:{}});
       const dispatch = useDispatch();
-      const facultFeedbackData = useSelector((store:RootState)=>store.student.FacultyFeedback) 
+      const {feedbackData , queryStatus:{isFetching,isRefetching , isError}} = useStudentFacultyfeedback(current_session , user.computer_code);
 
-      const [initial_values , set_initial_values] = useState({})
+
       const [modal , setModal] = useState({
         open : false , 
         data : {}
       })
 
-      const feedback_faculties = useMemo(()=>facultFeedbackData?.response , [facultFeedbackData])
+      const feedback_faculties = useMemo(()=>feedbackData?.response , [feedbackData])
+
+      const feedbackFrom = useForm<feedbackType>({
+        defaultValues:defaultFeedbackValue,
+      })
 
 
       useEffect(()=>{
-        let values = {}
-        feedback_faculties&&feedback_faculties.map((item)=>{
-          values[item.clg_sub_code] = null;
-        })
-
-        set_initial_values(values);
-
-      } ,[feedback_faculties])
-
-      const {isFetching , isError , isRefetching , refetch} = useQuery( studentApi.studentFacultyfeedback.name , ()=>studentApi.studentFacultyfeedback.fetch(
-          {
-              computer_code : user.computer_code,
-              academic_session : current_session,
-          },
-      ),
-      {
-          onSuccess : (data)=>{
-            // console.log(data)
-              dispatch({type : studentActionTypes.FacultyFeedback , payload : {...data}})
+        console.log(feedbackData)
+        if(feedbackData){
+          let values = {
+            feedback_id : feedbackData.feedback_id,
+            computer_code: user.computer_code,
+            comment:"",
+            data:[]
           }
-      }
-      )
+
+          feedbackFrom.setValue("feedback_id" , feedbackData.feedback_id);
+          feedbackFrom.setValue("computer_code" , user.computer_code);
+
+
+          feedback_faculties&&feedback_faculties.map((item)=>{
+            values[item.clg_sub_code] = null;
+          })
+
+        }
+
+      } ,[feedback_faculties , feedbackData])
+
 
     function onSubmit(values){
       console.log(values);
@@ -88,14 +142,45 @@ const FacultyFeedbackStatus = () => {
       setModal({ ...modal , data : {...value}})
     }
 
-    useEffect( ()=>{console.log(modal)}, [modal.data])
+    const {mutation} = useInsertFacultyFeedback({
+      onSuccess:(data:any)=>{
+        Toast.show("", {
+          type: "success",
+          text1: "Feedback Submited",
+          text2: "Faculty Feedback complete",
+        });
+        navigator.pop();
+      }
+    });
+
+
+    const handleSubmit = useCallback(()=>{
+      const values  = feedbackFrom.getValues();
+
+      console.log(values.data.length , feedback_faculties.length)
+
+      if (values.data.length != feedback_faculties.length){
+        Toast.show("", {
+          type: "error",
+          text1: "All Feedbacks are required",
+          text2: "Not all feedbacks are filled",
+        });
+
+        return 
+      }
+
+      mutation.mutate(values)
+      
+    },[feedbackFrom , feedback_faculties])
+
+    // useEffect( ()=>{console.log(modal)}, [modal.data])
 
     if ( isFetching && !isRefetching ) return (
       <CustomLoading />
     )
 
     if ( isError ) return  (
-      <CustomError text="Error Occured" />
+      <CustomError text="Feedback Already Submitted" />
     )
 
 
@@ -103,35 +188,35 @@ const FacultyFeedbackStatus = () => {
     <GestureHandlerRootView style={{flex:1}}>
 
     <BottomSheetModalProvider>
+      <FormProvider {...feedbackFrom}>
       <ScrollView contentContainerStyle={styles.mainContainer}>
-        <Formik initialValues={initial_values} onSubmit={onSubmit}>
-
-          {(props)=>(
-            <>
           <FlatList
                 data={feedback_faculties}
                 contentContainerStyle={styles.fListContainer}
                 keyExtractor={(item , index) => `${index}`}
-                renderItem={({item}) => <FeedbackItem item={item} setModal={setModal} />}
+                renderItem={({item}) => <FeedbackItem item={item} setModal={setModal} onPress={()=>{
+                  setModal({open:true , data:item})
+                }} />}
                 ListEmptyComponent={<NoData text="No Records" />}
               />
 
-              <FacultyFeedbackBottomSheet open={modal.open} setModal={setModalOpen} item={modal.data} />
+              <TextInput style={styles.comment} placeholder='Comment' multiline onChangeText={(text)=>{
+                feedbackFrom.setValue("comment" , text)
+              }} />
+
+              <FacultyFeedbackBottomSheet open={modal.open} setModal={setModalOpen} item={modal.data} teacherCriteria={feedbackData.teacherCriteria} />
 
           <View style={{alignItems :"center"}}>
-            <Button loading={false} style={{width : 100 , marginVertical : 15}}  mode="contained" onPress={()=>null} >Submit</Button>
+            <Button loading={false} style={{width : 100 , marginVertical : 15}}  mode="contained" onPress={handleSubmit} >Submit</Button>
           </View>
-          </>
-          )}
-          
-      </Formik>
       </ScrollView>
+          </FormProvider>
     </BottomSheetModalProvider>
     </GestureHandlerRootView>
   )
 }
 
-const FeedbackItem = ({item  , setModal})=>{
+const FeedbackItem = ({item  , setModal , onPress})=>{
   const theme:themeType = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const styles = StyleSheet.create({
@@ -155,10 +240,17 @@ const FeedbackItem = ({item  , setModal})=>{
 
   });
 
-  const formik = useFormikContext();
-  const submit = useMemo(()=>formik.values[item.clg_sub_code] , [formik])
+  const feedbackForm = useFormContext<feedbackType>()
+  const [submit , setSubmit] = useState(false);
 
-  useEffect( ()=>{console.log(submit)}, [formik])
+  useEffect(()=>{
+    let data = feedbackForm.getValues()['data']
+    if (data.find(feedback=>(feedback.faculty_computer_code == item.faculty_computer_code)&&(feedback.clg_sub_code == item.clg_sub_code))){
+      setSubmit(true);
+    }
+  }, [item , feedbackForm.getValues()['data']])
+
+  // useEffect( ()=>{console.log(submit)}, [formik])
 
   return(
     <List.Item title={item?.faculty_name} titleEllipsizeMode="tail"
@@ -167,7 +259,7 @@ const FeedbackItem = ({item  , setModal})=>{
         titleStyle={styles.listItemTitle} 
         // @ts-ignore
         onPress={()=>{
-          setModal({open:true , data : {...item}})
+          if (!submit) onPress();
         }}
         description={()=><Text variant='labelMedium'>{item.clg_sub_code}</Text>}
         left={()=>{
@@ -204,9 +296,18 @@ const FacultyFeedbackBottomSheet = props=>{
         backgroundColor: theme.colors.backdrop,
       },
 
+    feedbackContainer:{
+      padding:10,
+      paddingVertical:30,
+    }
+
   });
 
   const Modalref = useRef(null);
+  type User = Pick<reducerData['User'], 'user'>;
+  const [ {user} , setUser ] = useMMKVStorage<User>("User" , storage , {user:{}});
+
+  const [ facultyFeedback , setFacultyFeedback ] = useState({})
 
   const dismissModal = useCallback(()=>props.setModal(false) , []);
 
@@ -218,7 +319,44 @@ const FacultyFeedbackBottomSheet = props=>{
     }
   }, [props.open])
 
-  useEffect(()=>{console.log(props.item)} , [props.data])
+  useEffect(()=>{
+
+    setFacultyFeedback({
+      faculty_computer_code:props.item.faculty_computer_code,
+      clg_sub_code:props.item.clg_sub_code,
+      batch_id: props.item.batch_id,
+      a: 3,
+      b: 3,
+      c: 3,
+      d: 3,
+      e: 3,
+      f: 3,
+      g: 3,
+      h: 3,
+      i: 3,
+      j: 3,
+      k: 3,
+      l: 3,
+      m: 3,
+      n: 3
+    })
+
+  } , [props.item])
+
+  // useEffect(()=>{console.log("props" , facultyFeedback)} , [facultyFeedback])
+
+  const feedbackForm = useFormContext<feedbackType>();
+
+  const submitFacultyFeedback = useCallback(()=>{
+
+    let prev = feedbackForm.getValues()['data']
+    feedbackForm.setValue("data" , [...prev , facultyFeedback])
+    console.log(feedbackForm.getValues()['data'])
+
+
+    Modalref.current.dismiss();
+
+  },[facultyFeedback])
 
 
   return (
@@ -243,11 +381,19 @@ const FacultyFeedbackBottomSheet = props=>{
                   <BottomSheetScrollView>
                     <View style={{flex:1}}>
                       <Text style={{textAlign:"center"}} variant='titleLarge'>{props.item.faculty_name}</Text>
-                      <View>
-                        
+                      <View style={styles.feedbackContainer}>
+                        {
+                          props.teacherCriteria.map((item , index)=>(
+                            <View>
+                              <FeedbackRating  item={`${index+1}. ${item}`} set_feedback_rating={(rating)=>{
+                                setFacultyFeedback(prev=>({...prev , [String.fromCharCode(97+index)]:rating }))
+                              }} />
+                            </View>
+                          ))
+                        }
                       </View>
                       <View style={{alignItems :"center"}}>
-                        <Button loading={false} style={{width : 100 , marginVertical : 15}}  mode="contained" onPress={()=>null} >Submit</Button>
+                        <Button loading={false} style={{width : 100 , marginVertical : 15}}  mode="contained" onPress={submitFacultyFeedback} >Submit</Button>
                       </View>
                     </View>
                     
@@ -299,9 +445,9 @@ return (
   <CMScard
   style={styles.cardStyle}
   >
-      <Text variant='headlineSmall' numberOfLines={1} style={{}}>{item?.co_name}</Text>
+      {/* <Text variant='headlineSmall' numberOfLines={1} style={{}}>{item?.co_name}</Text> */}
       <View style={{ gap:20 }}>
-          <Text variant='titleMedium' style={{textAlign:"left"}}>{item?.co}</Text>
+          <Text variant='titleMedium' style={{textAlign:"left"}}>{item}</Text>
           <Text variant='headlineSmall' style={{textAlign : "center" ,color : rating_colors[rating-1]}} >{rating_titles[rating-1]}</Text>
           <Rating
           type='custom'

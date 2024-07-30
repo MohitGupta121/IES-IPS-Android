@@ -4,11 +4,11 @@ export const StudentDashOptions = [
     icon : "book-open",
     to : "Attendance"
   },
-  {
-    name : "Calender",
-    icon : "calendar",
-    to : "Calender"
-  },
+  // {
+  //   name : "Calender",
+  //   icon : "calendar",
+  //   to : "Calender"
+  // },
   {
     name : "Result",
     icon : "award",
@@ -29,18 +29,18 @@ export const StaffDashOptions = [
     to : "Attendance Panel"
   },
   {
-    name : "leave Application",
+    name : "Leave Application",
     icon : "briefcase",
-    to : "leave Application"
+    to : "Leave Application"
   },
+  // {
+  //   name : "Sechdule",
+  //   icon : "clock",
+  //   to : "Sechdule"
+  // },
   {
-    name : "Sechdule",
-    icon : "clock",
-    to : "Sechdule"
-  },
-  {
-    name : "Feedback",
-    icon : "check-square",
-    to : "Feedback"
+    name : "Notify",
+    icon : "message-circle",
+    to : "Notify Batches"
   },
 ] as const;

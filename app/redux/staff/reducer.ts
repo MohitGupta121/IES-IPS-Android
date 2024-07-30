@@ -76,6 +76,7 @@ const initialState:reducerData = {
     AllStudentChecked : null,
     AllStudentCheckedModify : null,
     ModifyAttendance : [],
+    LeaveBalance: {},
 };
 
 export default function staffReducer(state:reducerData = initialState , action: {type : keyof typeof staffActionType , payload : any}):reducerData{

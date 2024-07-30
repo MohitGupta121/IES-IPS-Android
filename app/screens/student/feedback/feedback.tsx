@@ -1,4 +1,4 @@
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {BackHandler, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Button, Chip, List, Text, useTheme} from 'react-native-paper';
@@ -9,10 +9,13 @@ import  Icon  from 'react-native-vector-icons/Feather';
 import { useBackHandler } from '@react-native-community/hooks';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../routes/routes';
+import Animated, { SlideInLeft } from 'react-native-reanimated';
+import useCollapsibleCustomHeader from '../../../hooks/useCollapsibleHeader';
 
 const Feedback = () => {
   const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const theme: themeType = useTheme();
+  const {onScroll , headerHeight} = useCollapsibleCustomHeader();
   const styles = StyleSheet.create({
     listItem: {
       borderRadius: 10,
@@ -72,7 +75,10 @@ const Feedback = () => {
     return true;
   })
   return (
-    <View style={{paddingTop: 50}}>
+    <ScrollView onScroll={onScroll} style={{paddingTop: 50}}>
+      
+      <Animated.View entering={SlideInLeft.duration(500)}>
+
       <List.Item
         // @ts-ignore
         title="NBA Feedback"
@@ -89,6 +95,10 @@ const Feedback = () => {
           );
         }}
       />
+      </Animated.View>
+      
+      <Animated.View entering={SlideInLeft.duration(500)}>
+
       <List.Item
         // @ts-ignore
         title="Facility Feedback"
@@ -105,6 +115,10 @@ const Feedback = () => {
           );
         }}
       />
+      </Animated.View>
+      
+      <Animated.View entering={SlideInLeft.duration(500)}>
+
       <List.Item
         // @ts-ignore
         title="Faculty Feedback"
@@ -119,7 +133,8 @@ const Feedback = () => {
           );
         }}
       />
-    </View>
+      </Animated.View>
+    </ScrollView>
   );
 };
 

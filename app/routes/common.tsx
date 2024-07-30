@@ -7,6 +7,7 @@ import Notification from "../screens/common/notification/notification";
 import About from "../screens/common/About/about";
 import ContactUs from "../screens/common/contactUs/contactUs";
 import MyProfile from "../screens/common/MyProfile/myProfile";
+import Message from "../screens/common/notification/message";
 
 const commonScreenProps: RouteConfig<
   ParamListBase,
@@ -34,6 +35,14 @@ const commonScreenProps: RouteConfig<
   {
     name: 'Notification',
     component: Notification,
+    options: {
+      animation: 'slide_from_left',
+      headerShown: true,
+    },
+  },
+  {
+    name: 'Message',
+    component: Message,
     options: {
       animation: 'slide_from_left',
       headerShown: true,

@@ -9,6 +9,7 @@ import { themeType } from '../../../theme';
 import ProgressCustom, { ProgressColorProp } from '../../../components/progressCustom';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../routes/routes';
+import Animated, { SlideInLeft } from 'react-native-reanimated';
 
 const ItemList = ({item}) => {
 
@@ -36,6 +37,7 @@ const ItemList = ({item}) => {
 
 
   return (
+    <Animated.View entering={SlideInLeft.duration(500)}>
     <List.Item title={item?.batch_name} titleEllipsizeMode="tail"
             titleNumberOfLines={2}  
             style={styles.listItem}
@@ -74,6 +76,7 @@ const ItemList = ({item}) => {
               </ProgressCustom>
             )}}
           />
+          </Animated.View>
   )
 }
 

@@ -18,7 +18,7 @@ function IosSafeArea(props: props) {
   return (
     <SafeAreaView style={{flex:1}}>
     <SafeAreaProvider >
-        <StatusBar barStyle={props.barStyle}  backgroundColor={props.color?props.color : 'transparent'}  />
+        <StatusBar barStyle={props.barStyle}  backgroundColor={props.color?props.color : 'transparent'} animated translucent />
         {props.children}
     </SafeAreaProvider>
     </SafeAreaView>

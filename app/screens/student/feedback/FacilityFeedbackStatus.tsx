@@ -13,6 +13,12 @@ import { RootState } from '../../../redux/store';
 import { AxiosError } from 'axios';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../routes/routes';
+import { reducerData } from '../../../redux/common/reducer';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { commonActionTypes } from '../../../redux/common/types';
+import { storage } from '../../../App';
+import { useAcademicSession } from '../../../hooks/query/common';
+import { useStudentFacilityFeedback } from '../../../hooks/query/student';
 
 const FacilityFeedbackStatus = () => {
     const styles = StyleSheet.create({});
@@ -23,27 +29,13 @@ const FacilityFeedbackStatus = () => {
     })
     
       const [error ,setError] = useState('');
-      const current_session = useSelector((store:RootState)=>store.common.AcademicSession.current.academic_session_id)
-      const user  = useSelector((store:RootState)=>store.common.User.user);
-      const dispatch = useDispatch();
+      const {current_academic_session_id:current_session} = useAcademicSession();
 
-    const {isFetching , isError} = useQuery( studentApi.studentFacilityFeedback.name , ()=>studentApi.studentFacilityFeedback.fetch(
-        {
-            computer_code : user.computer_code,
-            academic_session : current_session,
-        },
-    ),
-    {
-        onSuccess : (data)=>{
-            // console.log(data);
-            dispatch({type : studentActionTypes.FacilityFeedback , payload : {...data}})
-        },
-        onError : (err:AxiosError)=>{
-          console.error("from Facility",err.response?.data?.message)
-          setError(err.response?.data?.message)
-        }
-    }
-    )
+      type User = Pick<reducerData['User'], 'user'>;
+      const [ {user} , setUser ] = useMMKVStorage<User>("User" , storage , {user:{}});
+      const dispatch = useDispatch();
+      const {feedbackData , queryStatus:{isFetching , isError}} = useStudentFacilityFeedback(current_session ,user.computer_code);
+    
 
     if ( isFetching ) return (
       <CustomLoading />
@@ -51,7 +43,7 @@ const FacilityFeedbackStatus = () => {
 
 
     if ( isError ) return  (
-      <CustomError text={error} />
+      <CustomError text="No Feedback Generate or Some Error Occured" />
     )
 
 

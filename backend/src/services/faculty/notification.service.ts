@@ -16,7 +16,7 @@ const getNotificationPrincipal = async (computer_code: number, academic_session:
   }
   let hodlist = await prisma.assigned_roles.findMany({
     where: {
-      hod: true
+      hod: 1
     },
     select: {
       faculty_computer_code: true,
@@ -122,7 +122,7 @@ const getNotificationHod = async (computer_code: number, academic_session: numbe
   let hod = await prisma.assigned_roles.findFirst({
     where: {
       faculty_computer_code: computer_code,
-      hod:true
+      hod:1
     }
   });
   if (!hod) {

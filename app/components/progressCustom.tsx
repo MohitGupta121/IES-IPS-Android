@@ -33,9 +33,6 @@ const ProgressCustom = (props:Props) => {
     }
   return (
     <AnimatedCircularProgress
-        size={props.size}
-        width={props.width}
-        fill={props.fill}
         duration={2000}
         tintColor= {props.color?colored[props.color].color:theme.colors.primary}
         fillLineCap="butt"

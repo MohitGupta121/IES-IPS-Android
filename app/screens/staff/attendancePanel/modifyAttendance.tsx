@@ -1,11 +1,11 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
+import React, { Dispatch, memo, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Chip, DataTable, Switch, Text, useTheme } from 'react-native-paper'
 import { themeType } from '../../../theme'
 import { useDispatch, useSelector } from 'react-redux';
-import { LayoutAnimation, LayoutAnimationConfig, Platform, ScrollView, StyleSheet, UIManager, useWindowDimensions } from 'react-native';
+import { FlatList, LayoutAnimation, LayoutAnimationConfig, Platform, ScrollView, StyleSheet, UIManager, useWindowDimensions } from 'react-native';
 import { useMutation, useQuery } from 'react-query';
 import staffApi from '../../../api/staff/staffApi';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, createNavigationContainerRef } from '@react-navigation/native';
 import { staffActionType } from '../../../redux/staff/types';
 import CustomLoading from '../../../components/customLoading';
 import { TouchableOpacity, View } from 'react-native-ui-lib';
@@ -16,18 +16,29 @@ import { commonActionTypes } from '../../../redux/common/types';
 import { commonApi } from '../../../api/API';
 import dayjs from 'dayjs';
 import CMScard from '../../../components/cms_card';
-import { useImageDimensions } from '@react-native-community/hooks';
+import { useBackHandler, useImageDimensions } from '@react-native-community/hooks';
 import {Toast} from 'react-native-toast-notifications';
 import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut, FadeOutUp, Layout, runOnJS, useAnimatedStyle, useSharedValue, withDelay, withSequence, withTiming, ZoomInEasyUp } from 'react-native-reanimated';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../routes/routes';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { storage } from '../../../App';
+import dataTableStyles from '../../../cmsStyles/dataTableStyles';
+import AnimatedOutlineButton from '../../../components/animatedOutlineButton';
+import { useGetLectureType, useGetTimeSlot } from '../../../hooks/query/common';
+import { useDeleteAttendance, useGetAttendanceToModify, useGetStudentByAttendInfoToModify, useGetTopicForAttendance, useMarkAttendanceToModify } from '../../../hooks/query/staff';
+import useCollapsibleCustomHeader from '../../../hooks/useCollapsibleHeader';
 
 const ModifyAttendance = () => {
 
   const theme:themeType  = useTheme();
   const dispatch = useDispatch();
   const params:{batch_id : number} = useRoute<any>().params
-  const dimension  = useWindowDimensions()
+  const dimension  = useWindowDimensions();
+  const {headerHeight , onScroll} = useCollapsibleCustomHeader()
   const layoutAnimConfig:LayoutAnimationConfig = {
     duration : 150,
     update : {
@@ -41,6 +52,7 @@ const ModifyAttendance = () => {
     },
   }
   const styles = StyleSheet.create({
+    ...dataTableStyles,
     cardStyle : {
       width: dimension.width - 30,
       flexWrap : 'nowrap',
@@ -49,26 +61,248 @@ const ModifyAttendance = () => {
 
     },
     rootContainer:{
-      marginTop : 50,
       flex :1 ,
     },
-    heading :{
-      textAlign : "center",
-      fontSize : 20
+    heading:{
+      color : theme.colors.primary,
+      fontWeight:'700',
+      textAlign:"center",
+      marginVertical:20
     },
-    headerStyle: {
-      // borderTopWidth: 1,
-      borderBottomWidth: 2,
-      height: 50,
-      alignItems: 'center',
-      justifyContent:"center",
-      paddingHorizontal: 3,
-    },
+    ...dataTableStyles,
     headerContainerStyle:{
     },
     headerTextStyle:{
       // textAlign : "center"
     },
+    rowContainerStyle:{
+      justifyContent : "center" ,
+    },
+    rowText:{
+      
+    },
+    sno:{
+      width : 50,
+    },
+    topic:{
+      width : 200,
+    },
+    lab_group:{
+      width : 60,
+      alignItems :"center",
+    },
+    date:{
+      width : 100,
+    },
+    time_slot:{
+      width : 150,
+    },
+    lecture_type:{
+      width : 80,
+    },
+    action:{
+      width : 220,
+      flexDirection :"row",
+    },
+    button : {
+      // flexBasis : "40%",
+      width : 100,
+      margin:5,
+    },
+    buttonLabel:{
+      fontSize : 12,
+      textAlign :"left"
+    },
+    tableContainer:{
+      padding : 20,
+      
+    },
+    table:{
+    height : (10*55)+100
+    }
+  })
+      
+      if (Platform.OS === 'android') {
+        if (UIManager.setLayoutAnimationEnabledExperimental) {
+          UIManager.setLayoutAnimationEnabledExperimental(true);
+        }
+      }
+
+      const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  useBackHandler(()=>{
+
+    dispatch({type : staffActionType.ModifyAttendance , payload : []});
+    dispatch({type : staffActionType.AttendanceTopics , payload : []})
+      dispatch({type : commonActionTypes.TimeSlots , payload : []})
+      dispatch({type : commonActionTypes.LectureTypes , payload : []})
+
+    navigator.pop();
+    return true;
+  })
+          
+          
+
+  
+  
+  const {mutation:deleteAttendanceMutation} = useDeleteAttendance( {
+    onSuccess : (data:any)=>{
+      if (data.msg === "successfull")
+        Toast.show("",{
+        type: "success",
+        text1 : "Delete Complete",
+        text2 : "Attendance Deleted Successfully",
+      })
+      refetch();
+      
+    },
+    onError : (error)=>{
+      Toast.show("",{
+        type: "error",
+        text1 : "Delete Failed",
+        text2 : "Some error occured",
+        // autoHide : true,
+        // visibilityTime : 6000,
+      })
+    }
+  })
+  
+  
+  const {topicList} = useGetTopicForAttendance(params.batch_id)
+  const {timeSlots} = useGetTimeSlot();
+  const {lectureTypes} = useGetLectureType();
+  const {modifyAttendanceList,queryStatus:{isLoading , isFetching, isError}} = useGetAttendanceToModify(params.batch_id);
+
+  const [page , setPage] = useState(0);
+  const itemsPerPage = 10 ;
+  const from = page * itemsPerPage;
+  const to = useMemo(()=>Math.min((page + 1) * itemsPerPage, modifyAttendanceList?.length||0) , [modifyAttendanceList , page]);
+
+
+  const [attendInfo , setAttendInfo] = useState<string>('')
+
+  const [openSheet , setOpenSheet] = useState(false)
+
+
+  const openAttendanceSheet = useCallback((attend_info : string)=>{
+    setAttendInfo(attend_info)
+    setOpenSheet(true)
+  } , [attendInfo])
+
+  
+  const tableRow = useCallback(({item , index})=>{
+    const topic_name = topicList.find(topic=>topic.topic_id===item.topic)?.topic_name
+    const date = dayjs(item.date).format("DD-MM-YYYY")
+    const start_time = timeSlots.find(time=>time.id === item.time_slot_id)?.start_time
+    const end_time = timeSlots.find(time=>time.id === item.time_slot_id)?.end_time
+    const lecture = lectureTypes.find(lecture=>lecture.lecture_id===item.lecture_type)?.lecture_type
+
+    const deleteItem = (attend_info)=>{
+      deleteAttendanceMutation.mutate({attend_info})
+    }
+    const openSheet = ()=>{
+      openAttendanceSheet(item.attend_info)
+    }
+    return ( <ModifyAttendanceRow date={date} topic_name={topic_name} start_time={start_time} end_time={end_time} lecture={lecture} attend_info={item.attend_info} openSheet={openSheet} deleteItem={deleteItem} lab_group={item.lab_group} isDeleting={deleteAttendanceMutation.isLoading} />  )
+},[modifyAttendanceList , timeSlots , topicList , lectureTypes])
+
+  if (isFetching ) return <CustomLoading />
+  if (!modifyAttendanceList.length) return <NoData text="No attendance to Modify" />
+  
+  return (
+    <GestureHandlerRootView style={{flex  : 1}}>
+      <ScrollView onScroll={onScroll} nestedScrollEnabled  style={styles.rootContainer} contentContainerStyle={{paddingBottom:50 , paddingTop:headerHeight}}>
+    <BottomSheetModalProvider>
+        <Text variant="headlineMedium" style={styles.heading}>
+          Modify Attendance
+        </Text>
+    <ScrollView horizontal style={{alignSelf : "center"}} contentContainerStyle={styles.tableContainer} >
+      <DataTable style={styles.table}>
+          <DataTable.Header style={styles.headerStyle}>
+            {/* <View style={[styles.headerContainerStyle , styles.sno]}>
+              <Text variant="titleMedium" style={styles.headerTextStyle}>
+                S.No
+              </Text>
+            </View> */}
+            <View style={[styles.headerContainerStyle , styles.topic]}>
+              <Text variant="titleMedium" style={styles.headerTextStyle}>
+                Topic
+              </Text>
+            </View>
+            <View style={[styles.headerContainerStyle , styles.lab_group]}>
+              <Text variant="titleMedium" style={styles.headerTextStyle}>
+                Lab
+              </Text>
+            </View>
+            <View style={[styles.headerContainerStyle , styles.date]}>
+              <Text variant="titleMedium" style={styles.headerTextStyle}>
+                Date
+              </Text>
+            </View>
+            <View style={[styles.headerContainerStyle , styles.time_slot]}>
+              <Text variant="titleMedium" style={styles.headerTextStyle}>
+                time
+              </Text>
+            </View>
+            <View style={[styles.headerContainerStyle , styles.lecture_type]}>
+              <Text variant="titleMedium" style={styles.headerTextStyle}>
+                Lecture
+              </Text>
+            </View>
+            <View style={[styles.headerContainerStyle , styles.action]}>
+              <Text variant="titleMedium" style={styles.headerTextStyle}>
+                Action
+              </Text>
+            </View>
+          </DataTable.Header>
+          <FlashList 
+          data={modifyAttendanceList.slice(from , to)}
+          estimatedItemSize={itemsPerPage}
+          renderItem={tableRow}
+          keyExtractor={(item, index) => item.attend_info}
+          extraData={[ from , to]}
+          ListEmptyComponent={<NoData text="No Attendance Record" />}
+          
+          />
+
+            <DataTable.Pagination
+            page={page}
+            onPageChange={setPage}
+            numberOfPages={Math.ceil( modifyAttendanceList.length / itemsPerPage)}
+            showFastPaginationControls
+            selectPageDropdownLabel={'Rows per page'}
+            numberOfItemsPerPage={itemsPerPage}
+            label={`${from + 1}-${to} of ${modifyAttendanceList.length}`}
+          />
+
+        </DataTable>
+    </ScrollView>
+    <ModifyBottomSheet attend_info={attendInfo}   open={openSheet} changeOpen={setOpenSheet }/>
+    </BottomSheetModalProvider>
+    </ScrollView>
+    </GestureHandlerRootView>
+  )
+}
+
+export default ModifyAttendance
+
+type modifyRowProps = {
+  topic_name:string|undefined ,
+  lab_group:string|undefined ,
+  date:string|undefined ,
+  start_time:string|undefined ,
+  end_time:string|undefined ,
+  lecture:string|undefined ,
+  isDeleting:boolean ,
+  attend_info:string,
+  openSheet:()=>void ,
+  deleteItem:(attend_info:string)=>void ,
+}
+
+const ModifyAttendanceRow = ({topic_name , lab_group , date , start_time , end_time , lecture , isDeleting , attend_info, openSheet , deleteItem}:modifyRowProps)=>{
+
+  const theme:themeType = useTheme()
+  const styles = StyleSheet.create({
     rowContainerStyle:{
       justifyContent : "center" ,
     },
@@ -110,108 +344,27 @@ const ModifyAttendance = () => {
       // flexBasis : "40%",
       width : 100,
       margin:5,
+      justifyContent:"center"
     },
     buttonLabel:{
       fontSize : 12,
       textAlign :"left"
     },
-    tableContainer:{
-      padding : 20,
-      
-      },
-      })
-      
-      if (Platform.OS === 'android') {
-        if (UIManager.setLayoutAnimationEnabledExperimental) {
-          UIManager.setLayoutAnimationEnabledExperimental(true);
-          }
-          }
-          
-          const { isLoading , refetch } = useQuery(staffApi.getAttendanceToModify.name , ()=>staffApi.getAttendanceToModify.fetch({batch_id : params.batch_id}) , {
-            onSuccess : (data)=> {
-     LayoutAnimation.configureNext(layoutAnimConfig);
-    dispatch({type : staffActionType.ModifyAttendance , payload : [...data]});
-  },
-})
-const {isFetching:isFetchingTopic , isError:isErrorTopic } = useQuery(staffApi.getTopicForAttendance.name ,()=>staffApi.getTopicForAttendance.fetch({
-  batch_id : params?.batch_id
-}) , {
-  onSuccess : (data:any)=>{
-    dispatch({type : staffActionType.AttendanceTopics , payload : data.data})
-  }
   })
-  const {isFetching:isFetchingTimeSlot , isError:isErrorTimeSlot } = useQuery(commonApi.getTimeSlot.name ,()=>commonApi.getTimeSlot.fetch() , {
-    onSuccess : (data:any)=>{
-      dispatch({type : commonActionTypes.TimeSlots , payload : data})
-    }
-  })
-  const {isFetching:isFetchingLectureTypes , isError:isErrorLectureTypes } = useQuery(commonApi.getLectureType.name ,()=>commonApi.getLectureType.fetch() , {
-    onSuccess : (data:any)=>{
-      dispatch({type : commonActionTypes.LectureTypes , payload : data})
-    }
-  })
+
+  const translateX = useSharedValue(0);
+  const opacity = useSharedValue(1);
   
-  const deleteAttendanceMutation = useMutation(staffApi.deleteAttendance.fetch , {
-    onSuccess : (data:any)=>{
-      if (data.msg === "successfull")
-        Toast.show("",{
-        type: "success",
-        text1 : "Delete Complete",
-        text2 : "Attendance Deleted Successfully",
-      })
-      refetch();
-      
-    },
-    onError : (error)=>{
-      Toast.show("",{
-        type: "error",
-        text1 : "Delete Failed",
-        text2 : "Some error occured",
-        // autoHide : true,
-        // visibilityTime : 6000,
-      })
-    }
-  })
-  
-  
-  const topicList = useSelector((store:RootState)=>store.staff.AttendanceTopics)||[]
-  const timeSlots = useSelector((store:RootState)=>store.common.TimeSlots)||[]
-  const lectureTypes = useSelector((store:RootState)=>store.common.LectureTypes)||[]
-  const modifyAttendanceList = useSelector((store:RootState)=>store.staff.ModifyAttendance);
-
-  const [page , setPage] = useState(0);
-  const itemsPerPage = 10 ;
-  const from = page * itemsPerPage;
-  const to = Math.min((page + 1) * itemsPerPage, modifyAttendanceList?.length||0);
-
-  const [attendInfo , setAttendInfo] = useState<string>('')
-
-  const [openSheet , setOpenSheet] = useState(false)
-
-
-  const openAttendanceSheet = useCallback((attend_info : string)=>{
-    setAttendInfo(attend_info)
-    setOpenSheet(true)
-  } , [attendInfo])
-
+  const animDelete = useCallback(()=>{
+    opacity.value = withTiming(0 , {duration:1000})
+    translateX.value = withTiming(300 , {duration:1000})
+    deleteItem(attend_info);
+  } , [])
 
   
-  
-  
-  
-  const tableRow = useCallback(({item})=>{
-    const topic_name = topicList.find(topic=>topic.topic_id===item.topic)?.topic_name
-    const date = dayjs(item.date).format("DD-MM-YYYY")
-    const start_time = timeSlots.find(time=>time.id === item.time_slot_id)?.start_time
-    const end_time = timeSlots.find(time=>time.id === item.time_slot_id)?.end_time
-    const lecture = lectureTypes.find(lecture=>lecture.lecture_id===item.lecture_type)?.lecture_type
-    return (
+  return(
+    <Animated.View style={{opacity , transform:[{translateX}]}}  entering={FadeInDown.duration(500)} exiting={FadeOut.duration(250)}>
     <DataTable.Row style={styles.rowStyle} >
-      {/* <View style={[styles.rowContainerStyle , styles.sno]}>
-        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
-        {item.index + 1}
-        </Text>
-      </View> */}
       <View style={[styles.rowContainerStyle , styles.topic]}>
         <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
           {topic_name}
@@ -219,7 +372,7 @@ const {isFetching:isFetchingTopic , isError:isErrorTopic } = useQuery(staffApi.g
       </View>
       <View style={[styles.rowContainerStyle , styles.lab_group]}>
         <Text variant="labelLarge" ellipsizeMode='tail' style={[styles.rowText]} numberOfLines={2}>
-          {item.lab_group}
+          {lab_group}
         </Text>
       </View>
       <View style={[styles.rowContainerStyle , styles.date]}>
@@ -238,120 +391,28 @@ const {isFetching:isFetchingTopic , isError:isErrorTopic } = useQuery(staffApi.g
         </Text>
       </View>
       <View style={[styles.rowContainerStyle , styles.action]}>
-      <TouchableOpacity onPress={()=>openAttendanceSheet(item.attend_info)} ><Button icon="edit-3" labelStyle={styles.buttonLabel} textColor={theme.colors.yellow} style={[styles.button,{borderColor : theme.colors.yellow , backgroundColor : theme.colors.container_yellow}]} mode="outlined" >Modify</Button></TouchableOpacity>
-      <TouchableOpacity onPress={()=>deleteAttendanceMutation.mutate({attend_info : item.attend_info})} ><Button icon="trash-2" labelStyle={styles.buttonLabel} textColor={theme.colors.red} style={[styles.button,{borderColor : theme.colors.red , backgroundColor : theme.colors.container_red}]} mode="outlined" disabled={deleteAttendanceMutation.isLoading} >Delete</Button></TouchableOpacity>
+      <AnimatedOutlineButton color="yellow" onPress={openSheet} icon="edit-3" labelStyle={styles.buttonLabel} style={styles.button} >Modify</AnimatedOutlineButton>
+      <AnimatedOutlineButton color="red" onPress={animDelete} icon="trash-2" labelStyle={styles.buttonLabel} textColor={theme.colors.red} style={styles.button} disabled={isDeleting} >Delete</AnimatedOutlineButton>
       </View>
       </DataTable.Row>
-  )
-},[modifyAttendanceList , timeSlots , topicList , lectureTypes])
-
-  if (isLoading ) return <CustomLoading />
-  
-  return (<ScrollView  contentContainerStyle={styles.rootContainer}>
-    <GestureHandlerRootView style={{flex  : 1}}>
-    <BottomSheetModalProvider>
-    <CMScard style={styles.cardStyle}>
-        <Text variant="labelLarge" style={styles.heading}>
-          Modify Attendance
-        </Text>
-      </CMScard>
-    <ScrollView horizontal style={{alignSelf : "center"}} contentContainerStyle={styles.tableContainer} >
-      <DataTable>
-          <DataTable.Header style={styles.headerStyle}>
-            {/* <View style={[styles.headerContainerStyle , styles.sno]}>
-              <Text variant="titleMedium" style={styles.headerTextStyle}>
-                S.No
-              </Text>
-            </View> */}
-            <View style={[styles.headerContainerStyle , styles.topic]}>
-              <Text variant="titleMedium" style={styles.headerTextStyle}>
-                Topic
-              </Text>
-            </View>
-            <View style={[styles.headerContainerStyle , styles.lab_group]}>
-              <Text variant="titleMedium" style={styles.headerTextStyle}>
-                Lab
-              </Text>
-            </View>
-            <View style={[styles.headerContainerStyle , styles.date]}>
-              <Text variant="titleMedium" style={styles.headerTextStyle}>
-                Date
-              </Text>
-            </View>
-            <View style={[styles.headerContainerStyle , styles.time_slot]}>
-              <Text variant="titleMedium" style={styles.headerTextStyle}>
-                time
-              </Text>
-            </View>
-            <View style={[styles.headerContainerStyle , styles.lecture_type]}>
-              <Text variant="titleMedium" style={styles.headerTextStyle}>
-                Lecture
-              </Text>
-            </View>
-            <View style={[styles.headerContainerStyle , styles.action]}>
-              <Text variant="titleMedium" style={styles.headerTextStyle}>
-                Action
-              </Text>
-            </View>
-          </DataTable.Header>
-          <FlashList 
-          data={modifyAttendanceList.slice(from , to)}
-          estimatedItemSize={75}
-          renderItem={tableRow}
-          keyExtractor={(item, index) => `${index}`}
-          extraData={modifyAttendanceList?.length}
-          ListEmptyComponent={<NoData text="No Attendance Record" />}
-          
-          />
-
-            <DataTable.Pagination
-            page={page}
-            onPageChange={setPage}
-            numberOfPages={Math.ceil( modifyAttendanceList.length / itemsPerPage)}
-            showFastPaginationControls
-            selectPageDropdownLabel={'Rows per page'}
-            numberOfItemsPerPage={itemsPerPage}
-            label={`${from + 1}-${to} of ${modifyAttendanceList.length}`}
-          />
-
-        </DataTable>
-    </ScrollView>
-    <ModifyBottomSheet attend_info={attendInfo}   open={openSheet} changeOpen={setOpenSheet }/>
-    </BottomSheetModalProvider>
-    </GestureHandlerRootView>
-    </ScrollView>
+      </Animated.View>
   )
 }
 
-export default ModifyAttendance
 
 
 
 
-
-const ModifyBottomSheet = (props:{attend_info : string , open:boolean , changeOpen: Dispatch<SetStateAction<boolean>> }) => {
+const ModifyBottomSheet = memo((props: { attend_info: string; open: boolean; changeOpen: Dispatch<SetStateAction<boolean>> }) => {
   const dimension = useWindowDimensions();
-  const theme:themeType  = useTheme();
-
+  const theme: themeType = useTheme();
   const dispatch = useDispatch();
-  
+
+  const [studentAttend, setStudentAttend] = useState<Set<number>>(new Set());
+  const { studentList, queryState: { refetch, isFetching } } = useGetStudentByAttendInfoToModify(props.attend_info);
+
   const styles = StyleSheet.create({
-    headerStyle: {
-      // borderTopWidth: 1,
-      borderBottomWidth: 2,
-      height: 50,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingHorizontal: 3,
-    },
-    rowStyle: {
-      gap: 25,
-      // borderTopWidth: 1,
-      borderBottomWidth: 1,
-      paddingHorizontal: 3,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
+    ...dataTableStyles,
     headerContainerStyle: {},
     headerTextStyle: {},
     rowText: {},
@@ -380,42 +441,18 @@ const ModifyBottomSheet = (props:{attend_info : string , open:boolean , changeOp
       maxWidth: 500,
     },
   });
-  
+
   const sheetRef = useRef<BottomSheetModal>(null);
-  const studentAttend  = useRef(new Set());
-  const [studentList, setStudentList] = useState<
-    {
-      attend_record_id: string;
-      student_computer_code: number;
-      attend_info: string;
-      attend: boolean;
-      name: string;
-      enrollment: string;
-    }[]
-  >([]);
 
+  const submitModifyAttendance = useCallback(() => {
+    const modified_attendance = studentList.map(item => ({
+      ...item,
+      attend: studentAttend.has(item.student_computer_code),
+    }));
 
-  const submitModifyAttendance = useCallback(()=>{
+    modifyStudentAttendanceMutation.mutate({ attendance: modified_attendance });
+  }, [studentAttend, studentList]);
 
-      let modified_attendance:{
-        attend_record_id: string;
-        student_computer_code: number;
-        attend_info: string;
-        attend: boolean;
-        name: string;
-        enrollment: string;
-      }[] = [];
-
-      studentList.map(item=>{
-        if (studentAttend.current.has(item.student_computer_code)) modified_attendance.push({...item , attend : true })
-        else modified_attendance.push({...item , attend : false })
-      })
-
-      modifyStudentAttendanceMutation.mutate({attendance : modified_attendance})
-
-  } , [studentAttend.current.size , studentList])
-                
-                
   const backdrop = useCallback(
     (backdropProps: BottomSheetBackdropProps) => (
       <BottomSheetBackdrop
@@ -424,160 +461,147 @@ const ModifyBottomSheet = (props:{attend_info : string , open:boolean , changeOp
         disappearsOnIndex={-1}
       />
     ),
-    [],
+    []
   );
+
+  const [{ AllStudentCheckedModify: selectAllStudent }, setSelectAllStudent] = useMMKVStorage<any>("Staff", storage, { AllStudentCheckedModify: null });
 
   const selectStudentAttend = useCallback(
     (value: boolean, item: any) => {
-      // console.log(studentAttend.current);
-      if (value) studentAttend.current.add(item.student_computer_code);
-      else studentAttend.current.delete(item.student_computer_code);
+      setStudentAttend(prev => {
+        const newSet = new Set(prev);
+        if (value) newSet.add(item.student_computer_code);
+        else newSet.delete(item.student_computer_code);
+        return newSet;
+      });
     },
-    [studentAttend.current],
+    []
   );
-  const selectStudentAllAttend = useCallback((value)=>{
-    if(value) studentList.map(item=>{
-      studentAttend.current.add(item.student_computer_code)
-    })
-    else studentAttend.current.clear();
-    dispatch({type : staffActionType.AllStudentCheckedModify , payload : value})
-    setTimeout(()=>dispatch({type : staffActionType.AllStudentCheckedModify , payload : null}) , 1000)
 
-  }, [studentAttend.current])
-
-    
-    
-    const { isLoading , refetch } = useQuery(staffApi.getStudentByAttendInfoToModify.name , ()=>staffApi.getStudentByAttendInfoToModify.fetch({attend_info : props.attend_info}) , {
-      cacheTime : 0,
-      onSuccess : (data:any)=>{
-        data.data.map(item=>item.attend?studentAttend.current.add(item.student_computer_code):null)
-        setStudentList(data.data)
+  const selectStudentAllAttend = useCallback((value: boolean) => {
+    const newAttend = new Set<number>();
+    if (value) {
+      studentList.forEach(item => newAttend.add(item.student_computer_code));
     }
-  })
+    setStudentAttend(newAttend);
+    setSelectAllStudent(state => ({ ...state, AllStudentCheckedModify: value }));
+    setTimeout(() => setSelectAllStudent(state => ({ ...state, AllStudentCheckedModify: null })), 1000);
+  }, [studentList]);
 
-  const modifyStudentAttendanceMutation = useMutation(staffApi.markAttendanceToModify.fetch , {
-    onSuccess:(data)=>{
-      Toast.show("",{
+  const { mutation: modifyStudentAttendanceMutation } = useMarkAttendanceToModify({
+    onSuccess: (data) => {
+      Toast.show("", {
         type: "success",
-        text1 : "Modifiy Complete",
-        text2 : "Attendance Modified Successfully",
-      })
+        text1: "Modify Complete",
+        text2: "Attendance Modified Successfully",
+      });
 
       sheetRef.current?.close();
-      
     },
-    onError : (error)=>{
+    onError: (error) => {
       console.error(error);
-      Toast.show("",{
+      Toast.show("", {
         type: "error",
-        text1 : "Modify Failed",
-        text2 : "some error occured",
-      })
+        text1: "Modify Failed",
+        text2: "some error occurred",
+      });
     }
-  
   });
 
-
-  // useEffect( ()=>{console.log(studentAttend.current)}, [studentAttend.current.size])
-  
-  useEffect(()=>{
+  useEffect(() => {
     refetch();
-    if ( props.open) sheetRef.current?.present();
+    if (props.open) sheetRef.current?.present();
     else sheetRef.current?.close();
-    } , [props.open])
+  }, [props.open]);
 
-  const completeCloseBottomSheet = useCallback(()=>{
-    studentAttend.current.clear();
+  useEffect(() => {
+    const newAttend = new Set<number>();
+    studentList.forEach(item => {
+      if (item.attend) newAttend.add(item.student_computer_code);
+    });
+    setStudentAttend(newAttend);
+  }, [studentList]);
+
+  const completeCloseBottomSheet = useCallback(() => {
+    setStudentAttend(new Set());
     props.changeOpen(false);
-  } , [])
+  }, []);
 
-
-  const studentRow = useCallback(({item})=>(
-
-    <DataTable.Row style={styles.rowStyle} >
-      <View style={[styles.rowContainerStyle , styles.enroll]}>
-        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
-          {item.enrollment}
-        </Text>
-      </View>
-      <View style={[styles.rowContainerStyle , styles.name]}>
-        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
-          {item.name}
-        </Text>
-      </View>
-      <View style={[styles.rowContainerStyle , styles.switch]}>
-        {/* <Switch value={studentAttend.current.has(item.computer_code)} onValueChange={(value)=>selectStudentAttend(value , item)} theme={theme}></Switch> */}
-        <UncontrolledSwitchForAttendanceModify defaultValue={studentAttend.current.has(item.student_computer_code)} onValueChange={(value)=>selectStudentAttend(value , item)}  theme={theme} />
-      </View>
-    </DataTable.Row>
-  ),[studentList , studentAttend.current])
-
-
-
-
+  const studentRow = useCallback(({ item }) => (
+    <Animated.View entering={FadeInDown.duration(500)}>
+      <DataTable.Row style={styles.rowStyle}>
+        <View style={[styles.rowContainerStyle, styles.enroll]}>
+          <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
+            {item.enrollment}
+          </Text>
+        </View>
+        <View style={[styles.rowContainerStyle, styles.name]}>
+          <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
+            {item.name}
+          </Text>
+        </View>
+        <View style={[styles.rowContainerStyle, styles.switch]}>
+          <Switch value={studentAttend.has(item.student_computer_code)} onValueChange={(value) => selectStudentAttend(value, item)} theme={theme} />
+        </View>
+      </DataTable.Row>
+    </Animated.View>
+  ), [studentList, studentAttend]);
 
   return (
     <BottomSheetModal
-    ref={sheetRef}
-    // index={-1}
-    snapPoints={[dimension.height / 2, dimension.height - 50]}
-    enableDismissOnClose
-    onDismiss={completeCloseBottomSheet}
-    handleIndicatorStyle={{
-      backgroundColor: theme.colors.primary,
-      width: 100,
-      height: 5,
-    }}
-    backdropComponent={backdrop}
+      ref={sheetRef}
+      snapPoints={[dimension.height / 2, dimension.height - 50]}
+      enableDismissOnClose
+      onDismiss={completeCloseBottomSheet}
+      handleIndicatorStyle={{
+        backgroundColor: theme.colors.primary,
+        width: 100,
+        height: 5,
+      }}
+      backdropComponent={backdrop}
     >
       <BottomSheetScrollView contentContainerStyle={styles.scrollView}>
-      <DataTable>
+        <DataTable>
           <DataTable.Header style={styles.headerStyle}>
-            <View style={[styles.headerContainerStyle , styles.enroll]}>
+            <View style={[styles.headerContainerStyle, styles.enroll]}>
               <Text variant="titleMedium" style={styles.headerTextStyle}>
                 Enrollment No.
               </Text>
             </View>
-            <View style={[styles.headerContainerStyle , styles.name]}>
+            <View style={[styles.headerContainerStyle, styles.name]}>
               <Text variant="titleMedium" style={styles.headerTextStyle}>
                 Student Name
               </Text>
             </View>
-            <View style={[styles.headerContainerStyle , styles.switch]}>
-              <Switch value={studentList.every(item=>studentAttend.current.has(item.student_computer_code))} onValueChange={selectStudentAllAttend} theme={theme}></Switch>
-              {/* <UncontrolledSwitchForAttendance defaultValue={false} onChange={selectStudentAllAttend} theme={theme} /> */}
+            <View style={[styles.headerContainerStyle, styles.switch]}>
+              <Switch value={studentList.every(item => studentAttend.has(item.student_computer_code))} onValueChange={selectStudentAllAttend} theme={theme}></Switch>
             </View>
           </DataTable.Header>
-          <FlashList 
-          data={studentList}
-          renderItem={studentRow}
-          keyExtractor={(item, index) => `${index}`}
-          extraData={studentAttend.current.size}
-          ListEmptyComponent={<NoData text="No Students" />}
-          // getItemCount={()=>studentList.length}
-          // getItem={(data , index)=>studentList[index]}
-          
+          <FlashList
+            data={studentList}
+            renderItem={studentRow}
+            keyExtractor={(item, index) => `${index}`}
+            extraData={studentAttend}
+            ListEmptyComponent={isFetching ? <CustomLoading style={{ height: 500 }} /> : <NoData text="No Students" />}
           />
-
         </DataTable>
         <Chip>
-          {studentAttend.current.size}/{studentList.length}
+          {studentAttend.size}/{studentList.length}
         </Chip>
-
         <Button mode="contained" loading={modifyStudentAttendanceMutation.isLoading} onPress={submitModifyAttendance} style={styles.submitButton}>Submit Attendance</Button>
-
       </BottomSheetScrollView>
-
     </BottomSheetModal>
-  )
-}
+  );
+});
 
 
-const UncontrolledSwitchForAttendanceModify = ({onValueChange , theme , defaultValue  }:{onValueChange : (value:boolean)=>void , theme : themeType , defaultValue : boolean}) => {
+
+
+const UncontrolledSwitchForAttendanceModify = memo(({onValueChange , theme , defaultValue  }:{onValueChange : (value:boolean)=>void , theme : themeType , defaultValue : boolean}) => {
 
   const [value , setValue] = useState(defaultValue);
 
-  const selectAllStudent = useSelector((store:RootState)=>store.staff.AllStudentCheckedModify)
+  const [{AllStudentCheckedModify:selectAllStudent} ,setSelectAllStudent] = useMMKVStorage<any>("Staff"  , storage , {AllStudentCheckedModify:null})
 
   useEffect(  ()=>{
       if ( selectAllStudent !== null){
@@ -595,4 +619,4 @@ const UncontrolledSwitchForAttendanceModify = ({onValueChange , theme , defaultV
 return (
   <Switch  value={value} theme={theme} onValueChange={toggle} />
 )
-}
+})

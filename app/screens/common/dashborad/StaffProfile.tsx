@@ -1,15 +1,17 @@
 import { StyleSheet, View, useWindowDimensions } from 'react-native'
-import React from 'react'
+import React, { memo } from 'react'
 import { themeType } from '../../../theme';
 import { useTheme  , Text, DataTable} from 'react-native-paper';
 import CMScard from '../../../components/cms_card';
 import  Icon  from 'react-native-vector-icons/Feather';
+import dataTableStyles from '../../../cmsStyles/dataTableStyles';
 
-const StaffProfile = ({user , profile}) => {
+const StaffProfile = ({user}) => {
     const window = useWindowDimensions();
     const theme:themeType = useTheme();
     
     const styles = StyleSheet.create({
+      ...dataTableStyles,
         tableCellStyle : {
           justifyContent: 'center',
           flex: 1,
@@ -178,4 +180,4 @@ const StaffProfile = ({user , profile}) => {
   )
 }
 
-export default StaffProfile
+export default memo(StaffProfile)

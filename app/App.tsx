@@ -5,59 +5,44 @@
  * @format
  */
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
-import {PortalProvider} from '@gorhom/portal'
-import type {PropsWithChildren} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Portal, PortalProvider } from '@gorhom/portal';
+import type { PropsWithChildren } from 'react';
 import {
-  Alert,
   Dimensions,
-  LogBox,
-  PermissionsAndroid,
-  Platform,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
+  LogBox, StatusBar,
   StatusBarStyle,
-  StyleSheet,
-  Touchable,
-  useColorScheme,
-  View,
+  StyleSheet, useColorScheme
 } from 'react-native';
 
-import { useNetInfo } from "@react-native-community/netinfo"
 import customTheme, { fontConfig } from './theme';
-import {NavigationContainer, createNavigationContainerRef, useNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import LoginPage from './screens/common/login/loginPage';
-import {createAppContainer} from 'react-navigation';
+import { createNavigationContainerRef } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LottieView from 'lottie-react-native';
-import {PaperProvider, Snackbar, TouchableRipple, configureFonts} from 'react-native-paper';
-import {MD3DarkTheme, Text ,  MD3LightTheme} from 'react-native-paper';
-import {useMaterial3Theme} from '@pchmn/expo-material3-theme';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Provider, useDispatch} from 'react-redux';
+import { PaperProvider, configureFonts } from 'react-native-paper';
+import { MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
+import { useMaterial3Theme } from '@pchmn/expo-material3-theme';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
 import store from './redux/store';
 import Routes, { RootStackParamList } from './routes/routes';
 import Icon from 'react-native-vector-icons/Feather';
-import {QueryClient, QueryClientProvider} from 'react-query';
-import {MMKV} from 'react-native-mmkv';
-import { dispatchCommand } from 'react-native-reanimated';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 import messaging from '@react-native-firebase/messaging';
-import { getToken, notificationListener, requestUserPermission } from './utils/notification';
-import { commonActionTypes } from './redux/common/types';
-import { ToastConfig , ToastConfigParams } from 'react-native-toast-message'
-import Toast from 'react-native-toast-message'
+import { notificationListener } from './utils/notification';
+import Toast from 'react-native-toast-message';
 import useToastConfig from './hooks/toastConfig';
 import { useDeviceOrientation } from '@react-native-community/hooks';
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
-import { ToastProvider } from 'react-native-toast-notifications'
+import { ToastProvider } from 'react-native-toast-notifications';
+import HeaderCollapseContext from './context/headerCollapse';
+import useCollapsibleCustomHeader from './hooks/useCollapsibleHeader';
+import { NotificationType } from './types';
+import LoginContextProvder from './context/loginContext';
 
 
-export const storage = new MMKV();
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+export const storage = new MMKVLoader().initialize();
 
 export const navigationRef = createNavigationContainerRef<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -67,15 +52,13 @@ const query_client = new QueryClient();
 function App(): JSX.Element {
 
 
-  LogBox.ignoreLogs(['Warrning: ...']);
-  LogBox.ignoreAllLogs();
   const isDarkMode = useColorScheme() === 'dark';
   const [splash, setSplash] = useState(true);
   const orientation = useDeviceOrientation();
   const dark = useColorScheme() == 'dark';
   const {theme} = useMaterial3Theme({sourceColor: '#002877'});
 
-  const applyTheme = dark
+  const applyTheme = useMemo(()=>dark
     ? {
         ...MD3DarkTheme,
         // colors : customTheme,
@@ -92,45 +75,37 @@ function App(): JSX.Element {
         ...customTheme,
         colors: {...theme.light, ...customTheme.colors},
         font: configureFonts({config : fontConfig})
+      } ,[]);
+      
+      
+      
+      const linking = {
+        prefixes: ['http://cms.ipsacademy.net/', 'ips://'],
       };
+      
+      const [ notifications , setNotifications ] = useMMKVStorage<any>( "Notification" , storage , []);
+      const [bar_color , set_bar_color] = useState<{style : StatusBarStyle , color : string}>({color:applyTheme.colors.white , style:"dark-content"});
+      
 
 
-
-  const linking = {
-    prefixes: ['http://cms.ipsacademy.net/', 'ips://'],
-  };
-
+      useEffect(()=>{
+        setTimeout(  ()=>set_bar_color({color:"#002877" , style : "light-content"}) ,  1150)
+      },[])
 
   useEffect(() => {
+        
 
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      if (storage.contains('notifications')) {
-        const previous = storage.getString('notifications');
-        if (previous !== undefined) {
-          const data = [  ...JSON.parse(previous),{...remoteMessage.notification , seen:false} ];
-          storage.set('notifications', JSON.stringify(data));
-        } else {
-          storage.set(
-            'notifications',
-            JSON.stringify([{...remoteMessage.notification , seen:false}]),
-          );
-        }
-      } else {
-        storage.set(
-          'notifications',
-          JSON.stringify([{...remoteMessage.notification , seen:false}]),
-        );
-      }
-      let notifications = storage.getString("notifications");
-      if ( notifications !== undefined){
-        let notificationArray = JSON.parse(notifications);
-        store.dispatch({type:commonActionTypes.ClearNotification});
-        notificationArray.map(item=>{
-          store.dispatch({type:commonActionTypes.GetNotification , payload : item})
-        })
-      }
 
-      
+      let notification:NotificationType = {
+        title : remoteMessage.notification.title,
+        description : remoteMessage.notification.body,
+        message : remoteMessage.data.message,
+        sender : remoteMessage.data.sender,
+        timestamp : remoteMessage.data.timestamp,
+        seen:false,
+      }
+      setNotifications([notification,...notifications])
 
       Toast.show({
         type : "info",
@@ -143,25 +118,21 @@ function App(): JSX.Element {
         },
         onPress : ()=>{
           Toast.hide();
-          if (navigationRef.isReady()) navigationRef.navigate("Notification")
+          if (navigationRef.isReady()) navigationRef.navigate<any>("Notification")
         }
       })
     });
     // requestUserPermission();
     notificationListener();
     return unsubscribe;
-  }, []);
-
-
+  }, [notifications]);
   
-  const toastConfig:ToastConfig = useToastConfig(applyTheme);
   
-  const [bar_color , set_bar_color] = useState<{style : StatusBarStyle , color : string}>({color:applyTheme.colors.white , style:"dark-content"});
+  
+  const toastConfig = useToastConfig(applyTheme);
+  
 
-  setTimeout(  ()=>set_bar_color({color:"#002877" , style : "light-content"}) ,  1150)
-
-
-  if( splash) return (
+  const splashScreen = useMemo(()=>(
     <>
     <StatusBar translucent barStyle={bar_color.style} animated backgroundColor={bar_color.color} />
     <LottieView
@@ -180,27 +151,49 @@ function App(): JSX.Element {
           }}
         />
         </>
-  )
+  ) , [bar_color])
 
 
 
   return (
-            <ToastProvider placement='top' duration={6000} offsetTop={50} renderType={toastConfig} renderToast={toastConfig.success} >
-    <PortalProvider >
-        <QueryClientProvider client = {query_client}>
-        <Provider store={store}>
-          <SafeAreaProvider style={{flex : 1 , backgroundColor:applyTheme.colors.container_background }}>
-            <PaperProvider
-              settings={{icon: props => <Icon {...props} suppressHighlighting={true} />}}
-              theme={applyTheme}>
-              <Routes />
-              <Toast config={toastConfig}  />
-            </PaperProvider>
-          </SafeAreaProvider>
-        </Provider>
+    // <SafeAreaProvider
+    //   style={{
+    //     flex: 1,
+    //     backgroundColor: applyTheme.colors.container_background,
+    //   }}>
+    <ToastProvider
+      placement="top"
+      duration={6000}
+      offset={50+StatusBar.currentHeight}
+      renderType={toastConfig}
+      renderToast={toastConfig.success}>
+      <PortalProvider>
+        <QueryClientProvider client={query_client}>
+          <Provider store={store}>
+            <LoginContextProvder>
+                <HeaderCollapseContext>
+                <PaperProvider
+                  settings={{
+                    icon: props => (
+                      <Icon {...props} suppressHighlighting={true} />
+                    ),
+                  }}
+                  theme={applyTheme}>
+                  {splash?           
+                  splashScreen
+                  :<Routes />}
+                  <Portal>
+                    <Toast config={toastConfig} />
+                  </Portal>
+                </PaperProvider>
+              </HeaderCollapseContext>
+
+            </LoginContextProvder>
+          </Provider>
         </QueryClientProvider>
-        </PortalProvider>
-        </ToastProvider>
+      </PortalProvider>
+    </ToastProvider>
+            // </SafeAreaProvider>
   );
 }
 

@@ -21,6 +21,16 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Dropdown } from 'react-native-element-dropdown';
 import { commonActionTypes } from '../../../redux/common/types';
 import { commonApi } from '../../../api/API';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { storage } from '../../../App';
+import dataTableStyles from '../../../cmsStyles/dataTableStyles';
+import ModelCalendar from '../../../components/modelCalendar';
+import { useGetLectureType } from '../../../hooks/query/common';
+import { useGetViewAttendance } from '../../../hooks/query/staff';
+import useCollapsibleCustomHeader from '../../../hooks/useCollapsibleHeader';
 
 
 type viewAttendanceType = {
@@ -57,26 +67,15 @@ const ViewAttendance = () => {
     resolver : yupResolver<viewAttendanceType>(viewAttendanceValidation)
   })
   const params:{batch_id : number} = useRoute<any>().params
-  const academic_session = useSelector((store:RootState)=>store.common.AcademicSession.current.academic_session_id)
-  const lectureTypes = useSelector((store:RootState)=>store.common.LectureTypes)||[]
-  const dispatch = useDispatch();
+  const [{current:{academic_session_id:academic_session}} , setAcademicSession] = useMMKVStorage("AcademicSession" , storage , {current:{academic_session_id:0}});
 
-  const {isFetching:isFetchingLectureTypes , isError:isErrorLectureTypes } = useQuery(commonApi.getLectureType.name ,()=>commonApi.getLectureType.fetch() , {
-    onSuccess : (data:any)=>{
-      dispatch({type : commonActionTypes.LectureTypes , payload : data})
-    }
-  })
+  const {lectureTypes} = useGetLectureType();
 
   const [studentsData , setStudentsData] = useState<any[]|null>(null);
+  const {onScroll , headerHeight} = useCollapsibleCustomHeader();
 
-  const dateInputRef = useRef(null)
 
-  const [page , setPage] = useState(0)
-  const itemsPerPageList = useMemo(()=>[10 , 25 , 50 , 100] ,[])
-  const [itemsPerPage,setItemsPerPage] = useState(itemsPerPageList[0]);
-  
-  const from = page * itemsPerPage;
-  const to = Math.min((page + 1) * itemsPerPage, studentsData?.length||0);
+
 
   useEffect(()=>{
     viewAttendanceForm.setValue('academic_session' , academic_session)
@@ -87,73 +86,22 @@ const ViewAttendance = () => {
 
   
   const styles = StyleSheet.create({
-    headerStyle: {
-      // borderTopWidth: 1,
-      borderBottomWidth: 2,
-      height: 50,
-      alignItems: 'center',
-      justifyContent:"center",
-      paddingHorizontal: 3,
-    },
-    cardStyle : {
+    cardStyle: {
       width: dimension.width - 30,
-      flexWrap : 'nowrap',
-      flexDirection:'column',
-      gap : 20
-
+      flexWrap: 'nowrap',
+      flexDirection: 'column',
+      gap: 20,
+    },
+    fieldContainer :{
+      gap : 20,
+      alignSelf :"flex-start"
     },
     rootContainer:{
-      marginTop : 50,
       flex :1 ,
     },
     heading :{
       textAlign : "center",
       fontSize : 20
-    },
-    headerTextStyle:{
-      
-    },
-    rowStyle : {
-      gap: 25,
-      // borderTopWidth: 1,
-      borderBottomWidth: 1,
-      paddingHorizontal: 3,
-      justifyContent : 'center',
-      alignItems:"center"
-    },
-    headerContainerStyle:{
-    },
-    rowText:{
-      
-    },
-    rowContainerStyle:{
-      justifyContent : "center" ,
-    },
-    enroll : {
-      width : 150,
-    },
-    name: {
-      width : 200,
-    },
-    group:{
-      width: 60,
-      justifyContent:"center",
-    },
-    date: {
-      width : 100,
-    },
-    time_slot: {
-      width : 150,
-    },
-    status: {
-      width : 70,
-    },
-    statusText : {
-      fontWeight : "700",
-    },
-    tableContainer:{
-      padding : 20,
-      alignSelf:"center",
     },
     datepickerContainer : {
       height : 70 , 
@@ -175,6 +123,7 @@ const ViewAttendance = () => {
     dropdown:{
       width : dimension.width - 60,
       backgroundColor : theme.colors.surfaceContainer,
+      maxWidth:760,
       borderRadius : 5,
       padding : 10,
       paddingHorizontal : 15,
@@ -189,7 +138,12 @@ const ViewAttendance = () => {
     },
   });
 
-  const scrollViewRef = useRef<ScrollView>(null);
+
+  const [openModal , setOpenModal] = useState(false);
+
+  const dismissModal = useCallback(()=>{
+    setOpenModal(false);
+  },[])
 
   const setDateRage  = useCallback((date , type)=>{
      if (type === 'START_DATE')viewAttendanceForm.setValue('from_date' , date);
@@ -197,9 +151,10 @@ const ViewAttendance = () => {
    } , [viewAttendanceForm])
 
 
-   const {mutate , isLoading } = useMutation(staffApi.getViewAttendance.fetch , {
-    onSuccess : (data)=>{
+   const {mutation:{mutate , isLoading}} = useGetViewAttendance( {
+    onSuccess : (data:any)=>{
       setStudentsData([...data.data])
+      setOpenModal(true);
     }
    })
 
@@ -233,60 +188,21 @@ const ViewAttendance = () => {
     mutate(req_data)
   } , [viewAttendanceForm])
 
-  const studentRow = useCallback(({item})=>(
-
-    <DataTable.Row style={styles.rowStyle} >
-      <View style={[styles.rowContainerStyle , styles.enroll]}>
-        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
-          {item.enrollment_no}
-        </Text>
-      </View>
-      <View style={[styles.rowContainerStyle , styles.name]}>
-        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
-          {item.student_name}
-        </Text>
-      </View>
-      <View style={[styles.rowContainerStyle , styles.group]}>
-        <Text variant="labelLarge" ellipsizeMode='tail' style={[styles.rowText]} numberOfLines={2}>
-          {item.lab_group_name}
-        </Text>
-      </View>
-      <View style={[styles.rowContainerStyle , styles.date]}>
-        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
-          {dayjs(item.date).format("DD-MM-YYYY")}
-        </Text>
-      </View>
-      <View style={[styles.rowContainerStyle , styles.time_slot]}>
-        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
-          {`${item.time_slot.start_time}-${item.time_slot.end_time}`}
-        </Text>
-      </View>
-      <View style={[styles.rowContainerStyle , styles.status]}>
-        {item.attend ?(
-
-        <Text variant="labelLarge" ellipsizeMode='tail' style={[styles.rowText , styles.statusText , {color:theme.colors.green}]} numberOfLines={2}>
-          Present
-        </Text>
-        ):
-        (
-        <Text variant="labelLarge" ellipsizeMode='tail' style={[styles.rowText , styles.statusText , {color:theme.colors.red}]} numberOfLines={2}>
-          Absent
-        </Text>
-      )}
-      </View>
-    </DataTable.Row>
-  ),[studentsData])
-
+  
 
   return (
-    <ScrollView style={styles.rootContainer}>
+    <GestureHandlerRootView style={{flex: 1}}>
+
+        <BottomSheetModalProvider>
+    <ScrollView style={styles.rootContainer} onScroll={onScroll} contentContainerStyle={{paddingBottom:50 , paddingTop:headerHeight}} >
       <CMScard style={styles.cardStyle}>
         <Text variant="labelLarge" style={styles.heading}>
           Attendance Filter
         </Text>
+        <View style={styles.fieldContainer}>
         <View style={{gap: 5}}>
           <Text>From Date</Text>
-          <Controller
+          {/* <Controller
             control={viewAttendanceForm.control}
             name="from_date"
             render={({field: {onChange, onBlur, value, name}}) => (
@@ -301,11 +217,27 @@ const ViewAttendance = () => {
                 restrictMonthNavigation
               />
             )}
+          /> */}
+          <Controller
+            control={viewAttendanceForm.control}
+            name="from_date"
+            render={({field: {onChange, onBlur, value, name}}) => (
+              <ModelCalendar
+                width={dimension.width - 60}
+                onChange={onChange}
+                // scrollDecelarationRate={30}
+                selectedDayColor={theme.colors.container_background}
+                showDayStragglers
+                maxDate={new Date(Date.now())}
+                restrictMonthNavigation
+                headerText='From Date'
+              />
+            )}
           />
         </View>
         <View style={{gap: 5}}>
           <Text>To Date</Text>
-          <Controller
+          {/* <Controller
             control={viewAttendanceForm.control}
             name="to_date"
             render={({field: {onChange, onBlur, value, name}}) => (
@@ -319,6 +251,24 @@ const ViewAttendance = () => {
                 maxDate={new Date(Date.now())}
                 minDate={viewAttendanceForm.getValues().from_date || null}
                 restrictMonthNavigation
+              />
+            )}
+          /> */}
+          <Controller
+            control={viewAttendanceForm.control}
+            name="to_date"
+            render={({field: {onChange, onBlur, value, name}}) => (
+              <ModelCalendar
+                width={dimension.width - 60}
+                onChange={onChange}
+                scrollDecelarationRate={30}
+                selectedDayColor={theme.colors.container_background}
+                showDayStragglers
+                maxDate={new Date(Date.now())}
+                minDate={new Date(viewAttendanceForm.getValues().from_date!) || null}
+                restrictMonthNavigation
+                nextTitleStyle={{color:"black"}}
+                headerText='To Date'
               />
             )}
           />
@@ -376,16 +326,173 @@ const ViewAttendance = () => {
             Show
           </Button>
         </View>
+      </View>
       </CMScard>
-      {studentsData === null ? null : studentsData.length === 0 ? (
+      
+      <ViewAttendanceBottomsheet open={openModal} dismissModal={dismissModal} studentsData={studentsData} />
+
+    </ScrollView>
+    </BottomSheetModalProvider>
+    </GestureHandlerRootView>
+  );
+}
+
+export default ViewAttendance
+
+type modalProps = {
+  open : boolean,
+  dismissModal : ()=>void,
+  studentsData : any[]|null,
+}
+
+const ViewAttendanceBottomsheet = (props:modalProps)=>{
+
+  const theme:themeType = useTheme();
+  const window = useWindowDimensions();
+
+
+  const styles = StyleSheet.create({
+    ...dataTableStyles,
+    headerContainerStyle:{
+    },
+    rowText:{
+      
+    },
+    rowContainerStyle:{
+      justifyContent : "center" ,
+    },
+    enroll : {
+      width : 150,
+    },
+    name: {
+      width : 200,
+    },
+    group:{
+      width: 60,
+      justifyContent:"center",
+    },
+    date: {
+      width : 100,
+    },
+    time_slot: {
+      width : 150,
+    },
+    status: {
+      width : 70,
+    },
+    statusText : {
+      fontWeight : "700",
+    },
+    tableContainer:{
+      gap : 30,
+      paddingHorizontal : 10,
+      paddingBottom : 30,
+      alignItems : "center",
+      // maxWidth : 600,
+      alignSelf:"center",
+    },
+    headingContainer:{
+      paddingVertical:20,
+    }
+  })
+
+  const Modalref = useRef<BottomSheetModal>(null);
+
+  useEffect(()=>{
+    if (props.open) Modalref.current?.present()
+    // else Modalref.current?.dismiss()
+
+  } , [props.open , Modalref])
+
+
+  const backdrop = useCallback((backdropProps:BottomSheetBackdropProps)=>(
+    <BottomSheetBackdrop {...backdropProps} onPress={props.dismissModal} appearsOnIndex={0} disappearsOnIndex={-1} />
+  ) , [])
+
+
+  const studentRow = useCallback(({item})=>(
+
+    <Animated.View entering={FadeInDown.duration(500)}>
+    <DataTable.Row style={styles.rowStyle} >
+      <View style={[styles.rowContainerStyle , styles.enroll]}>
+        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
+          {item.enrollment_no}
+        </Text>
+      </View>
+      <View style={[styles.rowContainerStyle , styles.name]}>
+        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
+          {item.student_name}
+        </Text>
+      </View>
+      <View style={[styles.rowContainerStyle , styles.group]}>
+        <Text variant="labelLarge" ellipsizeMode='tail' style={[styles.rowText]} numberOfLines={2}>
+          {item.lab_group_name}
+        </Text>
+      </View>
+      <View style={[styles.rowContainerStyle , styles.date]}>
+        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
+          {dayjs(item.date).format("DD-MM-YYYY")}
+        </Text>
+      </View>
+      <View style={[styles.rowContainerStyle , styles.time_slot]}>
+        <Text variant="labelLarge" ellipsizeMode='tail' style={styles.rowText} numberOfLines={2}>
+          {`${item.time_slot.start_time}-${item.time_slot.end_time}`}
+        </Text>
+      </View>
+      <View style={[styles.rowContainerStyle , styles.status]}>
+        {item.attend ?(
+
+        <Text variant="labelLarge" ellipsizeMode='tail' style={[styles.rowText , styles.statusText , {color:theme.colors.green}]} numberOfLines={2}>
+          Present
+        </Text>
+        ):
+        (
+        <Text variant="labelLarge" ellipsizeMode='tail' style={[styles.rowText , styles.statusText , {color:theme.colors.red}]} numberOfLines={2}>
+          Absent
+        </Text>
+      )}
+      </View>
+    </DataTable.Row>
+    </Animated.View>
+  ),[props.studentsData])
+
+
+  const [page , setPage] = useState(0)
+  const itemsPerPageList = useMemo(()=>[10 , 25 , 50 , 100] ,[])
+  const [itemsPerPage,setItemsPerPage] = useState(itemsPerPageList[0]);
+  
+  const from = page * itemsPerPage;
+  const to = Math.min((page + 1) * itemsPerPage, props.studentsData?.length||0);
+
+
+  return (
+    <BottomSheetModal
+                ref = {Modalref}
+                index={0}
+                enableDismissOnClose
+                snapPoints={[500 , window.height - 50]}
+                onDismiss={props.dismissModal}
+                handleIndicatorStyle={{
+                    backgroundColor: theme.colors.primary,
+                    width: 100,
+                    height: 5,
+                }}
+                backdropComponent={backdrop}
+                
+                >
+                  <BottomSheetScrollView nestedScrollEnabled>
+                  <View style={styles.headingContainer}> 
+
+                  <Text style={{textAlign:"center" , fontWeight:"700"}} variant='titleLarge'>Attendance</Text>
+                  </View>
+                  {props.studentsData === null ? null : props.studentsData.length === 0 ? (
         <NoData text={'No Students'} />
       ) : (
-        <ScrollView
+        <BottomSheetScrollView
           horizontal
-          ref={scrollViewRef}
           style={{alignSelf: 'center'}}
           contentContainerStyle={styles.tableContainer}>
-          <DataTable>
+          <DataTable style={{flex:1,flexShrink:1}}>
             <DataTable.Header style={styles.headerStyle}>
               <View style={[styles.enroll]}>
                 <Text variant="titleMedium" style={styles.headerTextStyle}>
@@ -419,31 +526,30 @@ const ViewAttendance = () => {
               </View>
             </DataTable.Header>
             <FlashList
-              data={studentsData.slice(from, to)}
+              data={props.studentsData.slice(from, to)}
               estimatedItemSize={75}
               renderItem={studentRow}
               keyExtractor={(item, index) => `${index}`}
-              extraData={studentsData}
+              extraData={props.studentsData}
               ListEmptyComponent={<NoData text="No Students" />}
             />
 
             <DataTable.Pagination
               page={page}
               onPageChange={setPage}
-              numberOfPages={Math.ceil(studentsData.length / itemsPerPage)}
+              numberOfPages={Math.ceil(props.studentsData.length / itemsPerPage)}
               showFastPaginationControls
               selectPageDropdownLabel={'Rows per page'}
               numberOfItemsPerPage={itemsPerPage}
               onItemsPerPageChange={index =>
                 setItemsPerPage(itemsPerPageList[index])
               }
-              label={`${from + 1}-${to} of ${studentsData.length}`}
+              label={`${from + 1}-${to} of ${props.studentsData.length}`}
             />
           </DataTable>
-        </ScrollView>
+        </BottomSheetScrollView>
       )}
-    </ScrollView>
-  );
+      </BottomSheetScrollView>
+  </BottomSheetModal>
+  )
 }
-
-export default ViewAttendance

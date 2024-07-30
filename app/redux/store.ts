@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
 
 const store = configureStore({
     reducer : rootReducer,
+    middleware : ()=>[]
 })
 
 export type RootState = ReturnType< typeof store.getState >

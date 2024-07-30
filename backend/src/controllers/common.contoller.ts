@@ -33,14 +33,39 @@ const postAcademicCalender = async (req: any, res: any) => {
     });
     res.status(201).json(createEvent);
   } catch (error) {
-    console.error('Error creating resource:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 const getDepartments = catchAsync(async (req, res) => {
   const result = await commonService.getDepartments();
-  res.send(result);
+  res.status(200).send(result);
 });
+
+const getFacultyByDepartment = catchAsync(async( req , res)=>{
+  try{
+    const {department_id} = req.query;
+    const result = await commonService.getFacultyByDepartment(Number(department_id));
+    res.status(200).send(result);
+    
+  }catch(error){
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+})
+
+const getNameByComputerCode = catchAsync(async( req , res)=>{
+  try{
+    const {computer_code , user_type} = req.body;
+    const result = await commonService.getNameByComputerCode(computer_code , user_type);
+    res.status(200).send(result);
+    
+  }catch(error){
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+})
+
+
 
 export default {
   getAcademicSession,
@@ -49,4 +74,6 @@ export default {
   getTimeSlot,
   getLectureType,
   getDepartments,
+  getFacultyByDepartment,
+  getNameByComputerCode,
 };

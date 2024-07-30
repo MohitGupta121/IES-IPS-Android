@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { View } from "react-native";
@@ -33,12 +34,6 @@ const Pagination = ({ dotsLength, activeDotIndex }: { dotsLength: number; active
           }
 
     })
-
-    useEffect(()=>{
-      console.log(activeDotIndex)
-    }, [activeDotIndex])
-
-    
 
     return (
       <View style={styles.paginationContainer} >

@@ -1,5 +1,5 @@
-import { Dimensions, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native'
-import React, { useCallback, useEffect, useRef } from 'react'
+import { Dimensions, Pressable, StyleSheet, View, useWindowDimensions, StatusBar } from 'react-native';
+import React, { memo, useCallback, useEffect, useRef } from 'react'
 import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { themeType } from '../../../theme';
@@ -13,7 +13,8 @@ type menuProp = {
 
 
 const MenuBottomSheet = (props : menuProp) => {
-    const theme:themeType = useTheme();
+  const theme:themeType = useTheme();
+  const dimension = useWindowDimensions();
   const Modalref: any = useRef<BottomSheet>(null);
 
   useEffect(()=>{
@@ -22,16 +23,33 @@ const MenuBottomSheet = (props : menuProp) => {
   },[props.open])
 
   const window = useWindowDimensions();
+  
+  const styles = StyleSheet.create({
+    bottomsheetModal:{
+      maxWidth: 400,
+    },
+    containerStyle:{
+      marginHorizontal: dimension.width>420?(dimension.width-400)/2:10
+    }
+  })
 
   const backdrop = useCallback((backdropProps:BottomSheetBackdropProps)=>(
     <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
   ) , [])
 
+  // console.log("MENU")
+
   return (
+    <>
      <BottomSheetModal
               ref={Modalref}
               index={0}
               snapPoints={[310]}
+              detached
+              bottomInset={10}
+              style={styles.bottomsheetModal}
+              containerStyle={styles.containerStyle}
+              
               enableDismissOnClose
               handleIndicatorStyle={{
                 backgroundColor: theme.colors.primary,
@@ -45,7 +63,8 @@ const MenuBottomSheet = (props : menuProp) => {
                 <MenuList Modalref={Modalref} />
               </View>
             </BottomSheetModal>
+    </>
   )
 }
 
-export default MenuBottomSheet
+export default memo(MenuBottomSheet)

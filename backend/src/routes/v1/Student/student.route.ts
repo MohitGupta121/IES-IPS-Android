@@ -352,7 +352,7 @@ router.post('/getFacultyfeedback',studentfeedbackController.getfacultyfeedback);
  *                 type: array
  *                 items:
  *                   type: object
- *                   propertes:
+ *                   properties:  # Corrected "propertes" to "properties"
  *                      faculty_computer_code:
  *                          type: number
  *                      clg_sub_code:
@@ -391,4 +391,5 @@ router.post('/getFacultyfeedback',studentfeedbackController.getfacultyfeedback);
  *       "200":
  *         description: OK
  */
+
 router.post('/InsertFacultyFeedback',studentfeedbackController.InsertfacultyFeedback);

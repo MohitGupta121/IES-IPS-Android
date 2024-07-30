@@ -185,7 +185,7 @@ const loginStudent = async (
 
 interface facultyresponse {
   id: number;
-  temp_hod: boolean;
+  temp_hod: number|null;
   department: number;
   computer_code: number | null;
   title: string | null;

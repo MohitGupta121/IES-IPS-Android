@@ -5,6 +5,8 @@ const commonUrl = {
     getTimeSlot : `${appConfig.common}getTimeSlot`,
     getLectureType : `${appConfig.common}getLectureType`,
     getDepartments : `${appConfig.common}getDepartments`,
+    getFacultyByDepartment : `${appConfig.common}getFacultyByDepartment`,
+    getNameByComputerCode : `${appConfig.common}getNameByComputerCode`,
 };
 
 export default commonUrl;

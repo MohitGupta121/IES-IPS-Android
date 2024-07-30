@@ -33,6 +33,31 @@ export type studentInsertNbaFeedback = {
   }[]
 }; 
 
+export type InsertFacultyFeedback = {
+  computer_code: number,
+  feedback_id: number,
+  comment: string,
+  data: {
+      faculty_computer_code: number,
+      clg_sub_code: string,
+      batch_id: number,
+      a: number,
+      b: number,
+      c: number,
+      d: number,
+      e: number,
+      f: number,
+      g: number,
+      h: number,
+      i: number,
+      j: number,
+      k: number,
+      l: number,
+      m: number,
+      n: number
+    }[]
+}
+
 const studentApi = {
     login : {
         name : "login" , 
@@ -67,6 +92,10 @@ const studentApi = {
     studentFacultyfeedback : {
       name : "studentFacultyFeedback",
       fetch : ( payload : studentFacultyFeedback  )=>api.post(studentUrl.getFacultyFeedback, payload).then(res=>res.data)
+    },
+    InsertFacultyFeedback : {
+      name : "InsertFacultyFeedback",
+      fetch : ( payload : InsertFacultyFeedback  )=>api.post(studentUrl.InsertFacultyFeedback, payload).then(res=>res.data)
     },
 };
 

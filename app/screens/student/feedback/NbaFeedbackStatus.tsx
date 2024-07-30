@@ -16,6 +16,14 @@ import { useBackHandler } from '@react-native-community/hooks'
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
 import { RootStackParamList } from '../../../routes/routes';
 import { FlashList } from "@shopify/flash-list";
+import { reducerData } from '../../../redux/common/reducer';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
+import { commonActionTypes } from '../../../redux/common/types';
+import { storage } from '../../../App';
+import { RootState } from '../../../redux/store';
+import useCollapsibleCustomHeader from '../../../hooks/useCollapsibleHeader';
+import { useStudentNbaFeedback } from '../../../hooks/query/student';
+import { useAcademicSession } from '../../../hooks/query/common';
 
 
 const NbaFeedbackStatus = () => {
@@ -31,12 +39,13 @@ const NbaFeedbackStatus = () => {
     });
     const theme:themeType = useTheme();
     const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const params = useRoute().params;
+    const params:{reload:boolean} = useRoute<any>().params;
 
 
 
     useBackHandler(()=>{
-      navigator.pop();
+        dispatch({type: studentActionTypes.NbaFeedback, payload: []});
+        navigator.pop();
       return true;
     })
 
@@ -47,26 +56,16 @@ const NbaFeedbackStatus = () => {
           }
       }, [params])
     
-      const current_session = useSelector(store=>store.common.AcademicSession?.current.academic_session_id)
-      const user  = useSelector(store=>store.common.User.user);
-      const nba_data = useSelector(store=>store?.student?.NbaFeedback)
+      const {current_academic_session_id:current_session} = useAcademicSession();
+      type User = Pick<reducerData['User'], 'user'>;
+      const [ {user} , setUser ] = useMMKVStorage<User>("User" , storage , {user:{}});
+      const {nbaData , queryStatus:{isRefetching , refetch , isFetching,isError}} = useStudentNbaFeedback(current_session,user.computer_code);
 
 
       const dispatch = useDispatch();
 
-    const {isFetching, isError,error , isRefetching , refetch} =useQuery( studentApi.studentNbaFeedback.name , ()=>studentApi.studentNbaFeedback.fetch(
-        {
-            computer_code : user.computer_code,
-            academic_session : current_session,
-        },
-    ),
-    {
-      onSuccess: data => {
-        // console.log(data)
-        dispatch({type: studentActionTypes.NbaFeedback, payload: [...data]});
-      },
-    },
-  );
+
+  const {onScroll , headerHeight} = useCollapsibleCustomHeader();
 
     if ( isFetching && !isRefetching) return (
       <CustomLoading />
@@ -77,7 +76,8 @@ const NbaFeedbackStatus = () => {
 
   return (
     <FlashList
-          data={nba_data}
+          data={nbaData}
+          onScroll={onScroll}
           contentContainerStyle={styles.fListContainer}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({item}) => <FeedbackItem item={item} />}

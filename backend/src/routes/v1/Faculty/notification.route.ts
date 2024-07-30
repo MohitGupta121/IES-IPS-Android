@@ -17,7 +17,7 @@ export default router;
  * @swagger
  * /notification/sendNotification:
  *   post:
- *     summary: send notification
+ *     summary: Send notification
  *     tags: [Notification]
  *     security:
  *       - bearerAuth: []
@@ -28,20 +28,26 @@ export default router;
  *           schema:
  *             type: object
  *             properties:
- *               computer_code:
+ *               title:
+ *                 type: string
+ *                 description: The title of the notification
+ *               description:
+ *                 type: string
+ *                 description: A brief description of the notification
+ *               message:
+ *                 type: string
+ *                 description: The body message of the notification
+ *               sender_computer_code:
  *                 type: number
- *               msg_title:
- *                 type: string
- *               msg_body:
- *                 type: string
- *               sendto:
+ *                 description: The computer code of the sender
+ *               send_to:
  *                 type: array
  *                 items:
- *                    type: string
- *                 
+ *                   type: number
+ *                 description: An array of computer codes to send the notification to
  *     responses:
  *       "201":
- *         description: fetched 
+ *         description: Notification sent successfully
  *         content:
  *           application/json:
  *             schema:
@@ -54,6 +60,7 @@ export default router;
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  */
+
 router.post('/sendNotification', notificationController.sendNotification);
 /**
  * @swagger

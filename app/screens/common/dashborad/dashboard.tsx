@@ -3,40 +3,55 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Dimensions, StatusBar
+  Dimensions,
+  StatusBar,
 } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import IosSafeArea from '../../../components/iosSafeArea';
-import { Avatar, IconButton, useTheme, Text } from 'react-native-paper';
+import {Avatar, IconButton, useTheme, Text, Badge} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
-import { themeType } from '../../../theme';
+import {themeType} from '../../../theme';
 import BottomSheet, {
+  ANIMATION_CONFIGS,
   BottomSheetModalProvider,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useDispatch, useSelector } from 'react-redux';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
 import MenuBottomSheet from './MenuBottomSheet';
-import { StaffDashOptions, StudentDashOptions } from './DashOptions';
-import { useNavigation } from '@react-navigation/native';
-import { Calendar } from 'react-native-calendars';
+import {StaffDashOptions, StudentDashOptions} from './DashOptions';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+import {Calendar} from 'react-native-calendars';
 import CMScard from '../../../components/cms_card';
 import StudentViewAttendence from './StudentViewAttendence';
-import { storage } from '../../../App';
-import { userType } from '../../../constants';
+import {storage} from '../../../App';
+import {userType} from '../../../constants';
 import StudentProfile from './StudentProfile';
-import { useQuery } from 'react-query';
-import { commonApi } from '../../../api/API';
-import { commonActionTypes } from '../../../redux/common/types';
-import { useBackHandler } from '@react-native-community/hooks';
-import { RootState } from '../../../redux/store';
-import { reducerData } from '../../../redux/common/reducer';
+import {useQuery} from 'react-query';
+import {commonApi} from '../../../api/API';
+import {commonActionTypes} from '../../../redux/common/types';
+import {useBackHandler} from '@react-native-community/hooks';
+import {RootState} from '../../../redux/store';
+import {reducerData} from '../../../redux/common/reducer';
 import ExitDialog from '../../../components/exitDialog';
 import StaffProfile from './StaffProfile';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../routes/routes';
-import { useToast } from 'react-native-toast-notifications';
-
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../routes/routes';
+import {useToast} from 'react-native-toast-notifications';
+import {useMMKVStorage} from 'react-native-mmkv-storage';
+import Leavesummary from './Leavesummary';
+import getAvatar from '../../../utils/avatar';
+import {PermissionsAndroid} from 'react-native';
+import { NotificationType } from '../../../types';
+import { useGetDepartments } from '../../../hooks/query/common';
+import { ReduceMotion } from 'react-native-reanimated';
 
 const Dashboard = () => {
   const theme: themeType = useTheme();
@@ -49,6 +64,7 @@ const Dashboard = () => {
     topButtons: {
       flexDirection: 'row',
       paddingHorizontal: 5,
+      height: 60,
     },
     IconButton: {
       borderRadius: 20,
@@ -88,7 +104,7 @@ const Dashboard = () => {
       maxWidth: 500,
       alignSelf: 'center',
       gap: 20,
-      paddingBottom : window.height < 700?0: 240,
+      paddingBottom: window.height < 700 ? 0 : 240,
     },
     profileContainer: {
       marginHorizontal: 30,
@@ -106,266 +122,327 @@ const Dashboard = () => {
       fontSize: 22,
       fontWeight: '700',
     },
-    rootView : {
+    rootView: {
       flex: 1,
       width: '100%',
       height: StatusBar.currentHeight,
       backgroundColor: theme.colors.container_background,
     },
-    dashboardHeader:{
+    dashboardHeader: {
       flex: 1,
       backgroundColor: theme.colors.container_background,
       justifyContent: 'flex-start',
-    }
-    
+    },
+    bottomSheetContentContainer: {
+      gap: 20,
+      maxWidth: 800,
+    },
+    badge: {
+      position: 'absolute',
+      top: 5,
+      right: 10,
+      zIndex: 2,
+    },
   });
 
-  const [snapPoints , setSnapPoints] = useState([230 , window.height - 200, window.height]);
+  const [snapPoints, setSnapPoints] = useState([
+    window.height - 200,
+    230,
+    window.height - 60,
+  ]);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const profileSVRef = useRef<ScrollView>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [profile, setProfile] = useState(false);
+  const [profileHeaderHeight, setProfileHeaderHeight] = useState(80);
 
-
-  const updateOnProfileHeaderLoad = useCallback( (event)=>{
-    const {height} = event.nativeEvent.layout;
-    console.log(height)
-    setSnapPoints([230 , window.height - (height+120), window.height])
-  } ,[])
-
-
-  useQuery(commonApi.getDepartments.name , commonApi.getDepartments.fetch ,{
-    onSuccess : (data)=>{
-      dispatch({type : commonActionTypes.Departments ,  payload : data})
-    }
-  })
+  useGetDepartments();
 
   type User = Pick<reducerData['User'], 'user'>;
-  const user: User['user'] = useSelector(
-    (store: RootState) => store.common.User.user,
-  );
-
-  useEffect(() => {
-    if (user.type === userType.student) setDashOptions(StudentDashOptions);
-    else setDashOptions(StaffDashOptions);
-    // console.log('dashboard : ', user);
-  }, [user]);
+  const [{user}, setUser] = useMMKVStorage<User>('User', storage, {user: {}});
 
   const [DashOptions, setDashOptions] = useState<
     typeof StaffDashOptions | typeof StudentDashOptions | []
   >([]);
 
-  const navigator = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [notifications, setNotifications] = useMMKVStorage(
+    'Notification',
+    storage,
+    [],
+  );
+
+  const [exitDialogVisible, setExitDialogVisible] = useState(false);
+
+  const navigator =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [newNotification, setNewNotification] = useState(0);
 
-  useEffect(() => {
-    // Permission for android 13+
-    // PermissionsAndroid.request('android.permission.POST_NOTIFICATIONS');
-
-    // Check for unseen notification
-    const change_dimension = Dimensions.addEventListener(
-      'change',
-      ({window}) => {
-        setProfile(false);
-      },
-    );
-
-    const notifications = storage.getString('notifications');
-    let count = 0;
-    if (notifications !== undefined) {
-      let notificationArray = JSON.parse(notifications);
-      notificationArray.map(item => {
-        if (!item.seen) count++;
-      });
-      setNewNotification(count);
-    }
-
-    return () => change_dimension.remove();
-  }, []);
+  const [academicSessions, setAcademicSession] = useMMKVStorage(
+    'AcademicSession',
+    storage,
+    {},
+  );
 
   useBackHandler(() => {
     setExitDialogVisible(true);
     return true;
   });
 
-  const [exitDialogVisible, setExitDialogVisible] = useState(false);
-
-  useEffect(() => {
-    // profile
-    //   ? bottomSheetRef.current?.snapToIndex(0)
-    //   : bottomSheetRef.current?.snapToIndex(1);
-    window.height < 700 && profile
-      ? bottomSheetRef.current?.close()
-      : null;
-
-    if (!profile)
-      profileSVRef.current?.scrollTo({
-        y: 0,
-        animated: true,
-      });
-  }, [profile, bottomSheetRef.current , snapPoints]);
-
-  const dispatch = useDispatch();
-
-  const chaggeProfileonSnapPoint = useCallback((index : number)=>{
-    console.log(index)
-    if ( index === 0 ) {
-      setProfile(true);
-    }else {
-      setProfile(false)
-    }
-  } , [bottomSheetRef , profile])
-
   useQuery(
     commonApi.academicSession.name,
     () => commonApi.academicSession.fetch(),
     {
       onSuccess: data => {
-        let current = data.find(item => item.active)
-        dispatch({
-          type: commonActionTypes.AcademicSession,
-          payload: {
-            sessions: [...data],
-            current: {...current},
-          },
+        let current = data.find(item => item.active);
+        setAcademicSession({
+          sessions: [...data],
+          current: {...current},
         });
       },
     },
   );
 
+  useEffect(() => {
+    // Permission for android 13+
+    PermissionsAndroid.request('android.permission.POST_NOTIFICATIONS');
 
+    let count = 0;
+    notifications.map((item:NotificationType) => {
+      if (!item.seen) count++;
+    });
+    console.log(notifications);
+    setNewNotification(count);
+  }, [notifications]);
+
+  useEffect(() => {
+    if (user.type === userType.student) setDashOptions(StudentDashOptions);
+    else setDashOptions(StaffDashOptions);
+    console.log('dashboard : ', user);
+    console.log(getAvatar(user.computer_code));
+  }, [user]);
+
+  useEffect(()=>{
+    setSnapPoints([
+      window.height - (profileHeaderHeight + 60 + 20+(StatusBar.currentHeight||0)),
+      230,
+      window.height - (60 + (StatusBar.currentHeight||0)) ,
+    ]);
+    
+    bottomSheetRef.current?.snapToIndex(0);
+    
+  },[profileHeaderHeight , window , bottomSheetRef])
   
+  useEffect(() => {
+    // profile
+    //   ? bottomSheetRef.current?.snapToIndex(0)
+    //   : bottomSheetRef.current?.snapToIndex(1);
+    
+    if (!profile)
+      profileSVRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  }, [profile, bottomSheetRef.current, snapPoints]);
+
+  const updateOnProfileHeaderLoad = useCallback(event => {
+    const {height} = event.nativeEvent.layout;
+    setProfileHeaderHeight(height);
+  }, []);
+
+  const chaggeProfileonSnapPoint = useCallback((index: number) => {
+    if (index === 0) {
+      setProfile(true);
+    } else {
+      setProfile(false);
+    }
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    setMenuOpen(!menuOpen);
+  }, []);
+
+  const subHeaderText = useMemo(
+    () =>
+      user.type == userType.student
+        ? `${user?.department || ''} • ${user?.enrollment || ''}`
+        : `${user?.departmentFaculty || ''} • ${user?.computer_code || ''}`,
+    [user],
+  );
+
+  const topButtons = useMemo(
+    () => (
+      <View style={styles.topButtons}>
+        <IconButton
+          style={styles.IconButton}
+          rippleColor={theme.colors.backdrop}
+          onPress={toggleMenu}
+          icon="menu"
+          size={theme.icon.button_size}
+        />
+        <View style={{flex: 1, height: 50}}></View>
+        <View>
+          {newNotification !== 0 ? (
+            <Badge style={styles.badge}>{newNotification}</Badge>
+          ) : null}
+          <IconButton
+            // @ts-ignore
+            onPress={() => navigator.push('Notification')}
+            style={styles.IconButton}
+            icon="bell"
+            iconColor={theme.colors.black}
+            rippleColor={theme.colors.backdrop}
+            size={theme.icon.button_size}
+          />
+        </View>
+        <IconButton
+          onPress={() => null}
+          style={styles.IconButton}
+          icon={'user'}
+          rippleColor={theme.colors.backdrop}
+          size={theme.icon.button_size}
+        />
+      </View>
+    ),
+    [newNotification],
+  );
+
+  const profileHeader = useMemo(
+    () => (
+      <View onLayout={updateOnProfileHeaderLoad} style={styles.profileHeader}>
+        <Avatar.Image
+          size={window.width < 500 ? window.width / 4 : 110}
+          source={
+            user?.photograph
+              ? {uri: user?.photograph}
+              // : {uri: getAvatar(user.computer_code)}
+              : require("../../../assets/images/avatar.png")
+          }
+        />
+
+        <View style={{flexWrap: 'wrap'}}>
+          <Text
+            variant="bodyLarge"
+            numberOfLines={2}
+            style={styles.nameHeadingsFont}>
+            Hey,{'\n'}
+            {user?.name || ''}
+          </Text>
+          <Text
+            numberOfLines={1}
+            selectable
+            selectionColor={theme.colors.yellow}
+            variant="bodyLarge">
+            {subHeaderText}
+          </Text>
+        </View>
+      </View>
+    ),
+    [user , window],
+  );
+
+  const attendanceProgressBarBlock = useMemo(
+    () => (
+      <View>
+        <Text style={styles.headingsFont}>ATTENDANCE</Text>
+        <StudentViewAttendence />
+      </View>
+    ),
+    [],
+  );
+
+  const leaveSummaryBlock = useMemo(
+    () => (
+      <View>
+        <Text style={styles.headingsFont}>LEAVE SUMMARY</Text>
+        <Leavesummary />
+      </View>
+    ),
+    [],
+  );
+
+  const academicCalendarBlock = useMemo(
+    () => (
+      <View>
+        <Text
+          numberOfLines={1}
+          // @ts-ignore
+          style={styles.headingsFont}>
+          ACADEMIC CALENDAR
+        </Text>
+        <CMScard style={{padding: 0}}>
+          <Calendar
+            enableSwipeMonths
+            hideExtraDays
+            style={styles.academicCalendar}
+          />
+        </CMScard>
+      </View>
+    ),
+    [],
+  );
+
+  const backgroundProfile = useMemo(
+    () => (
+      <View>
+        <ScrollView
+          ref={profileSVRef}
+          contentContainerStyle={styles.previewProfileScrollView}
+          scrollEnabled={true}>
+          {profileHeader}
+          <View style={styles.profileContainer}>
+            <Text variant="headlineMedium" style={{textAlign: 'center'}}>
+              <Icon name="user" size={30} />
+              Profile
+            </Text>
+            {user.type === userType.student ? (
+              <StudentProfile user={user} />
+            ) : (
+              <StaffProfile user={user} />
+            )}
+          </View>
+        </ScrollView>
+      </View>
+    ),
+    [user , window],
+  );
+
+  const studentBlocks = useMemo(
+    () => [attendanceProgressBarBlock, academicCalendarBlock],
+    [],
+  );
+  const staffBlocks = useMemo(
+    () => [leaveSummaryBlock, academicCalendarBlock],
+    [],
+  );
 
   return (
-    <GestureHandlerRootView
-      style={styles.rootView}>
-      <StatusBar barStyle="default" backgroundColor="black" />
+    <GestureHandlerRootView style={styles.rootView}>
       <IosSafeArea
-        color={theme.colors.container_background}
+        color='transparent'
         barStyle="dark-content">
         <ExitDialog
           exitDialogVisible={exitDialogVisible}
           setExitDialogVisible={setExitDialogVisible}
         />
-        <View
-          style={styles.dashboardHeader}>
-          <View style={styles.topButtons}>
-            <IconButton
-              style={styles.IconButton}
-              rippleColor={theme.colors.backdrop}
-              onPress={() => setMenuOpen(!menuOpen)}
-              icon="menu"
-              iconColor={menuOpen ? theme.colors.primary : theme.colors.black}
-              size={theme.icon.button_size}
-              containerColor={menuOpen ? theme.colors.white : undefined}
-            />
-            <View style={{flex: 1, height: 50}}></View>
-            <IconButton
-              // @ts-ignore
-              onPress={() => navigator.push('Notification')}
-              style={styles.IconButton}
-              icon="bell"
-              iconColor={theme.colors.black}
-              rippleColor={theme.colors.backdrop}
-              size={theme.icon.button_size}
-            />
-            <IconButton
-              onPress={() => null}
-              style={styles.IconButton}
-              icon={'user'}
-              iconColor={profile ? theme.colors.primary : theme.colors.black}
-              rippleColor={theme.colors.backdrop}
-              size={theme.icon.button_size}
-              containerColor={profile ? theme.colors.white : undefined}
-            />
-          </View>
-          <View>
-            <ScrollView
-              ref={profileSVRef}
-              contentContainerStyle={styles.previewProfileScrollView}
-              scrollEnabled={profile}
-              >
-              <View onLayout={updateOnProfileHeaderLoad} style={styles.profileHeader}>
-                <Avatar.Image
-                  size={window.width < 500 ? window.width / 4 : 110}
-                  source={
-                    user?.photograph
-                      ? {
-                          uri: user?.photograph,
-                        }
-                      : require('../../../assets/images/avatar.png')
-                  }
-                />
-                {user.type === userType.student ? (
-                  <View style={{flexWrap: 'wrap'}}>
-                    <Text
-                      variant="bodyLarge"
-                      numberOfLines={2}
-                      style={styles.nameHeadingsFont}>
-                      Hey,{'\n'}
-                      {user?.name || ''}
-                    </Text>
-                    <Text
-                      numberOfLines={1}
-                      selectable
-                      selectionColor={theme.colors.yellow}
-                      style={{
-                        fontSize: 15,
-                        color: theme.colors.scrim,
-                        flexWrap: 'wrap',
-                      }}>
-                      {user?.department || ''} • {user?.enrollment || ''}
-                    </Text>
-                  </View>
-                ) : (
-                  <View style={{flexWrap: 'wrap'}}>
-                    <Text
-                      variant="bodyLarge"
-                      numberOfLines={2}
-                      style={styles.nameHeadingsFont}>
-                      Hey,{'\n'}
-                      {user?.name || ''}
-                    </Text>
-                    <Text
-                      numberOfLines={1}
-                      selectable
-                      selectionColor={theme.colors.yellow}
-                      style={{
-                        fontSize: 15,
-                        color: theme.colors.scrim,
-                        flexWrap: 'wrap',
-                      }}>
-                      {user?.departmentFaculty || ''} •{' '}
-                      {user?.computer_code || ''}
-                    </Text>
-                  </View>
-                )}
-              </View>
-              <View style={styles.profileContainer}>
-                <Text variant="headlineMedium" style={{textAlign: 'center'}}>
-                  <Icon name="user" size={30} />
-                  Profile
-                </Text>
-                {user.type === userType.student ? (
-                  <StudentProfile user={user} profile={profile} />
-                ) : (
-                  <StaffProfile user={user} profile={profile} />
-                )}
-              </View>
-            </ScrollView>
-          </View>
+        <View style={styles.dashboardHeader}>
+          {topButtons}
+          {backgroundProfile}
         </View>
       </IosSafeArea>
       <BottomSheet
         ref={bottomSheetRef}
         snapPoints={snapPoints}
-        index={1}
+        index={0}
         handleIndicatorStyle={{backgroundColor: theme.colors.primary}}
         backgroundStyle={styles.SheetViewStyle}
-        onChange={chaggeProfileonSnapPoint}
+        // onChange={chaggeProfileonSnapPoint}
         >
-        <BottomSheetScrollView contentContainerStyle={{gap: 10}}>
+        <BottomSheetScrollView
+          style={{alignSelf: 'center'}}
+          contentContainerStyle={styles.bottomSheetContentContainer}
+          showsVerticalScrollIndicator={false}
+          >
           <View>
             <Text
               numberOfLines={1}
@@ -378,7 +455,7 @@ const Dashboard = () => {
                 <View key={index} style={styles.progressStyle}>
                   <IconButton
                     // @ts-ignore
-                    onPress={() => navigator.navigate(item.to)}
+                    onPress={() => navigator.push(item.to)}
                     style={styles.IconButton}
                     icon={item.icon}
                     iconColor={theme.colors.scrim}
@@ -394,56 +471,9 @@ const Dashboard = () => {
               ))}
             </CMScard>
           </View>
-          {user.type===userType.student?
-          <View>
-            <Text style={styles.headingsFont}>ATTENDANCE</Text>
-            <StudentViewAttendence />
-          </View>
-          :null
-        }
-          <View>
-            <Text
-              numberOfLines={1}
-              // @ts-ignore
-              style={styles.headingsFont}>
-              ACADEMIC CALENDAR
-            </Text>
-            <CMScard style={{padding: 0}}>
-              <Calendar
-                enableSwipeMonths
-                hideExtraDays
-                // displayLoadingIndicator
-                style={styles.academicCalendar}
-                markingType={'custom'}
-                markedDates={{
-                  '2023-08-03': {
-                    customStyles: {
-                      container: {
-                        backgroundColor: 'red',
-                        borderRadius: 20,
-                      },
-                      text: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                      },
-                    },
-                  },
-                  '2023-08-05': {
-                    customStyles: {
-                      container: {
-                        backgroundColor: theme.colors.container_background,
-                        borderRadius: 20,
-                      },
-                      text: {
-                        color: theme.colors.primary,
-                        fontWeight: 'bold',
-                      },
-                    },
-                  },
-                }}
-              />
-            </CMScard>
-          </View>
+          {user.type === userType.student
+            ? studentBlocks.map(item => item)
+            : staffBlocks.map(item => item)}
         </BottomSheetScrollView>
       </BottomSheet>
       <BottomSheetModalProvider>
@@ -453,4 +483,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default memo(Dashboard);

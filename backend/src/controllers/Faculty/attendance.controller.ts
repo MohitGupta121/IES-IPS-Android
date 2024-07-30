@@ -123,6 +123,7 @@ const getStudentByAttendInfoToModify = catchAsync(async (req, res)=>{
   
       res.status(200).send({ status : 1 , msg : 'successfull' , data : result});
     } catch (error){
+      console.log(error)
       res.status(500).send({ status : 0 , msg : 'unsuccessfull' , data : error});
     }
     
